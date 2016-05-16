@@ -19,7 +19,7 @@
     <!-- endbuild -->
   </head>
   <body layout="row" ng-app="frontendmuApp" ng-controller="MasterCtrl" style="background-color: lightgray;">
-  <md-sidenav ng-if="authenticated && obj.establecimiento"  class="site-sidenav md-sidenav-left md-whiteframe-z2" style="width: 250px;" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+  <md-sidenav ng-if="authenticated && obj.establecimiento" class="site-sidenav md-sidenav-left md-whiteframe-z2" style="width: 250px;" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
 
     <header class="nav-header">
       <img src="images/logo.jpg" width="100%">
@@ -53,7 +53,7 @@
         <md-menu md-position-mode="target-right target" >
 
           <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-            <md-icon><i class="material-icons white-text">more_vert</i> </md-icon>
+            <md-icon><i class="material-icons">more_vert</i> </md-icon>
           </md-button>
 
           <md-menu-content width="4" >
@@ -63,14 +63,14 @@
               </md-button>
             </md-menu-item>
             <md-menu-item>
-              <md-button ng-href="#/logout">
-                <p>Cerrar sesión</p>
+              <md-button ng-href="#/main">
+                <p>Cambiar establecimiento</p>
               </md-button>
             </md-menu-item>
-            <md-divider ng-show="selectionLote.length == 1"></md-divider>
-            <md-menu-item ng-show="selectionLote.length == 1">
-              <md-button ng-click="cargarDetalleLote(selectionLote[0])">
-                <p>Modificar</p>
+            <md-divider></md-divider>
+            <md-menu-item>
+              <md-button ng-href="#/logout">
+                <p>Cerrar sesión</p>
               </md-button>
             </md-menu-item>
           </md-menu-content>
@@ -129,6 +129,11 @@
         <script src="scripts/services/potrero.js"></script>
         <script src="scripts/services/categoria.js"></script>
         <script src="scripts/services/raza.js"></script>
+        <script src="scripts/services/mortandad.js"></script>
+        <script src="scripts/controllers/establecimiento.js"></script>
+        <script src="scripts/controllers/potrero.js"></script>
+        <script src="scripts/controllers/nutricion.js"></script>
+        <script src="scripts/services/nutricion.js"></script>
         <!-- endbuild -->
 </body>
 </html>
