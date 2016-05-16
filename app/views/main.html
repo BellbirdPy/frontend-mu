@@ -1,0 +1,16 @@
+<div layout="row">
+<md-card flex="20" ng-repeat="e in establecimientos" class="green">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">{{e.nombre}}</span>
+      <span class="md-subhead">Large</span>
+    </md-card-title-text>
+    <md-card-title-media>
+      <div class="md-media-lg card-media"></div>
+    </md-card-title-media>
+  </md-card-title>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button ng-click="seleccionar(e)">Continuar</md-button>
+  </md-card-actions>
+</md-card>
+</div>
