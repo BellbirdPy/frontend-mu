@@ -103,6 +103,26 @@ angular
           }]
         }
       })
+      .when('/sanitacion', {
+        templateUrl: 'views/sanitacion.html',
+        controller: 'SanitacionCtrl',
+        controllerAs: 'sanitacion',
+        resolve: {
+          authenticated: ['DjangoAuth', function(DjangoAuth){
+            return DjangoAuth.authenticationStatus(true);
+          }]
+        }
+      })
+      .when('/dashboard', {
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardCtrl',
+        controllerAs: 'dashboard',
+        resolve: {
+          authenticated: ['DjangoAuth', function(DjangoAuth){
+            return DjangoAuth.authenticationStatus(true);
+          }]
+        }
+      })
       .otherwise({
         redirectTo: '/'
       });

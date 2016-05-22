@@ -237,10 +237,10 @@ angular.module('frontendmuApp')
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_animal.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','Animal','Categoria','Raza','Lote' ,function ($scope, $mdDialog, Animal, Categoria,Raza) {
+        controller: ['$scope','$mdDialog','Animal','Categoria','Raza','Lote' ,function ($scope, $mdDialog, Animal, Categoria,Raza, Lote) {
           $scope.categorias =[];
           $scope.razas = [];
-          $scope.lotes = []
+          $scope.lotes = [];
 
           $scope.lotes = Lote.query({establecimiento:obj.establecimiento.id},function(response){
             $scope.lotes = response;
