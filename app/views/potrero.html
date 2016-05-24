@@ -1,0 +1,37 @@
+<section>
+  <md-button href="#/establecimiento" class="green-text">Establecimiento</md-button>
+  <md-card layout="column">
+    <md-toolbar class="">
+      <div class="md-toolbar-tools white-text">
+        <h2 class="md-title">Potreros</h2>
+      </div>
+    </md-toolbar>
+    <md-content>
+
+      <br>
+      <md-button  ng-hide="selection.length" ng-click="cargarPotrero()" class="lime-text">Agregar</md-button>
+      <br><br>
+      <table class="table table-responsive centered" right-click="selectAll()">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Superficie (Ha.)</th>
+          <th>Uso</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="potrero in potreros" >
+          <td style="padding: 10px !important;">{{potrero.nombre}}</td>
+          <td>{{potrero.superficie}}</td>
+          <td>{{potrero.uso}}</td>
+          <td><i class="material-icons action" ng-click="cargarPotrero(potrero)">mode_edit</i> <i class="material-icons action" ng-click="deletePotrero(potrero)">delete</i></td>
+        </tr>
+        </tbody>
+      </table>
+    </md-content>
+  </md-card>
+</section>
+
+

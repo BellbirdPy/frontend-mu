@@ -99,10 +99,14 @@
           <md-button class="md-icon-button" ng-show="selection.length == 1" ng-click="cargarDetalle(selection[0])"
                      aria-label="edit">
             <md-icon><i class="material-icons">edit</i></md-icon>
+          <md-button class="md-icon-button" ng-show="selection.length == 1" ng-click="cargarDetalle(selection[0])" aria-label="Editar Animal">
+            <md-icon><i class="material-icons">edit</i> </md-icon>
           </md-button>
           <md-button class="md-icon-button" ng-show="selection.length == 1" ng-click="deleteAnimal(selection[0])"
                      aria-label="delete">
             <md-icon><i class="material-icons">delete</i></md-icon>
+          <md-button class="md-icon-button" ng-show="selection.length == 1" ng-click="deleteAnimal(selection[0])"  aria-label="Delete Animal">
+            <md-icon><i class="material-icons">delete</i> </md-icon>
           </md-button>
           <md-menu md-position-mode="target-right target">
             <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
@@ -120,7 +124,7 @@
                 </md-button>
               </md-menu-item>
               <md-menu-item ng-show="selection.length">
-                <md-button>
+                <md-button ng-click="agruparEnLote(selection)">
                   <p>Agrupar en Lote nuevo</p>
                 </md-button>
               </md-menu-item>

@@ -73,6 +73,56 @@ angular
           }]
         }
       })
+      .when('/establecimiento', {
+        templateUrl: 'views/establecimiento.html',
+        controller: 'EstablecimientoCtrl',
+        controllerAs: 'establecimiento',
+        resolve: {
+          authenticated: ['DjangoAuth', function(DjangoAuth){
+            return DjangoAuth.authenticationStatus(true);
+          }]
+        }
+      })
+      .when('/potrero', {
+        templateUrl: 'views/potrero.html',
+        controller: 'PotreroCtrl',
+        controllerAs: 'potrero',
+        resolve: {
+          authenticated: ['DjangoAuth', function(DjangoAuth){
+            return DjangoAuth.authenticationStatus(true);
+          }]
+        }
+      })
+      .when('/nutricion', {
+        templateUrl: 'views/nutricion.html',
+        controller: 'NutricionCtrl',
+        controllerAs: 'nutricion',
+        resolve: {
+          authenticated: ['DjangoAuth', function(DjangoAuth){
+            return DjangoAuth.authenticationStatus(true);
+          }]
+        }
+      })
+      .when('/sanitacion', {
+        templateUrl: 'views/sanitacion.html',
+        controller: 'SanitacionCtrl',
+        controllerAs: 'sanitacion',
+        resolve: {
+          authenticated: ['DjangoAuth', function(DjangoAuth){
+            return DjangoAuth.authenticationStatus(true);
+          }]
+        }
+      })
+      .when('/dashboard', {
+        templateUrl: 'views/dashboard.html',
+        controller: 'DashboardCtrl',
+        controllerAs: 'dashboard',
+        resolve: {
+          authenticated: ['DjangoAuth', function(DjangoAuth){
+            return DjangoAuth.authenticationStatus(true);
+          }]
+        }
+      })
       .when('/compra', {
         templateUrl: 'views/compra.html',
         controller: 'CompraCtrl',

@@ -10,6 +10,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.css" />
+    <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -20,14 +21,14 @@
     <!-- endbuild -->
   </head>
   <body layout="row" ng-app="frontendmuApp" ng-controller="MasterCtrl" style="background-color: lightgray;">
-  <md-sidenav ng-if="authenticated && obj.establecimiento"  class="site-sidenav md-sidenav-left md-whiteframe-z2" style="width: 250px;" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+  <md-sidenav ng-if="authenticated && obj.establecimiento" class="site-sidenav md-sidenav-left md-whiteframe-z2" style="width: 250px;" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
 
     <header class="nav-header">
       <img src="images/logo.jpg" width="100%">
     </header>
     <md-content flex role="navigation">
       <div class="collection">
-        <a href="#/" class="collection-item black-text">Home</a>
+        <a href="#/dashboard" class="collection-item black-text">Home</a>
         <a ng-href="#/inventario" class="collection-item black-text">Manejo</a>
         <a href="#/sanitacion" class="collection-item black-text">Sanitación</a>
         <a href="#/nutricion" class="collection-item black-text">Nutrición</a>
@@ -54,7 +55,7 @@
         <md-menu md-position-mode="target-right target" >
 
           <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-            <md-icon><i class="material-icons white-text">more_vert</i> </md-icon>
+            <md-icon><i class="material-icons">more_vert</i> </md-icon>
           </md-button>
 
           <md-menu-content width="4" >
@@ -64,14 +65,14 @@
               </md-button>
             </md-menu-item>
             <md-menu-item>
-              <md-button ng-href="#/logout">
-                <p>Cerrar sesión</p>
+              <md-button ng-href="#/main">
+                <p>Cambiar establecimiento</p>
               </md-button>
             </md-menu-item>
-            <md-divider ng-show="selectionLote.length == 1"></md-divider>
-            <md-menu-item ng-show="selectionLote.length == 1">
-              <md-button ng-click="cargarDetalleLote(selectionLote[0])">
-                <p>Modificar</p>
+            <md-divider></md-divider>
+            <md-menu-item>
+              <md-button ng-href="#/logout">
+                <p>Cerrar sesión</p>
               </md-button>
             </md-menu-item>
           </md-menu-content>
@@ -100,6 +101,7 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -110,9 +112,13 @@
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
     <script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+  <script src='bower_components/fullcalendar/dist/lang/es.js'></script>
+  <script src="scripts/angular-locale_es-py.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
@@ -131,6 +137,15 @@
         <script src="scripts/services/potrero.js"></script>
         <script src="scripts/services/categoria.js"></script>
         <script src="scripts/services/raza.js"></script>
+        <script src="scripts/services/mortandad.js"></script>
+        <script src="scripts/controllers/establecimiento.js"></script>
+        <script src="scripts/controllers/potrero.js"></script>
+        <script src="scripts/controllers/nutricion.js"></script>
+        <script src="scripts/services/nutricion.js"></script>
+        <script src="scripts/controllers/sanitacion.js"></script>
+        <script src="scripts/services/evento.js"></script>
+        <script src="scripts/services/eventoestablecimiento.js"></script>
+        <script src="scripts/controllers/dashboard.js"></script>
         <script src="scripts/controllers/compra.js"></script>
         <script src="scripts/services/compra.js"></script>
         <script src="scripts/controllers/dialogs/dialogo_crear_compra.js"></script>

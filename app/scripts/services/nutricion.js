@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc service
- * @name frontendmuApp.Lote
+ * @name frontendmuApp.Nutricion
  * @description
- * # Lote
+ * # Nutricion
  * Factory in the frontendmuApp.
  */
 angular.module('frontendmuApp')
-  .factory('Lote', function ($resource) {
-    return $resource('http://localhost:8000/api/lote/:id/',null,{
+  .factory('Nutricion', function ($resource) {
+    return $resource('http://localhost:8000/api/nutricion/:id/',null,{
       'update': { method:'PUT' },
       'delete': {method:'DELETE'}
     });
