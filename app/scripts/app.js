@@ -17,7 +17,7 @@ angular
     'ngSanitize',
     'ngMaterial'
   ])
-  .config(function ($routeProvider,$mdThemingProvider,$httpProvider,$resourceProvider) {
+  .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider) {
     // CSRF Support
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -33,7 +33,7 @@ angular
         controller: 'MainCtrl',
         controllerAs: 'main',
         resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
+          authenticated: ['DjangoAuth', function (DjangoAuth) {
             return DjangoAuth.authenticationStatus(true);
           }]
         }
@@ -43,7 +43,7 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about',
         resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
+          authenticated: ['DjangoAuth', function (DjangoAuth) {
             return DjangoAuth.authenticationStatus();
           }]
         }
@@ -58,7 +58,7 @@ angular
         controller: 'LogoutCtrl',
         controllerAs: 'logout',
         resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
+          authenticated: ['DjangoAuth', function (DjangoAuth) {
             return DjangoAuth.authenticationStatus(true);
           }]
         }
@@ -68,15 +68,21 @@ angular
         controller: 'InventarioCtrl',
         controllerAs: 'inventario',
         resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
+          authenticated: ['DjangoAuth', function (DjangoAuth) {
             return DjangoAuth.authenticationStatus(true);
           }]
         }
+      })
+      .when('/compra', {
+        templateUrl: 'views/compra.html',
+        controller: 'CompraCtrl',
+        controllerAs: 'compra',
       })
       .otherwise({
         redirectTo: '/'
       });
   })
-  .run(function(DjangoAuth){
+  .run(function (DjangoAuth) {
     DjangoAuth.initialize('//localhost:8000/rest-auth', false);
-  });;
+  });
+;

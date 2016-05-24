@@ -9,6 +9,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -40,10 +41,10 @@
 
   </md-sidenav>
   <div layout="column" tabIndex="-1" role="main" flex>
-    <md-toolbar ng-if="authenticated" ng-hide="loginView" class="md-whiteframe-z1 grey lighten-3">
+    <md-toolbar ng-if="authenticated" ng-hide="loginView" class="md-whiteframe-z1 white lighten-3">
       <div class="md-toolbar-tools" tabIndex="-1">
         <md-button class="md-icon-button" aria-label="Menu"hide-gt-md ng-click="toggleLeft()">
-          <md-icon><i class="material-icons" style="color: white">menu</i> </md-icon>
+          <md-icon><i class="material-icons black-text" style="color: black">menu</i> </md-icon>
         </md-button>
         <div layout="row" flex class="fill-height">
           <h2 class="md-toolbar-item md-breadcrumb md-headline">
@@ -109,6 +110,7 @@
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -129,6 +131,9 @@
         <script src="scripts/services/potrero.js"></script>
         <script src="scripts/services/categoria.js"></script>
         <script src="scripts/services/raza.js"></script>
+        <script src="scripts/controllers/compra.js"></script>
+        <script src="scripts/services/compra.js"></script>
+        <script src="scripts/controllers/dialogs/dialogo_crear_compra.js"></script>
         <!-- endbuild -->
 </body>
 </html>

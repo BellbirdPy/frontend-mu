@@ -1,0 +1,94 @@
+<!--Section Compras -->
+<section>
+  <md-card>
+    <md-toolbar class="green">
+      <div class="md-toolbar-tools white-text">
+        <h2 class="md-title ">Compras</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-show="selectionCompra.length == 1"
+                   ng-click="cargarDetalleLote(selectionCompra[0])" aria-label="edit-lote">
+          <md-icon><i class="material-icons white-text">edit</i></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" ng-show="selectionCompra.length == 1"
+                   ng-click="deleteLote(selectionCompra[0])"
+                   aria-label="delete">
+          <md-icon><i style="color:white;" class="material-icons">delete</i></md-icon>
+        </md-button>
+        <md-menu md-position-mode="target-right target">
+
+          <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
+            <md-icon><i class="material-icons white-text">more_vert</i></md-icon>
+          </md-button>
+
+          <md-menu-content width="4">
+            <md-menu-item>
+              <md-button ng-click="abrirFormCarga()">
+                <p>Agregar</p>
+              </md-button>
+            </md-menu-item>
+            <md-divider ng-show="selectionCompra.length == 1"></md-divider>
+            <md-menu-item ng-show="selectionCompra.length == 1">
+              <md-button ng-click="cargarDetalleLote(selectionCompra[0])">
+                <p>Modificar</p>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </md-toolbar>
+    <md-content>
+      <div layout="row" layout-padding>
+        <md-input-container flex="50">
+          <label>Búsqueda</label>
+          <input ng-model="buscarCompra">
+        </md-input-container>
+      </div>
+      <table class="table table-responsive centered hoverable" right-click="selectAll()">
+        <thead>
+        <tr>
+          <th>
+            <md-checkbox aria-label="selectAll" ng-model="selectedAll" ng-change="selectAll()"></md-checkbox>
+          </th>
+          <th>
+            <a ng-click="sortType = 'fecha'; sortReverse = !sortReverse" class="grey-text">
+              Fecha
+              <span ng-show="sortType == 'fecha' && !sortReverse"></span>
+              <span ng-show="sortType == 'fecha' && sortReverse"></span>
+            </a>
+          </th>
+          <th>
+            <a ng-click="sortType = 'cod_est_vend'; sortReverse = !sortReverse" class="grey-text">
+              Codigo de establecimiento de vendedor
+              <span ng-show="sortType == 'cod_est_vend' && !sortReverse"></span>
+              <span ng-show="sortType == 'cod_est_vend' && sortReverse"></span>
+            </a>
+          </th>
+          <th>
+            <a ng-click="sortType = 'nombre_vendedor'; sortReverse = !sortReverse" class="grey-text">
+              Nombre de vendedor
+              <span ng-show="sortType == 'nombre_vendedor' && !sortReverse"></span>
+              <span ng-show="sortType == 'nombre_vendedor' && sortReverse"></span>
+            </a>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          ng-repeat="compra in compras | orderBy:sortType:sortReverse | filter:buscarCompra"
+          ng-click="abrir(compra);$event.stopPropagation();"
+          ng-class="{'cb-active': compra.selected}"
+          ng-class="{'selected':selection.indexOf($index)!=-1}"
+          class="action">
+            <td>
+              <md-checkbox aria-label="select" ng-model="compra.selected"
+                           ng-click="toggle(compra.id);$event.stopPropagation();"></md-checkbox>
+            </td>
+            <td>{{compra.fecha}}</td>
+            <td>{{compra.cod_establecimiento_vendedor}}</td>
+            <td>{{compra.nombre_vendedor}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </md-content>
+  </md-card>
+</section>

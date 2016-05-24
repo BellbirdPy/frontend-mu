@@ -1,0 +1,90 @@
+<md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="white-text">Compra Animal</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()">
+        <md-icon class="md-icon-button white-text"><i class="material-icons">close</i></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <!-- Card Encabezado -->
+  <md-card>
+    <md-content layout-padding>
+      <h6 class="green-text">Encabezado</h6>
+      <div layout="row">
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Codigo de establecimiento del vendedor</label>
+          <input ng-model="newCompra.cod_establecimiento_vendedor">
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Nombre del vendedor</label>
+          <input ng-model="newCompra.nombre_vendedor">
+        </md-input-container>
+        <md-datepicker ng-model="newCompra.fecha" style="margin:13px 0;"
+                       md-placeholder="Fecha de compra"></md-datepicker>
+      </div>
+    </md-content>
+  </md-card>
+  <md-card>
+    <md-content layout-padding>
+      <h6 class="green-text">Detalles</h6>
+      <div layout="row">
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Categoria</label>
+          <md-select ng-model="newDetalle.categoria">
+            <md-option ng-repeat="categoria in categorias" value="{{categoria.id}}">
+              {{categoria.nombre}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Carimbo</label>
+          <md-select ng-model="newDetalle.carimbo">
+            <md-option value=0>0</md-option>
+            <md-option value=1>1</md-option>
+            <md-option value=2>2</md-option>
+            <md-option value=3>3</md-option>
+            <md-option value=4>4</md-option>
+            <md-option value=5>5</md-option>
+            <md-option value=6>6</md-option>
+            <md-option value=7>7</md-option>
+            <md-option value=8>8</md-option>
+            <md-option value=9>9</md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Raza</label>
+          <md-select ng-model="newDetalle.raza">
+            <md-option ng-repeat="raza in razas" value="{{raza.id}}">
+              {{raza.nombre}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Cantidad</label>
+          <input type="number" ng-model="newDetalle.cantidad">
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Nro de caravana inicial</label>
+          <input type="number" ng-model="newDetalle.nro_caravana_inicial">
+        </md-input-container>
+        <md-button class="md-icon-button" ng-click="cargarDetalleCompra(newDetalle)">
+          <md-icon><i class="material-icons">add</i></md-icon>
+        </md-button>
+      </div>
+    </md-content>
+  </md-card>
+  <md-dialog-actions layout="row">
+    <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
+    <span flex></span>
+    <md-button flex-order="1" ng-click="guardarCompra(newCompra)" class="md-primary">Guardar</md-button>
+    <md-button ng-click="cancel()">Cancelar</md-button>
+  </md-dialog-actions>
+  <md-card>
+    <md-content layout-padding>
+      <p>{{newCompra}}</p>
+    </md-content>
+  </md-card>
+</md-dialog>
