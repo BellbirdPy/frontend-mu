@@ -13,8 +13,8 @@
         <md-input-container class="block" >
           <label>Lote</label>
           <md-select ng-model="form.lote">
-            <md-option ng-repeat="lote in lotes" value={{lote.id}}>
-              {{lote.nombre}}
+            <md-option ng-repeat="lote in lotes" value=[[lote.id]]>
+              [[lote.nombre]]
             </md-option>
           </md-select>
         </md-input-container>

@@ -24,9 +24,9 @@
           <span flex></span>
           <md-button flex-order="1" type="submit" class="md-primary">Ingresar</md-button>
         </div>
-        <div class="red-text" ng-repeat="error in errors.password">{{error}}</div>
-        <div class="red-text" ng-repeat="error in errors.non_field_errors">{{error}}</div>
-        <div class="red-text" ng-if="error">{{error}}</div>
+        <div class="red-text" ng-repeat="error in errors.password">[[error]]</div>
+        <div class="red-text" ng-repeat="error in errors.non_field_errors">[[error]]</div>
+        <div class="red-text" ng-if="error">[[error]]</div>
 
       </form>
     </md-card-content>

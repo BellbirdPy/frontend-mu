@@ -9,11 +9,20 @@
  */
 angular.module('frontendmuApp')
   .controller('PotreroCtrl', function ($scope,Potrero,$mdDialog,$filter,ServerData) {
-    $scope.potreros = [];
 
-    Potrero.query({establecimiento:ServerData.establecimiento.id},function(response) {
-      $scope.potreros = response;
-    });
+    $scope.queryPotreros = {establecimiento: ServerData.establecimiento.id,ordering: 'nombre',page: 1};
+    $scope.selectedPotreros = [];
+
+  function successPotreros(potreros) {
+    $scope.potreros = potreros;
+  }
+
+  $scope.getPotreros = function () {
+    $scope.promisePotreros = Potrero.get($scope.queryPotreros,successPotreros).$promise;
+    $scope.selectedPotreros = [];
+  };
+
+  $scope.getPotreros();
 
 
     $scope.deletePotrero = function(ev) {
@@ -31,7 +40,7 @@ angular.module('frontendmuApp')
       $mdDialog.show(confirm).then(function() {
         Potrero.delete({id:ev.id},ev,function(data){
           console.log(data);
-          $scope.potreros.splice($scope.potreros.indexOf(ev),1);
+          $scope.potreros.results.splice($scope.potreros.results.indexOf(ev),1);
         });
       }, function() {
         $scope.status = 'Se eliminó correctamente.';
@@ -39,10 +48,10 @@ angular.module('frontendmuApp')
       });
     };
 
-    $scope.cargarPotrero = function(potreroModificar) {
+    $scope.editPotrero = function(potreroModificar) {
 
       $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_potrero.html',
+        templateUrl: '/staticfiles/views/dialogs/dialogo_potrero.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Potrero','ServerData' ,function ($scope, $mdDialog, Potrero, ServerData) {
           $scope.newPotrero = {};
@@ -88,15 +97,15 @@ angular.module('frontendmuApp')
       })
         .then(function(nuevo) {
           if (nuevo !== true) {
-            var prueba = $filter('filter')($scope.potreros, { id: nuevo.id }, true)[0];
+            var prueba = $filter('filter')($scope.potreros.results, function (d) {return d.id.toString() === nuevo.id.toString();})[0];
             if (prueba){
               if (prueba.id === nuevo.id) {
                 angular.extend(prueba, nuevo);
               }else{
-                $scope.potreros.unshift(nuevo);
+                $scope.potreros.results.unshift(nuevo);
               }
             }else{
-              $scope.potreros.unshift(nuevo);
+              $scope.potreros.results.unshift(nuevo);
             }
 
           }

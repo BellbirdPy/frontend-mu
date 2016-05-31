@@ -14,7 +14,7 @@ angular.module('frontendmuApp')
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
     });
 
-    EventoEstablecimiento.query(function(response){
+    EventoEstablecimiento.query({'establecimiento':ServerData.establecimiento.id},function(response){
       $scope.eventos_establecimiento = response;
       console.log($scope.eventos_establecimiento);
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );

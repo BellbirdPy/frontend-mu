@@ -14,7 +14,7 @@ angular.module('frontendmuApp')
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
     });
 
-    EventoEstablecimiento.query(function(response){
+    EventoEstablecimiento.query({'establecimiento':ServerData.establecimiento.id},function(response){
       $scope.eventos_establecimiento = response;
       console.log($scope.eventos_establecimiento);
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
@@ -61,7 +61,7 @@ angular.module('frontendmuApp')
 
     $scope.agregarEvento = function(evento) {
       $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_evento.html',
+        templateUrl: '/staticfiles/views/dialogs/dialogo_evento.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','EventoEstablecimiento','$filter','ServerData' ,function ($scope, $mdDialog, EventoEstablecimiento,$filter,ServerData) {
 

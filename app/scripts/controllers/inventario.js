@@ -8,232 +8,39 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('InventarioCtrl', function ($scope,$filter,$mdDialog,Animal,Lote, ServerData) {
+  .controller('InventarioCtrl', function ($scope,$filter,$mdDialog,$mdMedia,Animal,Lote, ServerData,Categoria,Raza) {
     var obj = ServerData;
-    $scope.animales = [];
-    $scope.lotes = [];
-    $scope.sortType     = 'caravana'; // set the default sort type
-    $scope.sortReverse  = false;  // set the default sort order
-    $scope.searchAnimal   = '';     // set the default search/filter term
-    $scope.searchAnimalLote = '';
-    $scope.selection = [];
-    $scope.selectionLote = [];
-    $scope.selectionCant = 0;
-    $scope.selectedAll = false;
-    $scope.cargandoAnimal = false;
-    $scope.cargandoLote = false;
+    $scope.estados_sanitarios = [{c:'E',display:'En fecha'},{c:'N',display:'No esta en fecha'},{c:'D',display:'En fecha'}]
 
-    Animal.query({establecimiento:obj.establecimiento.id},function(response) {
-      $scope.animales = response;
-      $scope.cargandoAnimal = true;
+    $scope.categorias = Categoria.get(function(response){
+      $scope.categorias = response;
+    });
+    $scope.razas = Raza.get(function(response){
+      $scope.razas = response;
     });
 
-    Lote.query({establecimiento:obj.establecimiento.id},function(response){
-      $scope.lotes = response;
-      $scope.cargandoLote = true;
-    });
-
-    $scope.updateLote = function(){
-      Lote.query({establecimiento:obj.establecimiento.id},function(response){
-        $scope.lotes = response;
-        $scope.cargandoLote = true;
-      });
+    $scope.options = {
+      boundaryLinks: false,
+      pageSelect: true
     };
 
-    $scope.updateAnimal = function(){
-      Animal.query({establecimiento:obj.establecimiento.id},function(response) {
-        $scope.animales = response;
-        $scope.cargandoAnimal = true;
-      });
-    };
 
-    $scope.filterPorLote = function(animal) {
-      if ($scope.selectionLote.length > 0) {
-        if (animal.lote) {
-          if ($scope.selectionLote.indexOf(animal.lote.toString()) === -1) {
-            return false;
-          }
-        }else{
-          return false;
-        }
-      }
-      return true;
-    };
+    //-----------------------------------ANIMALES---------------------------------------------------
+    $scope.queryAnimales = {establecimiento: ServerData.establecimiento.id,estado:'V',ordering: 'lote__nombre',page: 1};
+    $scope.selectedAnimales = [];
 
-    $scope.filterPorSearch = function(animal){
-      if (animal.caravana.toLowerCase().indexOf($scope.searchAnimal) > -1){
-        return true;
-      }
-      if (animal.carimbo.toString().toLowerCase().indexOf($scope.searchAnimal) > -1){
-        return true;
-      }
-      if (animal.categoria_nombre.toLowerCase().indexOf($scope.searchAnimal) > -1){
-        return true;
-      }
-      if (animal.raza_nombre.toLowerCase().indexOf($scope.searchAnimal) > -1){
-        return true;
-      }
-      return false;
-
+    function successAnimales(animales) {
+      $scope.animales = animales;
     }
 
-    $scope.selectAll = function () {
-      angular.forEach($scope.animales, function (animal) {
-        animal.selected = $scope.selectedAll;
-        var id = $scope.selection.indexOf(animal.id);
-        if (id === -1) {
-          if ($scope.selectedAll){
-            $scope.selection.push(animal.id);
-          }
-        }else{
-          if (!$scope.selectedAll){
-            $scope.selection.splice(id,1);
-          }
-        }
-      });
-      $scope.verificarMensaje();
+    $scope.getAnimales = function () {
+      $scope.promiseAnimales = Animal.get($scope.queryAnimales,successAnimales).$promise;
+      $scope.selectedAnimales = [];
     };
 
-    $scope.toggleLote = function (loteId) {
-      var id = $scope.selectionLote.indexOf(loteId.toString());
-      $scope.searchAnimalLote = id;
-      if (id === -1){
-        $scope.selectionLote.push(loteId.toString());
-      }else{
-        $scope.selectionLote.splice(id,1);
-      }
-    };
+    $scope.getAnimales();
 
-    $scope.toggle = function (animalId) {
-      var id = $scope.selection.indexOf(animalId);
-      if (id === -1){
-        $scope.selection.push(animalId);
-      }else{
-        $scope.selection.splice(id,1);
-      }
-      $scope.verificarMensaje();
-    };
-
-    $scope.verificarMensaje = function(){
-      if ($scope.selection.length ===1){
-        $scope.mensaje = 'animal seleccionado';
-      }else if ($scope.selection.length >1){
-        $scope.mensaje = 'animales seleccionados';
-      }else {
-        $scope.mensaje='';
-      }
-      var cant = $scope.selection.length;
-      if (cant > 0) {
-        $scope.selectionCant = $scope.selection.length;
-      }else{
-        $scope.selectionCant = '';
-      }
-    };
-
-    $scope.changeLote = function(lote){
-
-      if (lote.selected){
-        lote.selected = false;
-        $scope.toggleLote(lote.id);
-      }else{
-        lote.selected = true;
-        $scope.toggleLote(lote.id);
-      }
-    };
-
-    $scope.change = function(animal){
-      if (animal.selected){
-        animal.selected = false;
-        $scope.toggle(animal.id);
-      }else{
-        animal.selected = true;
-        $scope.toggle(animal.id);
-      }
-    };
-
-    $scope.deleteAnimal = function(ev) {
-      // Appending dialog to document.body to cover sidenav in docs app]
-      var animalEliminar = $filter('filter')($scope.animales, { id: $scope.selection[0] }, true)[0];
-      console.log(animalEliminar);
-      var confirm = $mdDialog.confirm().title('Estas seguro de que quieres eliminar?')
-        .textContent(animalEliminar.categoria_nombre + '- Caravana: '+animalEliminar.caravana + ' - Raza: ' + animalEliminar.raza_nombre + ' - Carimbo: ' + animalEliminar.carimbo)
-        .ariaLabel('Eliminar Animal')
-        .targetEvent(null)
-        .ok('Sí, estoy seguro')
-        .cancel('Cancelar');
-      $mdDialog.show(confirm).then(function() {
-        Animal.delete({id:animalEliminar.id},animalEliminar,function(data){
-          $scope.updateLote();
-        });
-      }, function() {
-       console.log('Cancelaste');
-      });
-    };
-
-    $scope.deleteLote = function(ev) {
-      // Appending dialog to document.body to cover sidenav in docs app
-      $scope.loteSeleccionado2 = $filter('filter')($scope.lotes, { id: $scope.selectionLote[0] }, false)[0];
-      var confirm = $mdDialog.confirm()
-        .title('Estas seguro de que quieres eliminar?')
-        .content('Lote: '+$scope.loteSeleccionado2.nombre + '<br>' +
-        'Potrero: ' + $scope.loteSeleccionado2.potrero_nombre + '<br>' +
-        'Cantidad de animales: ' + $scope.loteSeleccionado2.animales.length + '<br>' )
-        .ariaLabel('Lucky day')
-        .targetEvent(null)
-        .ok('Sí, estoy seguro')
-        .cancel('Cancelar');
-      $mdDialog.show(confirm).then(function() {
-        Lote.delete({id:ev},$scope.loteSeleccionado2,function(data){
-          console.log(data);
-        });
-        $scope.lotes.splice($scope.lotes.indexOf($scope.loteSeleccionado2),1);
-        $scope.selectionLote = [];
-        $scope.updateAnimal();
-      }, function() {
-        $scope.status = 'Se eliminó correctamente.';
-
-      });
-    };
-
-    $scope.cargarDetalle = function(animalId){
-      var animalSeleccionado = $filter('filter')($scope.animales, { id: animalId }, true)[0];
-      $scope.cargar(animalSeleccionado);
-    };
-
-    $scope.cargarDetalleRecategorizar = function (){
-      var lista = [];
-      angular.forEach($scope.selection, function (animal){
-        var animalSeleccionado = $filter('filter')($scope.animales, { id: animal }, true)[0];
-        lista.push(animalSeleccionado);
-      });
-      $scope.cargarRecategorizar(lista);
-    };
-
-    $scope.cargarDetalleMortandad = function (){
-      var lista = [];
-      angular.forEach($scope.selection, function (animal){
-        var animalSeleccionado = $filter('filter')($scope.animales, { id: animal }, true)[0];
-        lista.push(animalSeleccionado);
-      });
-      $scope.cargarMortandad(lista);
-    };
-
-    $scope.cargarDetalleLote = function(loteId){
-      var loteSeleccionado = $filter('filter')($scope.lotes, { id: parseInt(loteId)  }, true)[0];
-
-      $scope.cargarLote(loteSeleccionado);
-    };
-
-    $scope.cargarDetalleMudar = function (){
-      var lista = [];
-      angular.forEach($scope.selection, function (animal){
-        var animalSeleccionado = $filter('filter')($scope.animales, { id: animal }, true)[0];
-        lista.push(animalSeleccionado);
-      });
-      $scope.cargarMudar(lista);
-    };
-
-    $scope.cargar = function(animalSeleccionado) {
+    $scope.editAnimal = function(animalSeleccionado) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_animal.html',
         targetEvent: null,
@@ -242,16 +49,16 @@ angular.module('frontendmuApp')
           $scope.razas = [];
           $scope.lotes = [];
 
-          $scope.lotes = Lote.query({establecimiento:obj.establecimiento.id},function(response){
-            $scope.lotes = response;
+          $scope.lotes = Lote.get({establecimiento:obj.establecimiento.id},function(response){
+            $scope.lotes = response.results;
           });
 
-          $scope.categorias = Categoria.query(function(response){
-            $scope.categorias = response;
+          $scope.categorias = Categoria.get(function(response){
+            $scope.categorias = response.results;
           });
 
-          $scope.razas = Raza.query(function(response){
-            $scope.razas = response;
+          $scope.razas = Raza.get(function(response){
+            $scope.razas = response.results;
           });
 
           $scope.newAnimal = {};
@@ -271,12 +78,10 @@ angular.module('frontendmuApp')
           $scope.answer = function (answer) {
             if (answer === 'guardar'){
               if (animalSeleccionado){
-                console.log($scope.newAnimal);
                 Animal.update({id:$scope.newAnimal.id},$scope.newAnimal,function(data){
                   $scope.newAnimal = data;
                   $mdDialog.hide($scope.newAnimal);
                 });
-
               }else {
                 $scope.newAnimal.estado = "V";
                 $scope.newAnimal.establecimiento = obj.establecimiento.id;
@@ -295,36 +100,379 @@ angular.module('frontendmuApp')
         }]
       })
         .then(function(nuevo) {
-          console.log(nuevo);
           if (nuevo !== true) {
-            var prueba = $filter('filter')($scope.animales, { id: nuevo.id }, true)[0];
+            var prueba = $filter('filter')($scope.animales.results, function (d) {return d.id.toString() === nuevo.id.toString();})[0];
             if (prueba){
               if (prueba.id === nuevo.id) {
                 angular.extend(prueba, nuevo);
               }else{
-                $scope.animales.unshift(nuevo);
+                $scope.animales.results.unshift(nuevo);
               }
             }else{
-              $scope.animales.unshift(nuevo);
+              $scope.animales.results.unshift(nuevo);
             }
 
           }
-          $scope.updateLote();
+          $scope.getLotes();
         }, function() {
           $scope.alert = 'You cancelled the dialog.';
         });
     };
 
-    $scope.cargarLote = function(loteSeleccionado) {
+    $scope.deleteAnimal = function(animalSeleccionado) {
+      // Appending dialog to document.body to cover sidenav in docs app]
+
+      var confirm = $mdDialog.confirm().title('Estas seguro de que quieres eliminar?')
+        .textContent(animalSeleccionado.categoria_nombre + '- Caravana: '+animalSeleccionado.caravana + ' - Raza: ' + animalSeleccionado.raza_nombre + ' - Carimbo: ' + animalSeleccionado.carimbo)
+        .ariaLabel('Eliminar Animal')
+        .targetEvent(null)
+        .ok('Sí, estoy seguro')
+        .cancel('Cancelar');
+      $mdDialog.show(confirm).then(function() {
+        Animal.delete({id:animalSeleccionado.id},animalSeleccionado,function(data){
+          $scope.getLotes();
+          var prueba = $filter('filter')($scope.animales.results, function (d) {return d.id.toString() === animalSeleccionado.id.toString();})[0];
+          $scope.animales.results.shift(prueba);
+        });
+      }, function() {
+        console.log('Cancelaste');
+      });
+    };
+
+    $scope.deleteListaAnimal = function(lista) {
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_eliminar.html',
+        targetEvent: null,
+        controller: ['$scope','$mdDialog','Animal','$filter' ,function ($scope, $mdDialog, Animal,$filter) {
+          $scope.lista = lista;
+          $scope.hide = function () {
+            $mdDialog.hide();
+          };
+
+          $scope.cancel = function () {
+            $mdDialog.cancel();
+          };
+
+          $scope.answer = function (answer) {
+            if (answer === 'guardar'){
+              if (lista.length >= 1){
+                angular.forEach(lista, function(animalSeleccionado){
+                  Animal.delete({id:animalSeleccionado.id},animalSeleccionado,function(data){
+                    console.log("eliminado: " + data.caravana);
+                  });
+                });
+              }
+              $mdDialog.hide(lista);
+            }else{
+              $mdDialog.hide(lista);
+            }
+          };
+
+        }]
+      })
+        .then(function(lista) {
+          if (lista !== true) {
+            $scope.getAnimales();
+            $scope.getLotes();
+          }
+        }, function() {
+          $scope.alert = 'You cancelled the dialog.';
+        });
+    };
+
+
+    $scope.mudarAnimales = function(lista) {
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_mudar.html',
+        targetEvent: null,
+        controller: ['$scope','$mdDialog','Lote','Animal','$filter' ,function ($scope, $mdDialog, Lote, Animal, $filter) {
+          $scope.lotes =[];
+          $scope.lotes = Lote.get({establecimiento:obj.establecimiento.id},function(response){
+            $scope.lotes = response.results;
+          });
+
+          $scope.form = {};
+
+
+          $scope.hide = function () {
+            $mdDialog.hide();
+          };
+
+          $scope.cancel = function () {
+            $mdDialog.cancel();
+          };
+
+          $scope.answer = function (answer) {
+            if (answer === 'guardar'){
+              if (lista.length >= 1){
+                angular.forEach(lista, function(animalSeleccionado){
+                  animalSeleccionado.lote = $scope.form.lote;
+                  Animal.update({id:animalSeleccionado.id},animalSeleccionado,function(data){
+                    console.log(data);
+                  });
+                  var lote_nombre = $filter('filter')($scope.lotes, function (d) {return d.id.toString() === $scope.form.lote.toString();})[0];
+                  animalSeleccionado.lote_nombre = lote_nombre.nombre;
+                });
+                $mdDialog.hide(lista);
+              }
+            }
+          };
+
+        }]
+      })
+        .then(function(lista) {
+          if (lista !== true) {
+            $scope.getLotes();
+            angular.forEach(lista,function(nuevo){
+              var prueba = $filter('filter')($scope.animales.results, function (d) {return d.id.toString() === nuevo.id.toString();})[0];
+              if (prueba){
+                if (prueba.id === nuevo.id) {
+                  angular.extend(prueba, nuevo);
+                }
+              }
+            });
+
+
+          }
+        }, function() {
+          $scope.alert = 'You cancelled the dialog.';
+        });
+    };
+
+    $scope.recategorizar = function(lista) {
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_recategorizar.html',
+        targetEvent: null,
+        controller: ['$scope','$mdDialog','Categoria','Animal','$filter' ,function ($scope, $mdDialog, Categoria, Animal,$filter) {
+          $scope.categorias =[];
+
+          $scope.categorias = Categoria.get(function(response){
+            $scope.categorias = response.results;
+          });
+
+          $scope.form = {};
+
+
+          $scope.hide = function () {
+            $mdDialog.hide();
+          };
+
+          $scope.cancel = function () {
+            $mdDialog.cancel();
+          };
+
+          $scope.answer = function (answer) {
+            if (answer === 'guardar'){
+              if (lista.length >= 1){
+                angular.forEach(lista, function(animalSeleccionado){
+
+                  animalSeleccionado.categoria = $scope.form.categoria;
+                  Animal.update({id:animalSeleccionado.id},animalSeleccionado,function(data){
+                    console.log(data);
+                  });
+                  var id = $scope.form.categoria;
+                  var categoria_nombre = $filter('filter')($scope.categorias,function (d) {return d.id.toString() === id.toString();})[0];
+                  animalSeleccionado.categoria_nombre = categoria_nombre.nombre;
+                });
+                $mdDialog.hide(lista);
+              }
+            }
+          };
+
+        }]
+      })
+        .then(function(lista) {
+          if (lista !== true) {
+            angular.forEach(lista,function(nuevo){
+              var prueba = $filter('filter')($scope.animales.results, function (d) {return d.id.toString() === nuevo.id.toString();})[0];
+              if (prueba){
+                if (prueba.id === nuevo.id) {
+                  angular.extend(prueba, nuevo);
+                }
+              }
+            });
+
+          }
+        }, function() {
+          $scope.alert = 'You cancelled the dialog.';
+        });
+    };
+
+    $scope.agruparEnLote = function(lista) {
 
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_lote.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','Potrero' ,function ($scope, $mdDialog, Potrero) {
+        controller: ['$scope','$mdDialog','Potrero','ServerData' ,function ($scope, $mdDialog, Potrero,ServerData) {
           $scope.potreros =[];
 
-          $scope.potreros = Potrero.query({establecimiento:obj.establecimiento.id},function(response){
-            $scope.potreros = response;
+          $scope.potreros = Potrero.get({establecimiento:ServerData.establecimiento.id,lote:''},function(response){
+            $scope.potreros = response.results;
+          });
+
+          $scope.newLote = {};
+          $scope.newLote.potrero = "";
+          $scope.newLote.cantidad = 0;
+          $scope.newLote.peso_promedio = 0;
+          $scope.newLote.establecimiento = ServerData.establecimiento.id;
+          $scope.newLote.animales = [];
+
+          $scope.hide = function () {
+            $mdDialog.hide();
+          };
+
+          $scope.cancel = function () {
+            $mdDialog.cancel();
+          };
+
+          $scope.answer = function (answer) {
+            if (answer === 'guardar'){
+              var nuevo = new Lote($scope.newLote);
+
+              nuevo.$save(function (result) {
+                if (lista.length >= 1){
+                  angular.forEach(lista, function(animalSeleccionado){
+                    animalSeleccionado.lote = nuevo.id;
+                    Animal.update({id:animalSeleccionado.id},animalSeleccionado,function(data){
+                      console.log(data);
+                    });
+                    animalSeleccionado.lote_nombre = nuevo.nombre;
+                  });
+                  $mdDialog.hide(lista);
+                }
+
+              }, function (error) {
+                console.log(error);
+              });
+              $mdDialog.hide(lista);
+
+            }
+          };
+
+        }]
+      })
+        .then(function(lista) {
+          if (lista !== true) {
+            $scope.getLotes();
+            angular.forEach(lista,function(nuevo){
+              var prueba = $filter('filter')($scope.animales.results, function (d) {return d.id.toString() === nuevo.id.toString();})[0];
+              if (prueba){
+                if (prueba.id === nuevo.id) {
+                  angular.extend(prueba, nuevo);
+                }
+              }
+            });
+
+          }
+
+        }, function() {
+          $scope.alert = 'You cancelled the dialog.';
+        });
+    };
+
+    $scope.mortandad = function(lista) {
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_mortandad.html',
+        targetEvent: null,
+        controller: ['$scope','$mdDialog','Animal','Mortandad','ServerData' ,function ($scope, $mdDialog, Animal, Mortandad,ServerData) {
+
+          $scope.form = {};
+
+          $scope.hide = function () {
+            $mdDialog.hide();
+          };
+
+          $scope.cancel = function () {
+            $mdDialog.cancel();
+          };
+
+          $scope.answer = function (answer) {
+            if (answer === 'guardar'){
+              if (lista.length >= 1){
+                var listaId = []
+                angular.forEach(lista, function(animalSeleccionado){
+                  listaId.push(animalSeleccionado.id);
+                  animalSeleccionado.estado = 'M';
+                  animalSeleccionado.lote = null;
+                  Animal.update({id:animalSeleccionado.id},animalSeleccionado,function(data){
+                  });
+                });
+                var nuevo = new Mortandad($scope.form);
+                nuevo.establecimiento = ServerData.establecimiento.id;
+                nuevo.animales = [];
+                nuevo.$save(function (result) {
+                  result.animales = listaId;
+                  Mortandad.update({id:result.id},result,function(data){
+                    console.log(data);
+                  });
+                }, function (error) {
+                  console.log(error);
+                });
+
+                $mdDialog.hide(lista);
+              }
+            }
+          };
+
+        }]
+      })
+        .then(function(lista) {
+          if (lista !== true) {
+            $scope.getAnimales();
+          }
+        }, function() {
+          $scope.alert = 'You cancelled the dialog.';
+        });
+    };
+
+    //-----------------------------------LOTES---------------------------------------------------
+    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id,ordering: 'nombre',page: 1};
+    $scope.selectedLotes = [];
+
+    function successLotes(lotes) {
+      $scope.lotes = lotes;
+    }
+
+    $scope.getLotes = function () {
+      $scope.promiseLotes = Lote.get($scope.queryLotes,successLotes).$promise;
+      $scope.selectedLotes = [];
+    };
+
+    $scope.getLotes();
+
+    $scope.deleteLote = function(lote) {
+      // Appending dialog to document.body to cover sidenav in docs app
+      var confirm = $mdDialog.confirm()
+        .title('Estas seguro de que quieres eliminar?')
+        .content('Lote: '+lote.nombre + ' - ' +
+        'Potrero: ' + lote.potrero_nombre + ' - ' +
+        'Cantidad de animales: ' + lote.animales.length )
+        .ariaLabel('Lucky day')
+        .targetEvent(null)
+        .ok('Sí, estoy seguro')
+        .cancel('Cancelar');
+      $mdDialog.show(confirm).then(function() {
+        Lote.delete({id:lote.id},lote,function(data){
+          console.log(data);
+        });
+        $scope.lotes.results.splice($scope.lotes.results.indexOf(lote),1);
+        $scope.selectedLotes = []
+      }, function() {
+        $scope.status = 'Se eliminó correctamente.';
+
+      });
+    };
+
+    $scope.editLote = function(loteSeleccionado) {
+
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_lote.html',
+        targetEvent: null,
+        controller: ['$scope','$mdDialog','Potrero','ServerData' ,function ($scope, $mdDialog, Potrero,ServerData) {
+          $scope.potreros =[];
+
+          $scope.potreros = Potrero.get({establecimiento:ServerData.establecimiento.id,lote:""},function(response){
+            $scope.potreros = response.results;
           });
 
           $scope.newLote = {};
@@ -371,15 +519,15 @@ angular.module('frontendmuApp')
       })
         .then(function(nuevo) {
           if (nuevo !== true) {
-            var prueba = $filter('filter')($scope.lotes, { id: nuevo.id }, true)[0];
+            var prueba = $filter('filter')($scope.lotes.results,function (d) {return d.id.toString() === nuevo.id.toString();})[0];
             if (prueba){
               if (prueba.id === nuevo.id) {
                 angular.extend(prueba, nuevo);
               }else{
-                $scope.lotes.unshift(nuevo);
+                $scope.lotes.results.unshift(nuevo);
               }
             }else{
-              $scope.lotes.unshift(nuevo);
+              $scope.lotes.results.unshift(nuevo);
             }
 
           }
@@ -388,24 +536,75 @@ angular.module('frontendmuApp')
         });
     };
 
-    $scope.agruparEnLote = function(animales) {
+
+    //------------------------------------MANEJO DE ARCHIVOS---------------
+    var X = XLSX;
+    $scope.archivo = {};
+    $scope.cargarArchivo = function(result) {
 
       $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_lote.html',
+        templateUrl: 'views/dialogs/dialogo_archivo.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','Potrero' ,function ($scope, $mdDialog, Potrero) {
-          $scope.potreros =[];
+        controller: ['$scope','$mdDialog','Animal','ServerData' ,function ($scope, $mdDialog, Animal,ServerData) {
 
-          $scope.potreros = Potrero.query({establecimiento:obj.establecimiento.id},function(response){
-            $scope.potreros = response;
+
+          $scope.options = {
+            pageSelect: true
+          };
+          $scope.logPagination = function (page, limit) {
+            console.log('page: ', page);
+            console.log('limit: ', limit);
+          }
+
+          $scope.query = {
+            limit: 20,
+            page: 1
+          };
+          $scope.archivo = result;
+          var categorias = {'1':'Toro','2':'Vaca','3':'Desmamante','4':'Ternero'};
+          var razas = {'1':'Brahman','2':'Angus','3':'Brangus','4':'Nelore'};
+
+          var rename = function (obj,oldName, newName) {
+            // Do nothing if the names are the same
+            if (oldName == newName) {
+              return obj;
+            }
+            // Check for the old property name to avoid a ReferenceError in strict mode.
+            if (obj.hasOwnProperty(oldName)) {
+              obj[newName] = obj[oldName];
+              delete obj[oldName];
+            }
+            return obj;
+          };
+          angular.forEach($scope.archivo, function(animal){
+            animal = rename(animal,'Caravana','caravana');
+            animal = rename(animal,'Carimbo','carimbo');
+            animal = rename(animal,'Categoria','categoria');
+            animal = rename(animal,'Raza','raza');
+            animal = rename(animal,'Peso especifico','peso_especifico');
+            animal = rename(animal,'Estado sanitario','estado_sanitario');
+            animal.estado = 'V';
+            animal.establecimiento = ServerData.establecimiento.id;
+            if (animal.estado_sanitario.toString() === 'En fecha'){
+              animal.estado_sanitario = 'E'
+              animal.estado_sanitario_display = 'En fecha'
+            }else if (animal.estado_sanitario.toString() === 'No esta en fecha'){
+              animal.estado_sanitario = 'N'
+              animal.estado_sanitario_display = 'No esta en fecha'
+            }else if (animal.estado_sanitario.toString() === 'Desconocido'){
+              animal.estado_sanitario = 'D'
+              animal.estado_sanitario_display = 'Desconocido'
+            }else {
+              animal.estado_sanitario = 'E'
+              animal.estado_sanitario_display = 'En fecha'
+            }
+            animal.raza_nombre = razas[animal.raza];
+            animal.categoria_nombre = categorias[animal.categoria];
+
+
+
           });
 
-          $scope.newLote = {};
-          $scope.newLote.potrero = "";
-          $scope.newLote.cantidad = 0;
-          $scope.newLote.peso_promedio = 0;
-          $scope.newLote.establecimiento = obj.establecimiento.id;
-          $scope.newLote.animales = [];
 
           $scope.hide = function () {
             $mdDialog.hide();
@@ -417,235 +616,64 @@ angular.module('frontendmuApp')
 
           $scope.answer = function (answer) {
             if (answer === 'guardar'){
-                var nuevo = new Lote($scope.newLote);
+              angular.forEach($scope.archivo, function(animal){
+                var nuevo = new Animal(animal);
+                console.log(nuevo);
 
-                nuevo.$save(function (result) {
-                  result.animales = animales;
-                  console.log($scope.selection);
-                  Lote.update({id:result.id},result,function(data){
-                    console.log(data);
-                  });
+                nuevo.$save(function () {
 
                 }, function (error) {
                   console.log(error);
                 });
-                $mdDialog.hide(nuevo);
+
+
+              });
+              $mdDialog.hide();
 
             }
           };
 
         }]
       })
-        .then(function(nuevo) {
-          if (nuevo !== true) {
-            var prueba = $filter('filter')($scope.lotes, { id: nuevo.id }, true)[0];
-            if (prueba){
-              if (prueba.id === nuevo.id) {
-                angular.extend(prueba, nuevo);
-              }else{
-                $scope.lotes.unshift(nuevo);
-              }
-            }else{
-              $scope.lotes.unshift(nuevo);
-            }
-
-          }
-          $scope.updateLote();
-          $scope.updateAnimal();
-          $scope.selection = [];
-          $scope.verificarMensaje();
+        .then(function() {
+          $scope.getAnimales();
         }, function() {
           $scope.alert = 'You cancelled the dialog.';
         });
     };
 
-    $scope.cargarMortandad = function(lista) {
-      $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_mortandad.html',
-        targetEvent: null,
-        controller: ['$scope','$mdDialog','Animal','Mortandad','ServerData' ,function ($scope, $mdDialog, Animal, Mortandad,ServerData) {
+    var to_json = function (workbook) {
+      var result = {};
+      var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[workbook.SheetNames[0]]);
+      if(roa.length > 0){
+        result = roa;
+      }
+      $scope.cargarArchivo(result);
+      $scope.model = {};
+    }
 
-          $scope.form = {};
+    $scope.handleFile = function(e) {
+      console.log(e);
 
-          $scope.hide = function () {
-            $mdDialog.hide();
-          };
+      var files = [e.file];
+      var i,f;
+      for (i = 0, f = files[i]; i != files.length; ++i) {
+        var reader = new FileReader();
+        var name = f.name;
+        reader.onload = function(e) {
+          var data = e.target.result;
 
-          $scope.cancel = function () {
-            $mdDialog.cancel();
-          };
+          var workbook = X.read(data, {type: 'binary'});
+          console.log('ok');
+          to_json(workbook);
 
-          $scope.answer = function (answer) {
-            if (answer === 'guardar'){
-              if (lista.length >= 1){
-                var listaId = []
-                angular.forEach(lista, function(animalSeleccionado){
-                  listaId.push(animalSeleccionado.id);
-                  animalSeleccionado.estado = 'M';
-                  Animal.update({id:animalSeleccionado.id},animalSeleccionado,function(data){
-                  });
-                });
-                var nuevo = new Mortandad($scope.form);
-                nuevo.establecimiento = ServerData.establecimiento.id;
-                nuevo.animales = [];
-                nuevo.$save(function (result) {
-                  result.animales = listaId;
-                  Mortandad.update({id:result.id},result,function(data){
-                    console.log(data);
-                  });
-                }, function (error) {
-                  console.log(error);
-                });
+          /* DO SOMETHING WITH workbook HERE */
 
-                $mdDialog.hide(lista);
-              }
-            }
-          };
+        };
+        reader.readAsBinaryString(f);
+      }
+    }
 
-        }]
-      })
-        .then(function(lista) {
-          if (lista !== true) {
-            angular.forEach(lista,function(nuevo){
-              var prueba = $filter('filter')($scope.animales, { id: nuevo.id }, true)[0];
-              if (prueba){
-                if (prueba.id === nuevo.id) {
-                  angular.extend(prueba, nuevo);
-                }
-              }
-            });
-
-          }
-        }, function() {
-          $scope.alert = 'You cancelled the dialog.';
-        });
-    };
-
-    $scope.cargarRecategorizar = function(lista) {
-      $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_recategorizar.html',
-        targetEvent: null,
-        controller: ['$scope','$mdDialog','Categoria','Animal','$filter' ,function ($scope, $mdDialog, Categoria, Animal,$filter) {
-          $scope.categorias =[];
-
-          $scope.categorias = Categoria.query(function(response){
-            $scope.categorias = response;
-          });
-
-          $scope.form = {};
-
-
-          $scope.hide = function () {
-            $mdDialog.hide();
-          };
-
-          $scope.cancel = function () {
-            $mdDialog.cancel();
-          };
-
-          $scope.answer = function (answer) {
-            if (answer === 'guardar'){
-              if (lista.length >= 1){
-                angular.forEach(lista, function(animalSeleccionado){
-
-                  animalSeleccionado.categoria = $scope.form.categoria;
-                  Animal.update({id:animalSeleccionado.id},animalSeleccionado,function(data){
-                    console.log(data);
-                  });
-                  var id = $scope.form.categoria;
-                  console.log(id);
-                  console.log($scope.categorias);
-                  var categoria_nombre = $filter('filter')($scope.categorias, { id: id})[0];
-                  console.log(categoria_nombre);
-                  animalSeleccionado.categoria_nombre = categoria_nombre.nombre;
-                });
-                $mdDialog.hide(lista);
-              }
-            }
-          };
-
-        }]
-      })
-        .then(function(lista) {
-          if (lista !== true) {
-            angular.forEach(lista,function(nuevo){
-              var prueba = $filter('filter')($scope.animales, { id: nuevo.id }, true)[0];
-              console.log(prueba);
-              if (prueba){
-                if (prueba.id === nuevo.id) {
-                  angular.extend(prueba, nuevo);
-                }
-              }
-            });
-
-          }
-        }, function() {
-          $scope.alert = 'You cancelled the dialog.';
-        });
-    };
-
-    $scope.cargarMudar = function(lista) {
-      $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_mudar.html',
-        targetEvent: null,
-        controller: ['$scope','$mdDialog','Lote','Animal','$filter' ,function ($scope, $mdDialog, Lote, Animal, $filter) {
-          $scope.lotes =[];
-
-          $scope.lotes = Lote.query({establecimiento:obj.establecimiento.id},function(response){
-            $scope.lotes = response;
-          });
-
-          $scope.form = {};
-
-
-          $scope.hide = function () {
-            $mdDialog.hide();
-          };
-
-          $scope.cancel = function () {
-            $mdDialog.cancel();
-          };
-
-          $scope.answer = function (answer) {
-            if (answer === 'guardar'){
-              if (lista.length >= 1){
-                angular.forEach(lista, function(animalSeleccionado){
-                  animalSeleccionado.lote = $scope.form.lote;
-                  Animal.update({id:animalSeleccionado.id},animalSeleccionado,function(data){
-                    console.log(data);
-                  });
-                  var id = $scope.form.lote;
-                  console.log(id);
-                  console.log($scope.lotes);
-                  var lote = $filter('filter')($scope.lotes, { id: id})[0];
-                  console.log(lote);
-                  animalSeleccionado.lote_nombre = lote.nombre;
-                });
-                $mdDialog.hide(lista);
-              }
-            }
-          };
-
-        }]
-      })
-        .then(function(lista) {
-          if (lista !== true) {
-            angular.forEach(lista,function(nuevo){
-              var prueba = $filter('filter')($scope.animales, { id: nuevo.id }, true)[0];
-              if (prueba){
-                if (prueba.id === nuevo.id) {
-                  nuevo.selected = true;
-                  angular.extend(prueba, nuevo);
-                }
-              }
-            });
-            $scope.updateLote();
-
-          }
-        }, function() {
-          $scope.alert = 'You cancelled the dialog.';
-        });
-    };
 
 
   });

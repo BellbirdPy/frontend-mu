@@ -1,206 +1,281 @@
-<div layout="row" layout-sm="column" ng-hide="cargandoAnimal && cargandoLote" layout-align="space-around">
-  <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
-</div>
-<div layout="column" ng-show="cargandoAnimal && cargandoLote">
-  <div class="md-padding green-text" layout="row">
-    <md-button href="#/inventario">Inventario</md-button><md-button href="#/servicios">Servicios</md-button>
+<div layout="column">
+  <div >
+    <h1 class="md-display-1 green-text">Inventario</h1>
   </div>
+  <!-- LOTES -->
   <section>
+    <div layout-padding>
+    <h2 class="md-headline green-text">Lotes</h2>
+    </div>
     <md-card>
-      <md-toolbar class="green">
-        <div class="md-toolbar-tools white-text">
-          <h2 class="md-title ">Lotes</h2>
-          <span flex></span>
-          <md-button class="md-icon-button" ng-show="selectionLote.length == 1" ng-click="cargarDetalleLote(selectionLote[0])" aria-label="edit-lote">
-            <md-icon><i class="material-icons white-text">edit</i> </md-icon>
-          </md-button>
-          <md-button class="md-icon-button" ng-show="selectionLote.length == 1" ng-click="deleteLote(selectionLote[0])"  aria-label="delete">
-            <md-icon><i style="color:white;" class="material-icons">delete</i> </md-icon>
-          </md-button>
-          <md-menu md-position-mode="target-right target" >
-
-            <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-              <md-icon><i class="material-icons white-text">more_vert</i> </md-icon>
-            </md-button>
-
-            <md-menu-content width="4" >
-              <md-menu-item ng-hide="true">
-                <md-button>
-                  <p>Nada</p>
-                </md-button>
-              </md-menu-item>
-              <md-menu-item>
-                <md-button ng-click="cargarLote()">
-                  <p>Agregar</p>
-                </md-button>
-              </md-menu-item>
-              <md-divider ng-show="selectionLote.length == 1"></md-divider>
-              <md-menu-item ng-show="selectionLote.length == 1">
-                <md-button ng-click="cargarDetalleLote(selectionLote[0])">
-                  <p>Modificar</p>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-        </div>
-      </md-toolbar>
-      <div layout-wrap layout-padding layout="row">
-        <div class="hoverCard" flex="25" flex-sm="50" flex-md="50" ng-repeat="lote in lotes">
-          <md-card ng-click="changeLote(lote);" class="grey lighten-3">
-            <md-card-title>
-              <md-card-title-text>
-                <span class="md-headline">{{lote.nombre}}</span>
-                <span class="md-subhead">Potrero: {{lote.potrero_nombre}}<br>
-                  Peso promedio: {{lote.peso_promedio}} Kg.<br>
-                  Cantidad: {{lote.animales.length}}
-                </span>
-              </md-card-title-text>
-              </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-              <md-checkbox aria-label="lote" disabled ng-model="lote.selected" ></md-checkbox>
-            </md-card-actions>
-            </md-card>
-        </div>
-        <p ng-if="lotes.length <= 0" class="danger">No tiene ningún lote guardado.</p>
-      </div>
-    </md-card>
-  </section>
-  <section>
-    <md-card layout="column">
-      <md-toolbar class="">
-        <div class="md-toolbar-tools white-text">
-          <h2 class="md-title">Animales</h2>
-
-        </div>
-      </md-toolbar>
-      <div layout="row" layout-padding>
-        <md-input-container flex="50">
-          <label>Búsqueda</label>
-          <input ng-model="searchAnimal" >
-        </md-input-container>
-      </div>
-
-      <md-toolbar class="white md-subheader-wrapper" ng-class="{'lime lighten-3': selection.length}">
-
+      <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedLotes.length">
         <div class="md-toolbar-tools">
-          <md-button  ng-hide="selection.length" ng-click="cargar()" class="lime-text">Agregar</md-button>
-          <h2 class="lime-text text-darken-4">
-            <span ng-show="selection.length >= 1">{{selectionCant}} {{mensaje}} </span>
-          </h2>
-          <span flex></span>
-          <md-button class="md-icon-button" ng-show="selection.length == 1" ng-click="cargarDetalle(selection[0])" aria-label="Editar Animal">
-            <md-icon><i class="material-icons">edit</i> </md-icon>
-          </md-button>
-          <md-button class="md-icon-button" ng-show="selection.length == 1" ng-click="deleteAnimal(selection[0])"  aria-label="Delete Animal">
-            <md-icon><i class="material-icons">delete</i> </md-icon>
-          </md-button>
+          <span>Lotes</span>
           <md-menu md-position-mode="target-right target" >
             <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
               <md-icon><i class="material-icons">more_vert</i> </md-icon>
             </md-button>
             <md-menu-content width="4" >
-              <md-menu-item ng-hide="true">
-                <md-button>
-                  <p>Nada</p>
-                </md-button>
-              </md-menu-item>
-              <md-menu-item ng-hide="selection.length">
-                <md-button ng-click="cargar()">
+              <md-menu-item>
+                <md-button ng-click="editLote()">
                   <p>Agregar</p>
                 </md-button>
               </md-menu-item>
-              <md-menu-item ng-show="selection.length">
-                <md-button ng-click="agruparEnLote(selection)">
+            </md-menu-content>
+          </md-menu>
+        </div>
+      </md-toolbar>
+      <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedLotes.length">
+        <div class="md-toolbar-tools">
+          <span>[[selectedLotes.length]] [[selectedLotes.length > 1 ? 'lotes seleccionados' : 'lote seleccionado']]</span>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-show="selectedLotes.length == 1" ng-click="editLote(selectedLotes[0])" aria-label="Editar Lote">
+            <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+          </md-button>
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedLotes.length == 1" ng-click="deleteLote(selectedLotes[0])"  aria-label="Delete Animal">
+            <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+          </md-button>
+        </div>
+
+      </md-toolbar>
+
+      <!-- exact table from live demo -->
+      <md-table-container>
+        <table md-table md-row-select ng-model="selectedLotes" md-progress="promiseLotes">
+          <thead md-head md-order="queryLotes.ordering" md-on-reorder="getLotes">
+          <tr md-row md-select-id="id">
+            <th md-column md-order-by="nombre"><span>Nombre</span></th>
+            <th md-column md-order-by="potrero__nombre"><span>Potrero</span></th>
+            <th md-column md-numeric md-order-by="peso_promedio">Peso promedio (Kg.)</th>
+            <th md-column md-numeric md-order-by="cantidad">Cantidad</th>
+            <th md-column>En servicio</th>
+            <th md-column>Dietas Activas</th>
+          </tr>
+          </thead>
+          <tbody md-body>
+          <tr md-row md-select="lote" md-select-id="id" md-auto-select ng-repeat="lote in lotes.results">
+            <td md-cell>[[lote.nombre]]</td>
+            <td md-cell>[[lote.potrero_nombre]]</td>
+            <td md-cell>[[lote.peso_promedio]]</td>
+            <td md-cell>[[lote.animales.length]]</td>
+            <td md-cell>No</td>
+            <td md-cell>Ninguna</td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryLotes.page" md-total="[[lotes.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getLotes" md-page-select></md-table-pagination>
+    </md-card>
+  </section>
+  <!-- ANIMALES -->
+  <div layout="row" layout-sm="column" layout-align="space-around" ng-show="onLoadExcel">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+  <section>
+    <div layout-padding>
+    <h2 class="md-headline green-text">Animales</h2>
+    </div>
+    <md-card layout-padding>
+      <div layout="row">
+      <md-input-container class="md-block" flex>
+          <label>Lote</label>
+          <md-select ng-model="queryAnimales.lote" aria-label="Lote" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="lote in lotes.results" value=[[lote.id]]>
+              [[lote.nombre]]
+            </md-option>
+              </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Categoria</label>
+          <md-select ng-model="queryAnimales.categoria" aria-label="Categoria" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="cat in categorias.results" value=[[cat.id]]>
+              [[cat.nombre]]
+            </md-option>
+              </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Raza</label>
+          <md-select ng-model="queryAnimales.raza" aria-label="Raza" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="raza in razas.results" value=[[raza.id]]>
+              [[raza.nombre]]
+            </md-option>
+              </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Carimbo</label>
+          <md-select ng-model="queryAnimales.carimbo" aria-label="Carimbo" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="carimbo in [0,1,2,3,4,5,6,7,8,9]" value=[[carimbo]]>
+              [[carimbo]]
+            </md-option>
+              </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Estado Sanitario</label>
+          <md-select ng-model="queryAnimales.estado_sanitario" aria-label="Estado Sanitario" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="estado in estados_sanitarios" value=[[estado.c]]>
+              [[estado.display]]
+            </md-option>
+              </md-select>
+        </md-input-container>
+        </div>
+    </md-card>
+    <md-card>
+      <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedAnimales.length">
+        <div class="md-toolbar-tools">
+          <span>Animales</span>
+          <span flex></span>
+          <md-button>
+            <label for="file">
+              <md-icon><i class="material-icons">file_upload</i> </md-icon>Importar
+            </label>
+          </md-button>
+          <input id="file" type="file" ng-model="model.file" change="handleFile(model)" hidden="true" />
+          <md-menu md-position-mode="target-right target" >
+            <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
+              <md-icon><i class="material-icons">more_vert</i> </md-icon>
+            </md-button>
+            <md-menu-content width="4" >
+              <md-menu-item ng-hide="selection.length">
+                <md-button ng-click="editAnimal()">
+                  <p>Agregar</p>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </div>
+      </md-toolbar>
+      <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedAnimales.length">
+        <div class="md-toolbar-tools">
+          <span>[[selectedAnimales.length]] [[selectedAnimales.length > 1 ? 'animales seleccionados' : 'animal seleccionado']]</span>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-show="selectedAnimales.length == 1" ng-click="editAnimal(selectedAnimales[0])" aria-label="Editar Animal">
+            <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+          </md-button>
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedAnimales.length == 1" ng-click="deleteAnimal(selectedAnimales[0])"  aria-label="Delete Animal">
+            <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+          </md-button>
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedAnimales.length > 1" ng-click="deleteListaAnimal(selectedAnimales)"  aria-label="Delete Animal">
+            <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+          </md-button>
+          <md-menu md-position-mode="target-right target" >
+            <md-button class="md-icon-button green-text text-darken-4" aria-label="More" ng-click="$mdOpenMenu($event)">
+              <md-icon><i class="material-icons green-text text-darken-4">more_vert</i> </md-icon>
+            </md-button>
+            <md-menu-content width="4" >
+              <md-menu-item ng-show="selectedAnimales.length">
+                <md-button ng-click="agruparEnLote(selectedAnimales)">
                   <p>Agrupar en Lote nuevo</p>
                 </md-button>
               </md-menu-item>
-              <md-menu-item ng-show="selection.length">
-                <md-button ng-click="cargarDetalleMudar()">
+              <md-menu-item ng-show="selectedAnimales.length">
+                <md-button ng-click="mudarAnimales(selectedAnimales)">
                   <p>Mudar a Lote existente</p>
                 </md-button>
               </md-menu-item>
-              <md-divider ng-show="selection.length"></md-divider>
-              <md-menu-item ng-show="selection.length">
-                <md-button ng-click="cargarDetalleRecategorizar()">
+              <md-divider ng-show="selectedAnimales.length"></md-divider>
+              <md-menu-item ng-show="selectedAnimales.length">
+                <md-button ng-click="recategorizar(selectedAnimales)">
                   <p>Recategorizar</p>
                 </md-button>
               </md-menu-item>
-              <md-divider ng-show="selection.length"></md-divider>
-              <md-menu-item ng-show="selection.length">
-                <md-button ng-click="cargarDetalleMortandad()">
+              <md-divider ng-show="selectedAnimales.length"></md-divider>
+              <md-menu-item ng-show="selectedAnimales.length">
+                <md-button ng-click="mortandad(selectedAnimales)">
                   <p>Declarar Mortandad/Abigeo</p>
                 </md-button>
               </md-menu-item>
             </md-menu-content>
           </md-menu>
-
         </div>
+
       </md-toolbar>
-      <md-content>
-        <table class="table table-responsive centered hoverable" right-click="selectAll()">
-          <thead>
-          <tr>
-            <th>
-              <md-checkbox aria-label="selectAll" ng-model="selectedAll" ng-change="selectAll()" ></md-checkbox>
-            </th>
-            <th>
-              <a ng-click="sortType = 'caravana'; sortReverse = !sortReverse" class="grey-text">
-                Caravana
-                <span ng-show="sortType == 'caravana' && !sortReverse"></span>
-                <span ng-show="sortType == 'caravana' && sortReverse"></span>
-              </a>
-            </th>
-            <th>
-              <a  ng-click="sortType = 'categoria_nombre'; sortReverse = !sortReverse" class="grey-text">
-                Categoria
-                <span ng-show="sortType == 'categoria_nombre' && !sortReverse"></span>
-                <span ng-show="sortType == 'categoria_nombre' && sortReverse"></span>
-              </a>
-            </th>
-            <th>
-              <a ng-click="sortType = 'carimbo'; sortReverse = !sortReverse" class="grey-text">
-                Carimbo
-                <span ng-show="sortType == 'carimbo' && !sortReverse"></span>
-                <span ng-show="sortType == 'carimbo' && sortReverse"></span>
-              </a>
-            </th>
-            <th><a ng-click="sortType = 'raza_nombre'; sortReverse = !sortReverse" class="grey-text">
-              Raza
-              <span ng-show="sortType == 'raza_nombre' && !sortReverse"></span>
-              <span ng-show="sortType == 'raza_nombre' && sortReverse"></span>
-            </a></th>
-            <th><a ng-click="sortType = 'estado_sanitario'; sortReverse = !sortReverse" class="grey-text">
-              Estado Sanitario
-              <span ng-show="sortType == 'estado_sanitario' && !sortReverse"></span>
-              <span ng-show="sortType == 'estado_sanitario' && sortReverse"></span>
-            </a></th>
-            <th><a ng-click="sortType = 'lote_nombre'; sortReverse = !sortReverse" class="grey-text">
-              Lote
-              <span ng-show="sortType == 'lote_nombre' && !sortReverse"></span>
-              <span ng-show="sortType == 'lote_nombre' && sortReverse"></span>
-            </a></th>
+
+      <!-- exact table from live demo -->
+      <md-table-container>
+        <table md-table md-row-select multiple ng-model="selectedAnimales" md-progress="promiseAnimales">
+          <thead md-head md-order="queryAnimales.ordering" md-on-reorder="getAnimales">
+          <tr md-row md-select-id="id">
+            <th md-column md-order-by="lote__nombre">Lote</th>
+            <th md-column md-order-by="categoria__nombre"><span>Categoria</span></th>
+            <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
+            <th md-column md-numeric md-order-by="peso_especifico">Peso específico (Kg.)</th>
+            <th md-column md-order-by="estado_sanitario">Estado Sanitario</th>
+            <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
+            <th md-column md-order-by="raza__nombre">Raza</th>
           </tr>
           </thead>
-          <tbody>
+          <tbody md-body>
+          <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in animales.results">
 
-          <tr ng-repeat="animal in animales | orderBy:sortType:sortReverse | filter:searchAnimal | filter:filterPorLote | filter:filterPorSearch"
-              ng-click="change(animal);$event.stopPropagation();"
-              ng-class="{'cb-active': animal.selected}"
-              ng-class="{'selected':selection.indexOf($index)!=-1}"
-              class="action"
-            >
-            <td><md-checkbox aria-label="select" ng-model="animal.selected" ng-click="toggle(animal.id);$event.stopPropagation();"></md-checkbox></td>
-            <td>{{animal.caravana}}</td>
-            <td>{{animal.categoria_nombre}}</td>
-            <td>{{animal.carimbo}}</td>
-            <td>{{animal.raza_nombre}}</td>
-            <td>{{animal.estado_sanitario_display}}</td>
-            <td>{{animal.lote_nombre || 'No asignado'}} <span style="color: deeppink" ng-show="animal.servicio">(*)</span> </td>
+            <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
+            <td md-cell>[[animal.categoria_nombre]]</td>
+            <td md-cell>[[animal.carimbo]]</td>
+            <td md-cell>[[animal.peso_especifico]]</td>
+            <td md-cell>[[animal.estado_sanitario_display]]</td>
+            <td md-cell>[[animal.caravana]]</td>
+            <td md-cell>[[animal.raza_nombre]]</td>
           </tr>
           </tbody>
         </table>
-      </md-content>
+      </md-table-container>
+      <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryAnimales.page" md-total="[[animales.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getAnimales" md-page-select></md-table-pagination>
     </md-card>
   </section>
+    <!-- MORTANDAD & ABIGEO
+    <section>
+        <div layout-padding>
+            <h2 class="md-headline green-text">Mortandad y Abigeo</h2>
+        </div>
+        <md-card>
+            <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedMortandad.length">
+                <div class="md-toolbar-tools">
+                    <span>Mortandad y Abigeo</span>
+                </div>
+            </md-toolbar>
+            <md-table-container>
+                <table md-table md-progress="promiseMortandad">
+                    <thead md-head md-order="queryMortandad.ordering" md-on-reorder="getMortandad">
+                    <tr md-row>
+                        <th md-column md-order-by="lote__nombre">Lote</th>
+                        <th md-column md-order-by="categoria__nombre"><span>Categoria</span></th>
+                        <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
+                        <th md-column md-numeric md-order-by="peso_especifico">Peso específico (Kg.)</th>
+                        <th md-column md-order-by="estado_sanitario">Estado Sanitario</th>
+                        <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
+                        <th md-column md-order-by="raza__nombre">Raza</th>
+                    </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in animales.results">
+
+                        <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
+                        <td md-cell>[[animal.categoria_nombre]]</td>
+                        <td md-cell>[[animal.carimbo]]</td>
+                        <td md-cell>[[animal.peso_especifico]]</td>
+                        <td md-cell>[[animal.estado_sanitario_display]]</td>
+                        <td md-cell>[[animal.caravana]]</td>
+                        <td md-cell>[[animal.raza_nombre]]</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryAnimales.page" md-total="[[animales.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getAnimales" md-page-select></md-table-pagination>
+        </md-card>
+    </section>-->
 </div>
 

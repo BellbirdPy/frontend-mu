@@ -16,8 +16,8 @@
         <md-input-container >
           <label>Potrero</label>
           <md-select ng-model="newLote.potrero">
-            <md-option ng-repeat="potrero in potreros" value="{{potrero.id}}">
-              {{potrero.nombre}}
+            <md-option ng-repeat="potrero in potreros" value="[[potrero.id]]">
+              [[potrero.nombre]]
             </md-option>
           </md-select>
         </md-input-container>

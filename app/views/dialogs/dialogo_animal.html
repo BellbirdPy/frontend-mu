@@ -17,8 +17,8 @@
         <md-input-container class="md-block">
           <label>Categoria</label>
           <md-select ng-model="newAnimal.categoria">
-            <md-option ng-repeat="cat in categorias" value="{{cat.id}}">
-              {{cat.nombre}}
+            <md-option ng-repeat="cat in categorias" value="[[cat.id]]">
+              [[cat.nombre]]
             </md-option>
           </md-select>
         </md-input-container>
@@ -29,8 +29,8 @@
         <md-input-container class="md-block">
           <label>Raza</label>
           <md-select ng-model="newAnimal.raza">
-            <md-option ng-repeat="raza in razas" value={{raza.id}}>
-              {{raza.nombre}}
+            <md-option ng-repeat="raza in razas" value=[[raza.id]]>
+              [[raza.nombre]]
             </md-option>
         </md-input-container>
         <md-input-container class="md-block">
@@ -49,13 +49,14 @@
         </md-input-container>
         <md-input-container class="md-block">
           <label>Lote</label>
-          <md-select ng-model="newAnimal.lote">
+          <md-select ng-model="newAnimal.lote" aria-label="Lote">
             <md-option value="">
               No asignar
             </md-option>
-            <md-option ng-repeat="lote in lotes" value={{lote.id}}>
-              {{lote.nombre}}
+            <md-option ng-repeat="lote in lotes" value=[[lote.id]]>
+              [[lote.nombre]]
             </md-option>
+              </md-select>
         </md-input-container>
         <md-input-container class="md-block">
           <label>Peso</label>

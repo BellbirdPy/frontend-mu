@@ -13,8 +13,8 @@
         <md-input-container >
           <label>Categoria</label>
           <md-select ng-model="form.categoria">
-            <md-option ng-repeat="categoria in categorias" value={{categoria.id}}>
-              {{categoria.nombre}}
+            <md-option ng-repeat="categoria in categorias" value=[[categoria.id]]>
+              [[categoria.nombre]]
             </md-option>
           </md-select>
         </md-input-container>

@@ -35,6 +35,8 @@ module.exports = function(config) {
       'bower_components/angular-material/angular-material.js',
       'bower_components/moment/moment.js',
       'bower_components/fullcalendar/dist/fullcalendar.js',
+      'bower_components/angular-material-data-table/dist/md-data-table.js',
+      'bower_components/js-xlsx/dist/xlsx.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
