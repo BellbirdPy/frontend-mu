@@ -19,7 +19,7 @@ angular.module('frontendmuApp')
       Validate.form_validation(formData,$scope.errors);
       if(!formData.$invalid){
         DjangoAuth.login($scope.model.username, $scope.model.password)
-          .then(function(data){
+          .then(function(){
             // success case
             $location.path("/");
           },function(data){
@@ -27,5 +27,5 @@ angular.module('frontendmuApp')
             $scope.errors = data;
           });
       }
-    }
+    };
   });

@@ -8,16 +8,16 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DashboardCtrl', function ($scope,Evento,EventoEstablecimiento,$mdDialog,$filter,ServerData) {
-    Evento.query(function(response){
+  .controller('DashboardCtrl', function ($scope, Evento, EventoEstablecimiento) {
+    Evento.query(function (response) {
       $scope.eventos = response;
-      angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
+      angular.element(('#calendar')).fullCalendar('addEventSource', $scope.eventos);
     });
 
-    EventoEstablecimiento.query(function(response){
+    EventoEstablecimiento.query(function (response) {
       $scope.eventos_establecimiento = response;
       console.log($scope.eventos_establecimiento);
-      angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
+      angular.element(('#calendar')).fullCalendar('addEventSource', $scope.eventos_establecimiento);
     });
 
     angular.element(('#calendar')).fullCalendar({});

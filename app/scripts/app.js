@@ -32,22 +32,12 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: 'main',
-        resolve: {
-          authenticated: ['DjangoAuth', function (DjangoAuth) {
-            return DjangoAuth.authenticationStatus(true);
-          }]
-        }
+        controllerAs: 'main'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
-        controllerAs: 'about',
-        resolve: {
-          authenticated: ['DjangoAuth', function (DjangoAuth) {
-            return DjangoAuth.authenticationStatus();
-          }]
-        }
+        controllerAs: 'about'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
@@ -57,83 +47,45 @@ angular
       .when('/logout', {
         templateUrl: 'views/logout.html',
         controller: 'LogoutCtrl',
-        controllerAs: 'logout',
-        resolve: {
-          authenticated: ['DjangoAuth', function (DjangoAuth) {
-            return DjangoAuth.authenticationStatus(true);
-          }]
-        }
+        controllerAs: 'logout'
       })
       .when('/inventario', {
         templateUrl: 'views/inventario.html',
         controller: 'InventarioCtrl',
-        controllerAs: 'inventario',
-        resolve: {
-          authenticated: ['DjangoAuth', function (DjangoAuth) {
-            return DjangoAuth.authenticationStatus(true);
-          }]
-        }
+        controllerAs: 'inventario'
       })
       .when('/establecimiento', {
         templateUrl: 'views/establecimiento.html',
         controller: 'EstablecimientoCtrl',
-        controllerAs: 'establecimiento',
-        resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
-            return DjangoAuth.authenticationStatus(true);
-          }]
-        }
+        controllerAs: 'establecimiento'
       })
       .when('/potrero', {
         templateUrl: 'views/potrero.html',
         controller: 'PotreroCtrl',
-        controllerAs: 'potrero',
-        resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
-            return DjangoAuth.authenticationStatus(true);
-          }]
-        }
+        controllerAs: 'potrero'
       })
       .when('/nutricion', {
         templateUrl: 'views/nutricion.html',
         controller: 'NutricionCtrl',
-        controllerAs: 'nutricion',
-        resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
-            return DjangoAuth.authenticationStatus(true);
-          }]
-        }
+        controllerAs: 'nutricion'
       })
       .when('/sanitacion', {
         templateUrl: 'views/sanitacion.html',
         controller: 'SanitacionCtrl',
-        controllerAs: 'sanitacion',
-        resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
-            return DjangoAuth.authenticationStatus(true);
-          }]
-        }
+        controllerAs: 'sanitacion'
       })
       .when('/dashboard', {
         templateUrl: 'views/dashboard.html',
         controller: 'DashboardCtrl',
-        controllerAs: 'dashboard',
-        resolve: {
-          authenticated: ['DjangoAuth', function(DjangoAuth){
-            return DjangoAuth.authenticationStatus(true);
-          }]
-        }
+        controllerAs: 'dashboard'
       })
       .when('/compra', {
         templateUrl: 'views/compra.html',
         controller: 'CompraCtrl',
-        controllerAs: 'compra',
+        controllerAs: 'compra'
       })
       .otherwise({
         redirectTo: '/'
       });
-  })
-  .run(function (DjangoAuth) {
-    DjangoAuth.initialize('//localhost:8000/rest-auth', false);
   });
-;
+

@@ -17,10 +17,10 @@ angular.module('frontendmuApp')
     $scope.updateListadoCompras = function () {
       $scope.promise = Compra.query({establecimiento: 1}, function (response) {
         $scope.compras = response;
-        if ($scope.compras != []) {
+        if ($scope.compras !== []) {
           $scope.comprasCargadas = true;
         }
-      })
+      });
     };
     $scope.updateListadoCompras();
 
@@ -42,6 +42,6 @@ angular.module('frontendmuApp')
         controller: 'DialogsDialogoCrearCompraCtrl'
       }).then(function () {
         $scope.updateListadoCompras();
-      })
-    }
+      });
+    };
   });

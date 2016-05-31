@@ -8,6 +8,5 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('LogoutCtrl', function ($scope, $location, DjangoAuth,ServerData) {
-    DjangoAuth.logout();
+  .controller('LogoutCtrl', function () {
   });

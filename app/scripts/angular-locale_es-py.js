@@ -1,5 +1,5 @@
 'use strict';
-angular.module("ngLocale", [], ["$provide", function($provide) {
+angular.module("ngLocale", [], ["$provide", function ($provide) {
   var PLURAL_CATEGORY = {ZERO: "zero", ONE: "one", TWO: "two", FEW: "few", MANY: "many", OTHER: "other"};
   $provide.value("$locale", {
     "DATETIME_FORMATS": {
@@ -120,6 +120,11 @@ angular.module("ngLocale", [], ["$provide", function($provide) {
     },
     "id": "es-py",
     "localeID": "es_PY",
-    "pluralCat": function(n, opt_precision) {  if (n == 1) {    return PLURAL_CATEGORY.ONE;  }  return PLURAL_CATEGORY.OTHER;}
+    "pluralCat": function (n) {
+      if (n === 1) {
+        return PLURAL_CATEGORY.ONE;
+      }
+      return PLURAL_CATEGORY.OTHER;
+    }
   });
 }]);
