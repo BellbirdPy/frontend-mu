@@ -17,8 +17,8 @@
         <md-input-container >
           <label>Pajuela</label>
           <md-select ng-model="form.pajuela">
-            <md-option ng-repeat="pajuela in pajuelas" value={{pajuela.id}}>
-              {{pajuela.nombre}}
+            <md-option ng-repeat="pajuela in pajuelas" value=[[pajuela.id]]>
+              [[pajuela.nombre]]
             </md-option>
           </md-select>
         </md-input-container>

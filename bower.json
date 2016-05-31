@@ -10,8 +10,11 @@
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
     "angular-material": "^1.0.8",
+    "fullcalendar": "^2.7.1",
     "angular-material-data-table": "^0.10.9",
-    "fullcalendar": "^2.7.1"
+    "bower": "*",
+    "install": "^1.0.4",
+    "js-xlsx": "^0.8.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"

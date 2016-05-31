@@ -16,66 +16,69 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngMaterial',
-    'md.data.table'
+    'md.data.table',
+    'ur.file'
   ])
-  .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider) {
-    // CSRF Support
+  .config(function ($routeProvider,$mdThemingProvider,$httpProvider,$resourceProvider,$interpolateProvider) {
+    // Force angular to use square brackets for template tag
+    // The alternative is using {% verbatim %}
+    $interpolateProvider.startSymbol('[[').endSymbol(']]');    // CSRF Support
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     // This only works in angular 3!
     // It makes dealing with Django slashes at the end of everything easier.
     $resourceProvider.defaults.stripTrailingSlashes = false;
-    $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('lime', {
+    $mdThemingProvider.theme('default').primaryPalette('green').accentPalette('light-green', {
       'default': '500' // use shade 200 for default, and keep all other shades the same
     });
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
+        templateUrl: '/views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
       .when('/about', {
-        templateUrl: 'views/about.html',
+        templateUrl: '/views/about.html',
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
       .when('/login', {
-        templateUrl: 'views/login.html',
+        templateUrl: '/views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'login'
       })
       .when('/logout', {
-        templateUrl: 'views/logout.html',
+        templateUrl: '/views/logout.html',
         controller: 'LogoutCtrl',
         controllerAs: 'logout'
       })
       .when('/inventario', {
-        templateUrl: 'views/inventario.html',
+        templateUrl: '/views/inventario.html',
         controller: 'InventarioCtrl',
         controllerAs: 'inventario'
       })
       .when('/establecimiento', {
-        templateUrl: 'views/establecimiento.html',
+        templateUrl: '/views/establecimiento.html',
         controller: 'EstablecimientoCtrl',
         controllerAs: 'establecimiento'
       })
       .when('/potrero', {
-        templateUrl: 'views/potrero.html',
+        templateUrl: '/views/potrero.html',
         controller: 'PotreroCtrl',
         controllerAs: 'potrero'
       })
       .when('/nutricion', {
-        templateUrl: 'views/nutricion.html',
+        templateUrl: '/views/nutricion.html',
         controller: 'NutricionCtrl',
         controllerAs: 'nutricion'
       })
       .when('/sanitacion', {
-        templateUrl: 'views/sanitacion.html',
+        templateUrl: '/views/sanitacion.html',
         controller: 'SanitacionCtrl',
         controllerAs: 'sanitacion'
       })
       .when('/dashboard', {
-        templateUrl: 'views/dashboard.html',
+        templateUrl: '/views/dashboard.html',
         controller: 'DashboardCtrl',
         controllerAs: 'dashboard'
       })
@@ -88,4 +91,3 @@ angular
         redirectTo: '/'
       });
   });
-

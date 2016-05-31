@@ -17,16 +17,16 @@
         <md-input-container >
           <label>Sanitacion</label>
           <md-select ng-model="form.sanitacion">
-            <md-option ng-repeat="sanitacion in sanitaciones" value={{sanitacion.id}}>
-              {{sanitacion.title}}
+            <md-option ng-repeat="sanitacion in sanitaciones" value=[[sanitacion.id]]>
+              [[sanitacion.title]]
             </md-option>
           </md-select>
         </md-input-container>
         <md-input-container >
           <label>Vacuna</label>
           <md-select ng-model="form.vacuna">
-            <md-option ng-repeat="vacuna in vacunas" value={{vacuna.id}}>
-              {{vacuna.nombre}} - {{vacuna.nombre_cientifico}}
+            <md-option ng-repeat="vacuna in vacunas" value=[[vacuna.id]]>
+              [[vacuna.nombre]] - [[vacuna.nombre_cientifico]]
             </md-option>
           </md-select>
         </md-input-container>

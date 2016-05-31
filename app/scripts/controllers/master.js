@@ -8,16 +8,15 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('MasterCtrl', function ($scope, $location) {
-    // Assume user is not logged in until we hear otherwise
-    $scope.authenticated = false;
-    $scope.logout = function(){
-      $location.path('/logout/');
-    };
-    
-    // If the user attempts to access a restricted page, redirect them back to the main page.
-    $scope.$on('$routeChangeError', function(ev, current, previous, rejection){
-      console.error("Unable to change routes.  Error: ", rejection);
-      $location.path('/login/');
+  .controller('MasterCtrl', function ($scope, $location, ServerData, Establecimiento) {
+    $scope.establecimientos = [];
+    $scope.obj = ServerData;
+    Establecimiento.get(function (data) {
+      $scope.establecimientos = data.results;
     });
+
+    $scope.seleccionar = function(e){
+      $scope.obj.establecimiento = e;
+      $location.path('/inventario/');
+    };
   });

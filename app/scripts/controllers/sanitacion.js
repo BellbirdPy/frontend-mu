@@ -8,19 +8,19 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('SanitacionCtrl', function ($scope, Evento, EventoEstablecimiento, $mdDialog, $filter, ServerData) {
-    Evento.query(function (response) {
+  .controller('SanitacionCtrl', function ($scope,Evento,EventoEstablecimiento,$mdDialog,$filter,ServerData) {
+    Evento.query(function(response){
       $scope.eventos = response;
-      angular.element(('#calendar')).fullCalendar('addEventSource', $scope.eventos);
+      angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
     });
 
-    EventoEstablecimiento.query(function (response) {
+    EventoEstablecimiento.query({'establecimiento':ServerData.establecimiento.id},function(response){
       $scope.eventos_establecimiento = response;
       console.log($scope.eventos_establecimiento);
-      angular.element(('#calendar')).fullCalendar('addEventSource', $scope.eventos_establecimiento);
+      angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
     });
 
-    $scope.showAlert = function (ev) {
+    $scope.showAlert = function(ev) {
       // Appending dialog to document.body to cover sidenav in docs app
       // Modal dialogs should fully cover application
       // to prevent interaction outside of dialog
@@ -29,7 +29,7 @@ angular.module('frontendmuApp')
           .parent(angular.element(document.querySelector('#popupContainer')))
           .clickOutsideToClose(true)
           .title('Sanitación')
-          .textContent(ev.title)
+          .textContent(ev.title )
           .ariaLabel('Alert Dialog')
           .ok('OK!')
           .targetEvent(null)
@@ -38,22 +38,16 @@ angular.module('frontendmuApp')
 
     angular.element(('#calendar')).fullCalendar(
       {
-        eventClick: function (calEvent) {
-          if (calEvent.veterinario) {
+        eventClick: function(calEvent, jsEvent, view) {
+          if (calEvent.veterinario){
 
-            var prueba = $filter('filter')($scope.eventos_establecimiento, {id: calEvent.id}, true)[0];
+          var prueba = $filter('filter')($scope.eventos_establecimiento, { id: calEvent.id }, true)[0];
 
-            $scope.agregarEvento(prueba);
+          $scope.agregarEvento(prueba);
           }
         },
-        dayClick: function (date) {
-          var eventoNuevo = {
-            start: date,
-            end: date,
-            veterinario: '',
-            establecimiento: ServerData.establecimiento.id,
-            nombre: ''
-          };
+        dayClick: function (date, jsEvent, view) {
+          var eventoNuevo = {start:date,end:date,veterinario:'',establecimiento:ServerData.establecimiento.id,nombre:''};
 
           $scope.agregarEvento(eventoNuevo);
 
@@ -62,11 +56,14 @@ angular.module('frontendmuApp')
     );
 
 
-    $scope.agregarEvento = function (evento) {
+
+
+
+    $scope.agregarEvento = function(evento) {
       $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_evento.html',
+        templateUrl: '/staticfiles/views/dialogs/dialogo_evento.html',
         targetEvent: null,
-        controller: ['$scope', '$mdDialog', 'EventoEstablecimiento', '$filter', 'ServerData', function ($scope, $mdDialog, EventoEstablecimiento, $filter, ServerData) {
+        controller: ['$scope','$mdDialog','EventoEstablecimiento','$filter','ServerData' ,function ($scope, $mdDialog, EventoEstablecimiento,$filter,ServerData) {
 
           $scope.newEvento = {};
           if (evento) {
@@ -80,22 +77,24 @@ angular.module('frontendmuApp')
               $scope.newEvento.end = new Date(evento.end);
             }
           }
-          $scope.deleteEvento = function (evento) {
+          $scope.deleteEvento = function(evento) {
             var confirm = $mdDialog.confirm().title('Estas seguro de que quieres eliminar?')
               .textContent(evento.title)
               .ariaLabel('Eliminar Vacunación')
               .targetEvent(null)
               .ok('Sí, estoy seguro')
               .cancel('Cancelar');
-            $mdDialog.show(confirm).then(function () {
-              EventoEstablecimiento.delete({id: evento.id}, evento, function () {
-                angular.element(('#calendar')).fullCalendar('removeEvents', [evento.id]);
+            $mdDialog.show(confirm).then(function() {
+              EventoEstablecimiento.delete({id:evento.id},evento,function(data){
+                angular.element(('#calendar')).fullCalendar( 'removeEvents', [evento.id] );
               });
 
-            }, function () {
+            }, function() {
               console.log('Cancelaste');
             });
           };
+
+
 
 
           $scope.hide = function () {
@@ -107,19 +106,19 @@ angular.module('frontendmuApp')
           };
 
           $scope.answer = function (answer) {
-            if (answer === 'guardar') {
-              if (evento.id) {
+            if (answer === 'guardar'){
+              if (evento.id){
                 console.log($scope.newEvento);
-                EventoEstablecimiento.update({id: $scope.newEvento.id}, $scope.newEvento, function (data) {
+                EventoEstablecimiento.update({id:$scope.newEvento.id},$scope.newEvento,function(data){
                   $scope.newEvento = data;
                   $mdDialog.hide($scope.newEvento);
                 });
-              } else {
+              }else {
                 $scope.newEvento.establecimiento = ServerData.establecimiento.id;
                 var nuevo = new EventoEstablecimiento($scope.newEvento);
 
                 nuevo.$save(function (data) {
-                  angular.element(('#calendar')).fullCalendar('addEventSource', [data]);
+                  angular.element(('#calendar')).fullCalendar( 'addEventSource', [data] );
                 }, function (error) {
                   console.log(error);
                 });
@@ -130,26 +129,26 @@ angular.module('frontendmuApp')
 
         }]
       })
-        .then(function (nuevo) {
-          if (nuevo) {
-            if (nuevo !== true) {
-              var prueba = $filter('filter')($scope.eventos_establecimiento, {id: nuevo.id}, true)[0];
-              if (prueba) {
-                if (prueba.id === nuevo.id) {
-                  angular.extend(prueba, nuevo);
-                  angular.element(('#calendar')).fullCalendar('removeEvents', [nuevo.id]);
-                  angular.element(('#calendar')).fullCalendar('addEventSource', [nuevo]);
-                } else {
-                  $scope.eventos_establecimiento.unshift(nuevo);
-                }
-              } else {
+        .then(function(nuevo) {
+          if (nuevo){
+          if (nuevo !== true) {
+            var prueba = $filter('filter')($scope.eventos_establecimiento, { id: nuevo.id }, true)[0];
+            if (prueba){
+              if (prueba.id === nuevo.id) {
+                angular.extend(prueba, nuevo);
+                angular.element(('#calendar')).fullCalendar( 'removeEvents', [nuevo.id] );
+                angular.element(('#calendar')).fullCalendar( 'addEventSource', [nuevo] );
+              }else{
                 $scope.eventos_establecimiento.unshift(nuevo);
               }
-
+            }else{
+              $scope.eventos_establecimiento.unshift(nuevo);
             }
+
+          }
           }
 
-        }, function () {
+        }, function() {
           $scope.alert = 'You cancelled the dialog.';
         });
     };
