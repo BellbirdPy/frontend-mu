@@ -110,7 +110,10 @@ angular.module('frontendmuApp')
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_eliminar_animal.html',
         targetEvent: null,
-        controller: 'DialogsDialogoEliminarAnimalCtrl'
+        controller: 'DialogsDialogoEliminarAnimalCtrl',
+        locals: {
+          lista: lista
+        }
       })
         .then(function (lista) {
           if (lista !== true) {
@@ -122,47 +125,15 @@ angular.module('frontendmuApp')
         });
     };
 
-
+    // DialogsDialogoMudarAnimal
     $scope.mudarAnimales = function (lista) {
       $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_mudar.html',
+        templateUrl: 'views/dialogs/dialogo_mudar_animal.html',
         targetEvent: null,
-        controller: ['$scope', '$mdDialog', 'Lote', 'Animal', '$filter', function ($scope, $mdDialog, Lote, Animal, $filter) {
-          $scope.lotes = [];
-          $scope.lotes = Lote.get({establecimiento: obj.establecimiento.id}, function (response) {
-            $scope.lotes = response.results;
-          });
-
-          $scope.form = {};
-
-
-          $scope.hide = function () {
-            $mdDialog.hide();
-          };
-
-          $scope.cancel = function () {
-            $mdDialog.cancel();
-          };
-
-          $scope.answer = function (answer) {
-            if (answer === 'guardar') {
-              if (lista.length >= 1) {
-                angular.forEach(lista, function (animalSeleccionado) {
-                  animalSeleccionado.lote = $scope.form.lote;
-                  Animal.update({id: animalSeleccionado.id}, animalSeleccionado, function (data) {
-                    console.log(data);
-                  });
-                  var lote_nombre = $filter('filter')($scope.lotes, function (d) {
-                    return d.id.toString() === $scope.form.lote.toString();
-                  })[0];
-                  animalSeleccionado.lote_nombre = lote_nombre.nombre;
-                });
-                $mdDialog.hide(lista);
-              }
-            }
-          };
-
-        }]
+        controller: 'DialogsDialogoMudarAnimalCtrl',
+        locals: {
+          lista: lista
+        }
       })
         .then(function (lista) {
           if (lista !== true) {
@@ -185,6 +156,7 @@ angular.module('frontendmuApp')
         });
     };
 
+    //
     $scope.recategorizar = function (lista) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_recategorizar.html',
