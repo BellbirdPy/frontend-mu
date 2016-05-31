@@ -13,6 +13,9 @@ angular.module('frontendmuApp')
     $scope.newCompra = {};
     $scope.newDetalle = {};
     $scope.newCompra.detalle_compra = [];
+    console.log($scope.newCompra.detalle_compra.length);
+
+    $scope.seleccionDetalleCompra = [];
     $scope.categorias = Categoria.query(function (response) {
       $scope.catergorias = response;
     });
@@ -38,7 +41,7 @@ angular.module('frontendmuApp')
 
       $scope.newCompra.detalle_compra.push(detalle_compra);
       $scope.DetalleCompra = {};
-    }
+    };
 
     $scope.guardarCompra = function (newCompra) {
       $scope.newCompra.establecimiento = 1; //Esto se tieen que poner el establecimiento despues

@@ -9,7 +9,7 @@
  */
 angular.module('frontendmuApp')
   .factory('Nutricion', function ($resource) {
-    return $resource('http://localhost:8000/api/nutricion/:id/',null,{
+    return $resource('http://localhost:8000/nutricion/:id/',null,{
       'update': { method:'PUT' },
       'delete': {method:'DELETE'}
     });

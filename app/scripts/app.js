@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngMaterial'
+    'ngMaterial',
+    'md.data.table'
   ])
   .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider) {
     // CSRF Support

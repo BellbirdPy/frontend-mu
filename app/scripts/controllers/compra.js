@@ -8,25 +8,32 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('CompraCtrl', function ($scope, $filter, $mdDialog, Animal, Compra, DetalleCompra, ServerData) {
-    var obj = ServerData;
+  .controller('CompraCtrl', function ($scope, $filter, $mdDialog, Animal, Compra) {
     $scope.compras = [];
-    $scope.selectionCompra = [];
-    $scope.selectedAll = false;
-    $scope.cargandoCompra = false;
+    $scope.seleccionCompra = [];
+    $scope.comprasCargadas = false;
 
-    $scope.updateCompra = function () {
-      Compra.query({establecimiento: obj.establecimiento.id}, function (response) {
+    //Esto se encarga de cargar en el escope el listado de compras
+    $scope.updateListadoCompras = function () {
+      $scope.promise = Compra.query({establecimiento: 1}, function (response) {
         $scope.compras = response;
-        $scope.cargandoCompra = true;
+        if ($scope.compras != []) {
+          $scope.comprasCargadas = true;
+        }
       })
     };
-    $scope.updateCompra();
+    $scope.updateListadoCompras();
 
-    $scope.abrir = function (compra) {
+    $scope.query = {
+      order: 'fecha',
+      limit: 5,
+      page: 1
+    };
+
+    $scope.verDetalleCompra = function (compra) {
       console.log(compra);
       //Aca va ir una vista detallada de la compra
-    }
+    };
 
     $scope.abrirFormCarga = function () {
       $mdDialog.show({
@@ -34,7 +41,7 @@ angular.module('frontendmuApp')
         targetEvent: null,
         controller: 'DialogsDialogoCrearCompraCtrl'
       }).then(function () {
-        $scope.updateCompra();
+        $scope.updateListadoCompras();
       })
     }
   });
