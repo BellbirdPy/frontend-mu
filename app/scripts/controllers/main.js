@@ -11,15 +11,13 @@ angular.module('frontendmuApp')
   .controller('MainCtrl', function ($scope, ServerData, Establecimiento, $location) {
     $scope.establecimientos = [];
     $scope.obj = ServerData;
-    $scope.establecimientos = Establecimiento.get(function(response){
-    $scope.establecimientos = response.results;
-   });
+    $scope.establecimientos = Establecimiento.get(function (response) {
+      $scope.establecimientos = response.results;
+    });
 
-    $scope.seleccionar = function(e){
+    $scope.seleccionar = function (e) {
       $scope.obj.establecimiento = e;
       $location.path('/inventario/');
     };
-
-
 
   });

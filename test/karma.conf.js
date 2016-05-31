@@ -33,7 +33,6 @@ module.exports = function(config) {
       'bower_components/angular-aria/angular-aria.js',
       'bower_components/angular-messages/angular-messages.js',
       'bower_components/angular-material/angular-material.js',
-      'bower_components/angular-material-data-table/dist/md-data-table.js',
       'bower_components/moment/moment.js',
       'bower_components/fullcalendar/dist/fullcalendar.js',
       'bower_components/angular-material-data-table/dist/md-data-table.js',
