@@ -19,10 +19,11 @@ angular
     'md.data.table',
     'ur.file'
   ])
-  .config(function ($routeProvider,$mdThemingProvider,$httpProvider,$resourceProvider,$interpolateProvider) {
+  .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider, $interpolateProvider) {
     // Force angular to use square brackets for template tag
     // The alternative is using {% verbatim %}
-    $interpolateProvider.startSymbol('[[').endSymbol(']]');    // CSRF Support
+    $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    // CSRF Support
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     // This only works in angular 3!
