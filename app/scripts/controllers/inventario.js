@@ -156,50 +156,15 @@ angular.module('frontendmuApp')
         });
     };
 
-    //
+    // DialogsDialogoRecategorizarAnimalCtrl
     $scope.recategorizar = function (lista) {
       $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_recategorizar.html',
+        templateUrl: 'views/dialogs/dialogo_recategorizar_animal.html',
         targetEvent: null,
-        controller: ['$scope', '$mdDialog', 'Categoria', 'Animal', '$filter', function ($scope, $mdDialog, Categoria, Animal, $filter) {
-          $scope.categorias = [];
-
-          $scope.categorias = Categoria.get(function (response) {
-            $scope.categorias = response.results;
-          });
-
-          $scope.form = {};
-
-
-          $scope.hide = function () {
-            $mdDialog.hide();
-          };
-
-          $scope.cancel = function () {
-            $mdDialog.cancel();
-          };
-
-          $scope.answer = function (answer) {
-            if (answer === 'guardar') {
-              if (lista.length >= 1) {
-                angular.forEach(lista, function (animalSeleccionado) {
-
-                  animalSeleccionado.categoria = $scope.form.categoria;
-                  Animal.update({id: animalSeleccionado.id}, animalSeleccionado, function (data) {
-                    console.log(data);
-                  });
-                  var id = $scope.form.categoria;
-                  var categoria_nombre = $filter('filter')($scope.categorias, function (d) {
-                    return d.id.toString() === id.toString();
-                  })[0];
-                  animalSeleccionado.categoria_nombre = categoria_nombre.nombre;
-                });
-                $mdDialog.hide(lista);
-              }
-            }
-          };
-
-        }]
+        controller: 'DialogsDialogoRecategorizarAnimalCtrl',
+        locals: {
+          lista: lista
+        }
       })
         .then(function (lista) {
           if (lista !== true) {
