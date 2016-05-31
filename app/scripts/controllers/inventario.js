@@ -49,6 +49,7 @@ angular.module('frontendmuApp')
 
     $scope.getAnimales();
 
+    // DialogsDialogoAnimalCtrl
     $scope.editAnimal = function (animalSeleccionado) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_animal.html',
@@ -83,13 +84,14 @@ angular.module('frontendmuApp')
 
     $scope.deleteAnimal = function (animalSeleccionado) {
       // Appending dialog to document.body to cover sidenav in docs app]
-
       var confirm = $mdDialog.confirm().title('Estas seguro de que quieres eliminar?')
-        .textContent(animalSeleccionado.categoria_nombre + '- Caravana: ' + animalSeleccionado.caravana + ' - Raza: ' + animalSeleccionado.raza_nombre + ' - Carimbo: ' + animalSeleccionado.carimbo)
+        .textContent(animalSeleccionado.categoria_nombre + '- Caravana: ' + animalSeleccionado.caravana + ' - Raza: '
+          + animalSeleccionado.raza_nombre + ' - Carimbo: ' + animalSeleccionado.carimbo)
         .ariaLabel('Eliminar Animal')
         .targetEvent(null)
         .ok('Sí, estoy seguro')
         .cancel('Cancelar');
+
       $mdDialog.show(confirm).then(function () {
         Animal.delete({id: animalSeleccionado.id}, animalSeleccionado, function (data) {
           $scope.getLotes();
@@ -103,36 +105,12 @@ angular.module('frontendmuApp')
       });
     };
 
+    // DialogsDialogoEliminarAnimal
     $scope.deleteListaAnimal = function (lista) {
       $mdDialog.show({
-        templateUrl: 'views/dialogs/dialogo_eliminar.html',
+        templateUrl: 'views/dialogs/dialogo_eliminar_animal.html',
         targetEvent: null,
-        controller: ['$scope', '$mdDialog', 'Animal', '$filter', function ($scope, $mdDialog, Animal, $filter) {
-          $scope.lista = lista;
-          $scope.hide = function () {
-            $mdDialog.hide();
-          };
-
-          $scope.cancel = function () {
-            $mdDialog.cancel();
-          };
-
-          $scope.answer = function (answer) {
-            if (answer === 'guardar') {
-              if (lista.length >= 1) {
-                angular.forEach(lista, function (animalSeleccionado) {
-                  Animal.delete({id: animalSeleccionado.id}, animalSeleccionado, function (data) {
-                    console.log("eliminado: " + data.caravana);
-                  });
-                });
-              }
-              $mdDialog.hide(lista);
-            } else {
-              $mdDialog.hide(lista);
-            }
-          };
-
-        }]
+        controller: 'DialogsDialogoEliminarAnimalCtrl'
       })
         .then(function (lista) {
           if (lista !== true) {
