@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoEditarLoteCtrl', function ($scope, $mdDialog, Potrero, ServerData, Lote, loteSeleccionado) {
+  .controller('DialogsDialogoEditarCrearLoteCtrl', function ($scope, $mdDialog, Potrero, ServerData, Lote, loteSeleccionado) {
     $scope.potreros = [];
 
     $scope.potreros = Potrero.get({
@@ -24,7 +24,7 @@ angular.module('frontendmuApp')
       $scope.newLote.potrero = "";
       $scope.newLote.cantidad = 0;
       $scope.newLote.peso_promedio = 0;
-      $scope.newLote.establecimiento = obj.establecimiento.id;
+      $scope.newLote.establecimiento = ServerData.establecimiento.id;
       $scope.newLote.animales = [];
     }
 

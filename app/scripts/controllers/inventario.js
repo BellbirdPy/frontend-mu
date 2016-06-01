@@ -272,12 +272,12 @@ angular.module('frontendmuApp')
       });
     };
 
-    // DialogsDialogoEditarLoteCtrl
+    // DialogsDialogoEditarCrearLoteCtrl
     $scope.editLote = function (loteSeleccionado) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_lote.html',
         targetEvent: null,
-        controller: 'DialogsDialogoEditarLoteCtrl',
+        controller: 'DialogsDialogoEditarCrearLoteCtrl',
         locals: {
           loteSeleccionado: loteSeleccionado
         }
