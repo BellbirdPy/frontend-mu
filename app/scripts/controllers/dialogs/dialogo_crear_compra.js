@@ -13,15 +13,14 @@ angular.module('frontendmuApp')
     $scope.newCompra = {};
     $scope.newDetalle = {};
     $scope.newCompra.detalle_compra = [];
-    console.log($scope.newCompra.detalle_compra.length);
 
     $scope.seleccionDetalleCompra = [];
-    $scope.categorias = Categoria.query(function (response) {
-      $scope.catergorias = response;
+    $scope.categorias = Categoria.get(function (response) {
+      $scope.categorias = response.results;
     });
 
-    $scope.razas = Raza.query(function (response) {
-      $scope.razas = response;
+    $scope.razas = Raza.get(function (response) {
+      $scope.razas = response.results;
     });
     $scope.hide = function () {
       $mdDialog.hide();

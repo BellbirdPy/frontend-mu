@@ -57,9 +57,9 @@
             </thead>
             <tbody md-body>
             <tr md-row md-select="compra" md-select-id="id" md-auto-select ng-repeat="compra in compras">
-              <td md-cell>{{compra.cod_establecimiento_vendedor}}</td>
-              <td md-cell>{{compra.nombre_vendedor}}</td>
-              <td md-cell>{{compra.fecha}}</td>
+              <td md-cell>[[compra.cod_establecimiento_vendedor]]</td>
+              <td md-cell>[[compra.nombre_vendedor]]</td>
+              <td md-cell>[[compra.fecha]]</td>
             </tr>
             <tr>
               <td md-cell colspan="4" ng-hide="comprasCargadas"><p style="text-align: center;" flex>No hay compras
@@ -69,7 +69,7 @@
           </table>
         </md-table-container>
         <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page"
-                             md-total="{{compras.count}}" md-on-paginate="updateListadoCompras"
+                             md-total="[[compras.count]]" md-on-paginate="updateListadoCompras"
                              md-page-select></md-table-pagination>
 
       </md-card>

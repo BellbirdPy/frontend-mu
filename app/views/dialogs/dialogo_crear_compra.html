@@ -35,8 +35,8 @@
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Categoria</label>
           <md-select ng-model="newDetalle.categoria">
-            <md-option ng-repeat="categoria in categorias" value="{{categoria.id}}">
-              {{categoria.nombre}}
+            <md-option ng-repeat="categoria in categorias" value="[[categoria.id]]">
+              [[categoria.nombre]]
             </md-option>
           </md-select>
         </md-input-container>
@@ -58,8 +58,8 @@
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Raza</label>
           <md-select ng-model="newDetalle.raza">
-            <md-option ng-repeat="raza in razas" value="{{raza.id}}">
-              {{raza.nombre}}
+            <md-option ng-repeat="raza in razas" value="[[raza.id]]">
+              [[raza.nombre]]
             </md-option>
           </md-select>
         </md-input-container>
@@ -93,12 +93,12 @@
           <tbody md-body>
           <tr md-row md-select="detalle_compra" md-select-id="id" md-auto-select
               ng-repeat="detalle_compra in newCompra.detalle_compra">
-            <td md-cell>{{detalle_compra.categoria}}</td>
-            <td md-cell>{{detalle_compra.carimbo}}</td>
-            <td md-cell>{{detalle_compra.raza}}</td>
-            <td md-cell>{{detalle_compra.cantidad}}</td>
-            <td md-cell>{{detalle_compra.caravana_inicial}} a {{detalle_compra.caravana_inicial +
-              detalle_compra.cantidad}}
+            <td md-cell>[[detalle_compra.categoria]]</td>
+            <td md-cell>[[detalle_compra.carimbo]]</td>
+            <td md-cell>[[detalle_compra.raza]]</td>
+            <td md-cell>[[detalle_compra.cantidad]]</td>
+            <td md-cell>[[detalle_compra.caravana_inicial]] a [[detalle_compra.caravana_inicial +
+              detalle_compra.cantidad]]
             </td>
           </tr>
           <tr>
@@ -110,7 +110,7 @@
         </table>
       </md-table-container>
       <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page"
-                           md-total="{{compras.count}}" md-on-paginate="updateListadoCompras"
+                           md-total="[[compras.count]]" md-on-paginate="updateListadoCompras"
                            md-page-select></md-table-pagination>
     </md-content>
   </md-card>

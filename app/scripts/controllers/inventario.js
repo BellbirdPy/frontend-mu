@@ -185,61 +185,15 @@ angular.module('frontendmuApp')
         });
     };
 
+    // DialogsDialogoLoteCtrl
     $scope.agruparEnLote = function (lista) {
-
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_lote.html',
         targetEvent: null,
-        controller: ['$scope', '$mdDialog', 'Potrero', 'ServerData', function ($scope, $mdDialog, Potrero, ServerData) {
-          $scope.potreros = [];
-
-          $scope.potreros = Potrero.get({
-            establecimiento: ServerData.establecimiento.id,
-            lote: ''
-          }, function (response) {
-            $scope.potreros = response.results;
-          });
-
-          $scope.newLote = {};
-          $scope.newLote.potrero = "";
-          $scope.newLote.cantidad = 0;
-          $scope.newLote.peso_promedio = 0;
-          $scope.newLote.establecimiento = ServerData.establecimiento.id;
-          $scope.newLote.animales = [];
-
-          $scope.hide = function () {
-            $mdDialog.hide();
-          };
-
-          $scope.cancel = function () {
-            $mdDialog.cancel();
-          };
-
-          $scope.answer = function (answer) {
-            if (answer === 'guardar') {
-              var nuevo = new Lote($scope.newLote);
-
-              nuevo.$save(function (result) {
-                if (lista.length >= 1) {
-                  angular.forEach(lista, function (animalSeleccionado) {
-                    animalSeleccionado.lote = nuevo.id;
-                    Animal.update({id: animalSeleccionado.id}, animalSeleccionado, function (data) {
-                      console.log(data);
-                    });
-                    animalSeleccionado.lote_nombre = nuevo.nombre;
-                  });
-                  $mdDialog.hide(lista);
-                }
-
-              }, function (error) {
-                console.log(error);
-              });
-              $mdDialog.hide(lista);
-
-            }
-          };
-
-        }]
+        controller: 'DialogsDialogoLoteCtrl',
+        locals: {
+          lista: lista
+        }
       })
         .then(function (lista) {
           if (lista !== true) {
@@ -261,52 +215,15 @@ angular.module('frontendmuApp')
           $scope.alert = 'You cancelled the dialog.';
         });
     };
-
+    // Dialogs/DialogoMortandadCtrl
     $scope.mortandad = function (lista) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_mortandad.html',
         targetEvent: null,
-        controller: ['$scope', '$mdDialog', 'Animal', 'Mortandad', 'ServerData', function ($scope, $mdDialog, Animal, Mortandad, ServerData) {
-
-          $scope.form = {};
-
-          $scope.hide = function () {
-            $mdDialog.hide();
-          };
-
-          $scope.cancel = function () {
-            $mdDialog.cancel();
-          };
-
-          $scope.answer = function (answer) {
-            if (answer === 'guardar') {
-              if (lista.length >= 1) {
-                var listaId = []
-                angular.forEach(lista, function (animalSeleccionado) {
-                  listaId.push(animalSeleccionado.id);
-                  animalSeleccionado.estado = 'M';
-                  animalSeleccionado.lote = null;
-                  Animal.update({id: animalSeleccionado.id}, animalSeleccionado, function (data) {
-                  });
-                });
-                var nuevo = new Mortandad($scope.form);
-                nuevo.establecimiento = ServerData.establecimiento.id;
-                nuevo.animales = [];
-                nuevo.$save(function (result) {
-                  result.animales = listaId;
-                  Mortandad.update({id: result.id}, result, function (data) {
-                    console.log(data);
-                  });
-                }, function (error) {
-                  console.log(error);
-                });
-
-                $mdDialog.hide(lista);
-              }
-            }
-          };
-
-        }]
+        controller: 'DialogsDialogoMortandadCtrl',
+        locals: {
+          lista: lista
+        }
       })
         .then(function (lista) {
           if (lista !== true) {
