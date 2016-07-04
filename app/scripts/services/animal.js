@@ -9,8 +9,9 @@
  */
 angular.module('frontendmuApp')
   .factory('Animal', function ($resource) {
-    return $resource('http://localhost:8000/api/animal/:id/',null,{
+    return $resource('/api/animal/:id/' ,null,{
       'update': { method:'PUT' },
+      'create': { method:'POST',isArray:true},
       'delete': {method:'DELETE'}
     });
   });

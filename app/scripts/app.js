@@ -21,6 +21,7 @@ angular
     'ngMaterialSidemenu'
   ])
   .config(function ($routeProvider,$mdThemingProvider,$httpProvider,$resourceProvider,$interpolateProvider) {
+
     // Force angular to use square brackets for template tag
     // The alternative is using {% verbatim %}
     $interpolateProvider.startSymbol('[[').endSymbol(']]');    // CSRF Support
@@ -34,56 +35,94 @@ angular
     });
     $routeProvider
       .when('/', {
-        templateUrl: '/views/main.html',
+        templateUrl: '/staticfiles/views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
       .when('/about', {
-        templateUrl: '/views/about.html',
+        templateUrl: '/staticfiles/views/about.html',
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
       .when('/login', {
-        templateUrl: '/views/login.html',
+        templateUrl: '/staticfiles/views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'login'
       })
       .when('/logout', {
-        templateUrl: '/views/logout.html',
+        templateUrl: '/staticfiles/views/logout.html',
         controller: 'LogoutCtrl',
         controllerAs: 'logout'
       })
       .when('/inventario', {
-        templateUrl: '/views/inventario.html',
+        templateUrl: '/staticfiles/views/inventario.html',
         controller: 'InventarioCtrl',
         controllerAs: 'inventario'
       })
       .when('/establecimiento', {
-        templateUrl: '/views/establecimiento.html',
+        templateUrl: '/staticfiles/views/establecimiento.html',
         controller: 'EstablecimientoCtrl',
         controllerAs: 'establecimiento'
       })
       .when('/potrero', {
-        templateUrl: '/views/potrero.html',
+        templateUrl: '/staticfiles/views/potrero.html',
         controller: 'PotreroCtrl',
         controllerAs: 'potrero'
       })
       .when('/nutricion', {
-        templateUrl: '/views/nutricion.html',
+        templateUrl: '/staticfiles/views/nutricion.html',
         controller: 'NutricionCtrl',
         controllerAs: 'nutricion'
       })
       .when('/sanitacion', {
-        templateUrl: '/views/sanitacion.html',
+        templateUrl: '/staticfiles/views/sanitacion.html',
         controller: 'SanitacionCtrl',
         controllerAs: 'sanitacion'
       })
       .when('/dashboard', {
-        templateUrl: '/views/dashboard.html',
+        templateUrl: '/staticfiles/views/dashboard.html',
         controller: 'DashboardCtrl',
         controllerAs: 'dashboard'
+      })
+      .when('/mortandad', {
+        templateUrl: '/staticfiles/views/mortandad.html',
+        controller: 'MortandadCtrl',
+        controllerAs: 'mortandad'
+      })
+      .when('/categoria', {
+        templateUrl: '/staticfiles/views/categoria.html',
+        controller: 'CategoriaCtrl',
+        controllerAs: 'categoria'
+      })
+      .when('/raza', {
+        templateUrl: '/staticfiles/views/raza.html',
+        controller: 'RazaCtrl',
+        controllerAs: 'raza'
+      })
+      .when('/meteorologia', {
+        templateUrl: '/staticfiles/views/meteorologia.html',
+        controller: 'MeteorologiaCtrl',
+        controllerAs: 'meteorologia'
+      })
+
+      .when('/empleados', {
+        templateUrl: '/staticfiles/views/empleado.html',
+        controller: 'EmpleadoCtrl',
+        controllerAs: 'empleado'
       })
       .otherwise({
         redirectTo: '/'
       });
+
+  }).run( function($rootScope, $location) {
+    $rootScope.$on( "$routeChangeStart", function(event, next, current,$templateCache) {
+      if ( $rootScope.establecimiento == null ) {
+          $location.path( "" );
+      }
+    });
+
+    $rootScope.Utils = {
+      keys : Object.keys
+    }
   });
+
