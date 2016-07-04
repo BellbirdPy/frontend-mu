@@ -17,7 +17,8 @@ angular
     'ngSanitize',
     'ngMaterial',
     'md.data.table',
-    'ur.file'
+    'ur.file',
+    'ngMaterialSidemenu'
   ])
   .config(function ($routeProvider,$mdThemingProvider,$httpProvider,$resourceProvider,$interpolateProvider) {
     // Force angular to use square brackets for template tag

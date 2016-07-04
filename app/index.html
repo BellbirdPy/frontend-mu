@@ -21,12 +21,13 @@
     <!-- endbuild -->
   </head>
   <body layout="row" ng-app="frontendmuApp" ng-controller="MasterCtrl" style="background-color: lightgray;">
-  <md-sidenav ng-if="obj.establecimiento" class="site-sidenav md-sidenav-left md-whiteframe-z2" style="width: 250px;" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+  <div layout="row">
+  <md-sidenav ng-if="obj.establecimiento" class="md-sidenav-left md-whiteframe-z2" style="width: 250px;" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
 
     <header class="nav-header">
       <img src="images/logo.jpg" width="100%">
     </header>
-    <md-content flex role="navigation">
+    <md-content role="navigation">
       <div class="collection">
         <a href="#/dashboard" class="collection-item black-text">Home</a>
         <a ng-href="#/inventario" class="collection-item black-text">Manejo</a>
@@ -41,6 +42,9 @@
     </footer>
 
   </md-sidenav>
+
+  </div>
+
   <div layout="column" tabIndex="-1" role="main" flex>
     <md-toolbar ng-hide="loginView" class="md-whiteframe-z1 grey lighten-3">
       <div class="md-toolbar-tools" tabIndex="-1">
@@ -122,6 +126,7 @@
   <script src="scripts/angular-locale_es-py.js"></script>
   <script src="scripts/angular-file.js"></script>
 
+
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
@@ -148,6 +153,9 @@
         <script src="scripts/services/evento.js"></script>
         <script src="scripts/services/eventoestablecimiento.js"></script>
         <script src="scripts/controllers/dashboard.js"></script>
+        <script src="scripts/directives/menu-toggle.js"></script>
+        <script src="scripts/directives/menu-link.js"></script>
+        <script src="scripts/services/menu.js"></script>
         <!-- endbuild -->
 </body>
 </html>
