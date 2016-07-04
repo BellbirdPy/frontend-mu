@@ -16,13 +16,15 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
-    cdnify: 'grunt-google-cdn'
+    cdnify: 'grunt-google-cdn',
+    replace: 'grunt-text-replace'
   });
 
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: 'dist',
+    django: 'django'
   };
 
   // Define the configuration for all the tasks
@@ -167,7 +169,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      django: 'django'
     },
 
     // Add vendor prefixed styles
@@ -202,25 +205,25 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
       },
       test: {
         devDependencies: true,
         src: '<%= karma.unit.configFile %>',
-        ignorePath:  /\.\.\//,
-        fileTypes:{
+        ignorePath: /\.\.\//,
+        fileTypes: {
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-              detect: {
-                js: /'(.*\.js)'/gi
-              },
-              replace: {
-                js: '\'{{filePath}}\','
-              }
+            detect: {
+              js: /'(.*\.js)'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\','
             }
           }
+        }
       }
-    }, 
+    },
 
     // Renames files for browser caching purposes
     filerev: {
@@ -394,8 +397,59 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      django: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.dist %>',
+          dest: '<%= yeoman.django %>/staticfiles',
+          src: [
+            'styles/**',
+            'images/**',
+            'scripts/**'
+          ]
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.dist %>',
+          dest: '<%= yeoman.django %>/templates',
+          src: [
+            '*.html'
+          ]
+        }
+        ]
       }
     },
+
+    /*
+     * Esta parte remplaza todas las ocurrencias de load-staticfiles por sus respectivos load static de django, a la vez
+     * que elimina todos los llamados a localhost:8000 puesto que estos ya pasan a ser propios del sistema.
+     * */
+    replace: {
+      django: {
+        overwrite: true,
+        src: ['<%= yeoman.django %>/templates/*.html', '<%= yeoman.django %>/staticfiles/scripts/*.js'],
+        replacements: [{
+          from: /<!-- load-staticfiles -->/,
+          to: "{% load staticfiles %}"
+        }, {
+          from: "http://localhost:8000/",
+          to: "/"
+        }]
+      }
+    },
+
+    /*
+    * Esta parte agrega los static antes de cada src de css/js e imagenes que encuentre en el index
+    * */
+    bridge: {
+      django: {
+        options: {
+          html: '<%= yeoman.django %>/templates/index.html',
+          dest: '<%= yeoman.django %>/templates/index.html'
+        }
+      }
+    },
+
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
@@ -410,7 +464,8 @@ module.exports = function (grunt) {
         'imagemin',
         'svgmin'
       ]
-    },
+    }
+    ,
 
     // Test settings
     karma: {
@@ -419,7 +474,8 @@ module.exports = function (grunt) {
         singleRun: true
       }
     }
-  });
+  })
+  ;
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -466,7 +522,7 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
   ]);
 
   grunt.registerTask('default', [
@@ -475,4 +531,12 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('django', [
+    'clean:django',
+    'build',
+    'copy:django',
+    'replace:django',
+    'bridge:django'
+  ])
 };

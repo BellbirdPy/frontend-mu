@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- load-staticfiles -->
 <html>
 <head>
   <meta charset="utf-8">
@@ -16,7 +17,6 @@
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- endbuild -->
 </head>
@@ -80,6 +80,7 @@
       </md-menu>
     </div>
   </md-toolbar>
+
   <md-content md-scroll-y layout="column" flex>
     <div ng-view layout-padding flex="noshrink"></div>
   </md-content>
@@ -118,12 +119,13 @@
 <script src="bower_components/js-xlsx/dist/xlsx.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
-<script src='bower_components/fullcalendar/dist/lang/es.js'></script>
-<script src="scripts/angular-locale_es-py.js"></script>
-<script src="scripts/angular-file.js"></script>
+
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
+<script src='../bower_components/fullcalendar/dist/lang/es.js'></script>
+<script src="scripts/angular-locale_es-py.js"></script>
+<script src="scripts/angular-file.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/about.js"></script>
 <script src="scripts/controllers/login.js"></script>
@@ -158,6 +160,9 @@
 <script src="scripts/controllers/dialogs/dialogo_mortandad.js"></script>
 <script src="scripts/controllers/dialogs/dialogo_editar_crear_lote.js"></script>
 <script src="scripts/controllers/dialogs/dialogo_archivo.js"></script>
+<script src="scripts/directives/ngrightclick.js"></script>
+<script src="scripts/services/my_context_menu.js"></script>
+<script src="scripts/controllers/menu/my_constext_menu.js"></script>
 <!-- endbuild -->
 </body>
 </html>

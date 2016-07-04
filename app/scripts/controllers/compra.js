@@ -12,6 +12,7 @@ angular.module('frontendmuApp')
     $scope.compras = [];
     $scope.seleccionCompra = [];
     $scope.comprasCargadas = false;
+    $scope.searchState = false;
 
     //Esto se encarga de cargar en el escope el listado de compras
     $scope.updateListadoCompras = function () {
@@ -43,5 +44,14 @@ angular.module('frontendmuApp')
       }).then(function () {
         $scope.updateListadoCompras();
       });
+    };
+
+    $scope.prueba = function (event) {
+      console.log('Presionaste el click derecho');
+      console.log(event);
+    };
+
+    $scope.search = function () {
+      $scope.searchState = true;
     };
   });

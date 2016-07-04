@@ -9,20 +9,20 @@
  */
 angular.module('frontendmuApp')
   .controller('LoginCtrl', function ($scope, $location, DjangoAuth, Validate) {
-    if (DjangoAuth.authenticated){
+    if (DjangoAuth.authenticated) {
       $location.path("/");
     }
-    $scope.model = {'username':'','password':''};
+    $scope.model = {'username': '', 'password': ''};
     $scope.complete = false;
-    $scope.login = function(formData){
+    $scope.login = function (formData) {
       $scope.errors = [];
-      Validate.form_validation(formData,$scope.errors);
-      if(!formData.$invalid){
+      Validate.form_validation(formData, $scope.errors);
+      if (!formData.$invalid) {
         DjangoAuth.login($scope.model.username, $scope.model.password)
-          .then(function(){
+          .then(function () {
             // success case
             $location.path("/");
-          },function(data){
+          }, function (data) {
             // error case
             $scope.errors = data;
           });
