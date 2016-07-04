@@ -15,7 +15,7 @@ angular.module('frontendmuApp')
   $scope.getWeather = function () {
     Meteorologia.current.get($scope.query, function(data){
       data.dt = data.dt*1000;
-      if (data.weather[0].description == 'nubes rotas'){
+      if (data.weather[0].description === 'nubes rotas'){
         data.weather[0].description = 'parcialmente nublado';
       }
       data.wind.speed = data.wind.speed*3.6;
@@ -27,7 +27,7 @@ angular.module('frontendmuApp')
     Meteorologia.forecast.get($scope.query,function(data){
       data.list.shift();
       angular.forEach(data.list,function(item){
-        if (item.weather[0].description == 'nubes rotas'){
+        if (item.weather[0].description === 'nubes rotas'){
           item.weather[0].description = 'parcialmente nublado';
         }
         item.dt = new Date(item.dt*1000);
@@ -67,7 +67,7 @@ angular.module('frontendmuApp')
           $scope.logPagination = function (page, limit) {
             console.log('page: ', page);
             console.log('limit: ', limit);
-          }
+          };
 
           $scope.query = {
             limit: 20,

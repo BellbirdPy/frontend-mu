@@ -1,3 +1,4 @@
+"use strict"
 /**
  * ur.file: Native HTML5-based file input bindings for AngularJS
  *

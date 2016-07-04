@@ -38,7 +38,7 @@ angular.module('frontendmuApp')
           $scope.logPagination = function (page, limit) {
             console.log('page: ', page);
             console.log('limit: ', limit);
-          }
+          };
 
           $scope.query = {
             limit: 20,

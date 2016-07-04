@@ -27,7 +27,7 @@ angular.module('frontendmuApp')
           $http.defaults.headers.common.Authorization = 'Token ' + $cookies.get('token');
         }
         // Continue
-        params = args.params || {}
+        params = args.params || {};
         args = args || {};
         var deferred = $q.defer(),
           url = this.API_URL + args.url,
@@ -52,19 +52,19 @@ angular.module('frontendmuApp')
             if(data){
               data.status = status;
             }
-            if(status == 0){
-              if(data == ""){
+            if(status === 0){
+              if(data === ""){
                 data = {};
                 data['status'] = 0;
-                data['non_field_errors'] = ["Could not connect. Please try again."];
+                data['non_field_errors'] = ['Could not connect. Please try again.'];
               }
               // or if the data is null, then there was a timeout.
-              if(data == null){
+              if(data === null){
                 // Inject a non field error alerting the user
                 // that there's been a timeout error.
                 data = {};
                 data['status'] = 0;
-                data['non_field_errors'] = ["Server timed out. Please try again."];
+                data['non_field_errors'] = ['Server timed out. Please try again.'];
               }
             }
             deferred.reject(data, status, headers, config);
@@ -77,7 +77,7 @@ angular.module('frontendmuApp')
           'password1':password1,
           'password2':password2,
           'email':email
-        }
+        };
         data = angular.extend(data,more);
         return this.request({
           'method': "POST",
@@ -179,17 +179,17 @@ angular.module('frontendmuApp')
         // Set force to true to ignore stored value and query API
         restrict = restrict || false;
         force = force || false;
-        if(this.authPromise == null || force){
+        if(this.authPromise === null || force){
           this.authPromise = this.request({
             'method': "GET",
             'url': "/user/"
-          })
+          });
         }
         var da = this;
         var getAuthStatus = $q.defer();
-        if(this.authenticated != null && !force){
+        if(this.authenticated !== null && !force){
           // We have a stored value which means we can pass it back right away.
-          if(this.authenticated == false && restrict){
+          if(this.authenticated === false && restrict){
             getAuthStatus.reject("User is not logged in.");
           }else{
             getAuthStatus.resolve();
@@ -217,6 +217,6 @@ angular.module('frontendmuApp')
         return this.authenticationStatus();
       }
 
-    }
+    };
     return service;
   });

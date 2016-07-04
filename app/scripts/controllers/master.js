@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('MasterCtrl', function ($scope, $location, ServerData, Establecimiento,Menu,$rootScope,$timeout,$mdSidenav) {
+  .controller('MasterCtrl', function ($scope, $location, ServerData, Establecimiento, Menu, $rootScope, $timeout, $mdSidenav) {
     var menu = Menu;
     var vm = this;
     $scope.toggleLeft = buildDelayedToggler('left');
@@ -18,18 +18,19 @@ angular.module('frontendmuApp')
         var context = $scope,
           args = Array.prototype.slice.call(arguments);
         $timeout.cancel(timer);
-        timer = $timeout(function() {
+        timer = $timeout(function () {
           timer = undefined;
           func.apply(context, args);
         }, wait || 10);
       };
     }
+
     /**
      * Build handler to open/close a SideNav; when animation finishes
      * report completion in console
      */
     function buildDelayedToggler(navID) {
-      return debounce(function() {
+      return debounce(function () {
         // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav(navID)
           .toggle()
@@ -46,7 +47,7 @@ angular.module('frontendmuApp')
       $scope.establecimientos = data.results;
     });
 
-    $scope.seleccionar = function(e){
+    $scope.seleccionar = function (e) {
       $scope.obj.establecimiento = e;
       $rootScope.establecimiento = e;
       $location.path('/inventario/');
@@ -66,8 +67,10 @@ angular.module('frontendmuApp')
     function isOpen(section) {
       return menu.isSectionSelected(section);
     }
+
     function toggleOpen(section) {
       menu.toggleSelectSection(section);
     }
+
     $scope.vm = vm;
   });

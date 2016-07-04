@@ -8,71 +8,71 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('NutricionCtrl', function ($scope,$mdDialog,Nutricion,$filter,ServerData,Lote) {
+  .controller('NutricionCtrl', function ($scope, $mdDialog, Nutricion, $filter, ServerData, Lote) {
 
-    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id,ordering: 'nombre',page: 1};
+    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id, ordering: 'nombre', page: 1};
 
-      function successLotes(lotes) {
-        $scope.lotes = lotes;
+    function successLotes(lotes) {
+      $scope.lotes = lotes;
+    }
+
+    $scope.getLotes = function () {
+      $scope.promiseLotes = Lote.get($scope.queryLotes, successLotes).$promise;
+    };
+
+    $scope.getLotes();
+
+    $scope.queryDietas = {establecimiento: ServerData.establecimiento.id, ordering: 'fecha_inicio', page: 1};
+    $scope.selectedDietas = [];
+
+    function successDietas(dietas) {
+      $scope.dietas = dietas;
+    }
+
+    $scope.getDietas = function () {
+      if ($scope.queryDietas.lotes) {
+        if ($scope.queryDietas.lotes.toString() === 'todos') {
+          delete $scope.queryDietas['lotes'];
+        }
       }
 
-  $scope.getLotes = function () {
-    $scope.promiseLotes = Lote.get($scope.queryLotes,successLotes).$promise;
-  };
+      $scope.promiseDietas = Nutricion.get($scope.queryDietas, successDietas).$promise;
+      $scope.selectedDietas = [];
+    };
 
-  $scope.getLotes();
+    $scope.getDietas();
 
-    $scope.queryDietas = {establecimiento: ServerData.establecimiento.id,ordering: 'fecha_inicio',page: 1};
-    $scope.selectedDietas = [];
-
-  function successDietas(dietas) {
-    $scope.dietas = dietas;
-  }
-
-  $scope.getDietas = function () {
-  if ($scope.queryDietas.lotes){
-    if ($scope.queryDietas.lotes.toString() === 'todos'){
-        delete $scope.queryDietas["lotes"];
-    }
-    }
-
-    $scope.promiseDietas = Nutricion.get($scope.queryDietas,successDietas).$promise;
-    $scope.selectedDietas = [];
-  };
-
-  $scope.getDietas();
-
-    $scope.deleteDieta = function(ev) {
+    $scope.deleteDieta = function (ev) {
       // Appending dialog to document.body to cover sidenav in docs app
       console.log(ev);
       var confirm = $mdDialog.confirm()
         .title('Estas seguro de que quieres eliminar?')
-        .content('Tipo: '+ev.tipo_nutricion + '<br>' +
-        'Tipo de alimento: ' + ev.tipo_comida + '<br>' +
-        'Periodo: ' + $filter('date')(new Date(ev.fecha_inicio), "dd/MM/yyyy")   + ' - '+ $filter('date')(new Date(ev.fecha_fin), "dd/MM/yyyy") + '<br>' )
+        .content('Tipo: ' + ev.tipo_nutricion + '<br>' +
+          'Tipo de alimento: ' + ev.tipo_comida + '<br>' +
+          'Periodo: ' + $filter('date')(new Date(ev.fecha_inicio), "dd/MM/yyyy") + ' - ' + $filter('date')(new Date(ev.fecha_fin), "dd/MM/yyyy") + '<br>')
         .ariaLabel('Delete potrero')
         .targetEvent(null)
         .ok('Sí, estoy seguro')
         .cancel('Cancelar');
-      $mdDialog.show(confirm).then(function() {
-        Nutricion.delete({id:ev.id},ev,function(data){
+      $mdDialog.show(confirm).then(function () {
+        Nutricion.delete({id: ev.id}, ev, function (data) {
           console.log(data);
-          $scope.dietas.results.splice($scope.dietas.results.indexOf(ev),1);
+          $scope.dietas.results.splice($scope.dietas.results.indexOf(ev), 1);
           $scope.selectedDietas = [];
         });
-      }, function() {
+      }, function () {
         $scope.status = 'Se eliminó correctamente.';
 
       });
     };
 
 
-    $scope.editDieta = function(nutricion_modificar) {
+    $scope.editDieta = function (nutricion_modificar) {
 
       $mdDialog.show({
         templateUrl: '/staticfiles/views/dialogs/dialogo_nutricion.html',
         targetEvent: nutricion_modificar,
-        controller: ['$scope','$mdDialog','Nutricion','Lote','ServerData' ,function ($scope, $mdDialog, Nutricion,Lote,ServerData) {
+        controller: ['$scope', '$mdDialog', 'Nutricion', 'Lote', 'ServerData', function ($scope, $mdDialog, Nutricion, Lote, ServerData) {
           var _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 // a and b are javascript Date objects
@@ -83,26 +83,26 @@ angular.module('frontendmuApp')
 
             return Math.floor((utc2 - utc1) / _MS_PER_DAY);
           }
+
           $scope.form = {};
 
-          $scope.calculo_kilos = function(cantidad){
-            var result = dateDiffInDays($scope.newNutricion.fecha_inicio,$scope.newNutricion.fecha_fin);
+          $scope.calculo_kilos = function (cantidad) {
+            var result = dateDiffInDays($scope.newNutricion.fecha_inicio, $scope.newNutricion.fecha_fin);
             console.log(result);
-            if (cantidad == $scope.form.gramos){
-              $scope.form.kilos = cantidad * result /1000;
-            }else{
-              $scope.form.gramos = cantidad / result *1000;
+            if (cantidad === $scope.form.gramos) {
+              $scope.form.kilos = cantidad * result / 1000;
+            } else {
+              $scope.form.gramos = cantidad / result * 1000;
             }
           };
 
           $scope.lotes = [];
-          Lote.get({establecimiento:ServerData.establecimiento.id},function(response) {
+          Lote.get({establecimiento: ServerData.establecimiento.id}, function (response) {
             $scope.lotes = response.results;
           });
 
 
-
-          $scope.alimentos = ['Sal mineral','Balanceado','Pastura','Núcleo','Otros'];
+          $scope.alimentos = ['Sal mineral', 'Balanceado', 'Pastura', 'Núcleo', 'Otros'];
 
           $scope.newNutricion = {};
           if (nutricion_modificar) {
@@ -110,7 +110,7 @@ angular.module('frontendmuApp')
             $scope.newNutricion.fecha_inicio = new Date(nutricion_modificar.fecha_inicio);
             $scope.newNutricion.fecha_fin = new Date(nutricion_modificar.fecha_fin);
             console.log($scope.alimentos.indexOf($scope.newNutricion.tipo_comida));
-            if ($scope.alimentos.indexOf($scope.newNutricion.tipo_comida) == -1 ){
+            if ($scope.alimentos.indexOf($scope.newNutricion.tipo_comida) === -1) {
               $scope.form.tipo_comida = $scope.newNutricion.tipo_comida;
               $scope.newNutricion.tipo_comida = 'Otros';
             }
@@ -127,23 +127,22 @@ angular.module('frontendmuApp')
           };
 
 
-
           $scope.answer = function (answer) {
-            if (answer === 'guardar'){
-              if (nutricion_modificar){
-                if ($scope.newNutricion.tipo_comida == 'Otros'){
+            if (answer === 'guardar') {
+              if (nutricion_modificar) {
+                if ($scope.newNutricion.tipo_comida === 'Otros') {
                   $scope.newNutricion.tipo_comida = $scope.form.tipo_comida;
                 }
                 $scope.newNutricion.kilos = $scope.form.kilos;
 
-                Nutricion.update({id:$scope.newNutricion.id},$scope.newNutricion,function(data){
+                Nutricion.update({id: $scope.newNutricion.id}, $scope.newNutricion, function (data) {
                   $scope.newNutricion = data;
                   $mdDialog.hide($scope.newNutricion);
                 });
 
-              }else {
+              } else {
                 var nuevo = new Nutricion($scope.newNutricion);
-                if (nuevo.tipo_comida == 'Otros'){
+                if (nuevo.tipo_comida === 'Otros') {
                   nuevo.tipo_comida = $scope.form.tipo_comida;
                 }
                 nuevo.kilos = $scope.form.kilos;
@@ -162,21 +161,21 @@ angular.module('frontendmuApp')
 
         }]
       })
-        .then(function(nuevo) {
+        .then(function (nuevo) {
           if (nuevo !== true) {
-            var prueba = $filter('filter')($scope.dietas, { id: nuevo.id }, true)[0];
-            if (prueba){
+            var prueba = $filter('filter')($scope.dietas, {id: nuevo.id}, true)[0];
+            if (prueba) {
               if (prueba.id === nuevo.id) {
                 angular.extend(prueba, nuevo);
-              }else{
+              } else {
                 $scope.dietas.unshift(nuevo);
               }
-            }else{
+            } else {
               $scope.dietas.unshift(nuevo);
             }
 
           }
-        }, function() {
+        }, function () {
           $scope.alert = 'You cancelled the dialog.';
         });
     };

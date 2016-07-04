@@ -27,5 +27,5 @@ angular.module('frontendmuApp')
             $scope.errors = data;
           });
       }
-    }
+    };
   });

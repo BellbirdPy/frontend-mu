@@ -10,7 +10,7 @@
 angular.module('frontendmuApp')
   .controller('InventarioCtrl', function ($scope,$filter,$mdDialog,$mdMedia,Animal,Lote, ServerData,Categoria,Raza,Mortandad,Establecimiento) {
     var obj = ServerData;
-    $scope.estados_sanitarios = [{c:'E',display:'En fecha'},{c:'N',display:'No esta en fecha'},{c:'D',display:'En fecha'}]
+    $scope.estados_sanitarios = [{c:'E',display:'En fecha'},{c:'N',display:'No esta en fecha'},{c:'D',display:'En fecha'}];
 
     $scope.categorias = Categoria.get(function(response){
       $scope.categorias = response;
@@ -389,7 +389,7 @@ angular.module('frontendmuApp')
           $scope.answer = function (answer) {
             if (answer === 'guardar'){
               if (lista.length >= 1){
-                var listaId = []
+                var listaId = [];
                 angular.forEach(lista, function(animalSeleccionado){
                   listaId.push(animalSeleccionado.id);
                 });
@@ -452,7 +452,7 @@ angular.module('frontendmuApp')
           console.log(ServerData);
         });
         $scope.lotes.results.splice($scope.lotes.results.indexOf(lote),1);
-        $scope.selectedLotes = []
+        $scope.selectedLotes = [];
       }, function() {
         $scope.status = 'Se eliminó correctamente.';
 
@@ -599,7 +599,7 @@ angular.module('frontendmuApp')
           $scope.logPagination = function (page, limit) {
             console.log('page: ', page);
             console.log('limit: ', limit);
-          }
+          };
 
           $scope.query = {
             limit: 20,
@@ -611,7 +611,7 @@ angular.module('frontendmuApp')
 
           var rename = function (obj,oldName, newName) {
             // Do nothing if the names are the same
-            if (oldName == newName) {
+            if (oldName === newName) {
               return obj;
             }
             // Check for the old property name to avoid a ReferenceError in strict mode.
@@ -703,7 +703,7 @@ angular.module('frontendmuApp')
 
       var files = [e.file];
       var i,f;
-      for (i = 0, f = files[i]; i != files.length; ++i) {
+      for (i = 0, f = files[i]; i !== files.length; ++i) {
         var reader = new FileReader();
         var name = f.name;
         reader.onload = function(e) {
@@ -718,7 +718,7 @@ angular.module('frontendmuApp')
         };
         reader.readAsBinaryString(f);
       }
-    }
+    };
 
 
 

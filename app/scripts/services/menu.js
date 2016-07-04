@@ -63,7 +63,7 @@ angular.module('frontendmuApp')
         name: 'Establecimiento',
         type: 'link',
         state: 'establecimiento'
-      },
+      }
     ];
 
 
