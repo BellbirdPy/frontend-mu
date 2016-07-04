@@ -35,78 +35,78 @@ angular
     });
     $routeProvider
       .when('/', {
-        templateUrl: '/staticfiles/views/main.html',
+        templateUrl: '/views/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
       .when('/about', {
-        templateUrl: '/staticfiles/views/about.html',
+        templateUrl: '/views/about.html',
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
       .when('/login', {
-        templateUrl: '/staticfiles/views/login.html',
+        templateUrl: '/views/login.html',
         controller: 'LoginCtrl',
         controllerAs: 'login'
       })
       .when('/logout', {
-        templateUrl: '/staticfiles/views/logout.html',
+        templateUrl: '/views/logout.html',
         controller: 'LogoutCtrl',
         controllerAs: 'logout'
       })
       .when('/inventario', {
-        templateUrl: '/staticfiles/views/inventario.html',
+        templateUrl: '/views/inventario.html',
         controller: 'InventarioCtrl',
         controllerAs: 'inventario'
       })
       .when('/establecimiento', {
-        templateUrl: '/staticfiles/views/establecimiento.html',
+        templateUrl: '/views/establecimiento.html',
         controller: 'EstablecimientoCtrl',
         controllerAs: 'establecimiento'
       })
       .when('/potrero', {
-        templateUrl: '/staticfiles/views/potrero.html',
+        templateUrl: '/views/potrero.html',
         controller: 'PotreroCtrl',
         controllerAs: 'potrero'
       })
       .when('/nutricion', {
-        templateUrl: '/staticfiles/views/nutricion.html',
+        templateUrl: '/views/nutricion.html',
         controller: 'NutricionCtrl',
         controllerAs: 'nutricion'
       })
       .when('/sanitacion', {
-        templateUrl: '/staticfiles/views/sanitacion.html',
+        templateUrl: '/views/sanitacion.html',
         controller: 'SanitacionCtrl',
         controllerAs: 'sanitacion'
       })
       .when('/dashboard', {
-        templateUrl: '/staticfiles/views/dashboard.html',
+        templateUrl: '/views/dashboard.html',
         controller: 'DashboardCtrl',
         controllerAs: 'dashboard'
       })
       .when('/mortandad', {
-        templateUrl: '/staticfiles/views/mortandad.html',
+        templateUrl: '/views/mortandad.html',
         controller: 'MortandadCtrl',
         controllerAs: 'mortandad'
       })
       .when('/categoria', {
-        templateUrl: '/staticfiles/views/categoria.html',
+        templateUrl: '/views/categoria.html',
         controller: 'CategoriaCtrl',
         controllerAs: 'categoria'
       })
       .when('/raza', {
-        templateUrl: '/staticfiles/views/raza.html',
+        templateUrl: '/views/raza.html',
         controller: 'RazaCtrl',
         controllerAs: 'raza'
       })
       .when('/meteorologia', {
-        templateUrl: '/staticfiles/views/meteorologia.html',
+        templateUrl: '/views/meteorologia.html',
         controller: 'MeteorologiaCtrl',
         controllerAs: 'meteorologia'
       })
 
       .when('/empleados', {
-        templateUrl: '/staticfiles/views/empleado.html',
+        templateUrl: '/views/empleado.html',
         controller: 'EmpleadoCtrl',
         controllerAs: 'empleado'
       })
