@@ -10,6 +10,8 @@
 /**
  * The ur.file module implements native support for file uploads in AngularJS.
  */
+"use strict";
+
 angular.module('ur.file', []).config(['$provide', function($provide) {
 
   /**
