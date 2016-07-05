@@ -4,3 +4,6 @@ bower_components
 .idea/
 .tmp/
 
+dist/
+django/
+examples/
