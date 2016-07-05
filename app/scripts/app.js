@@ -114,6 +114,10 @@ angular
         templateUrl: '/views/compra.html',
         controller: 'CompraCtrl'
       })
+      .when('/venta', {
+        templateUrl: '/views/venta.html',
+        controller: 'VentaCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
