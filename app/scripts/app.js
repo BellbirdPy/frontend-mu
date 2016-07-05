@@ -20,7 +20,7 @@ angular
     'ur.file',
     'ngMaterialSidemenu'
   ])
-  .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider, $interpolateProvider) {
+  .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider, $interpolateProvider, $mdDateLocaleProvider) {
 
     // Force angular to use square brackets for template tag
     // The alternative is using {% verbatim %}

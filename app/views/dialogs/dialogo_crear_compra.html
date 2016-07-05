@@ -22,11 +22,16 @@
           <label>Nombre del vendedor</label>
           <input ng-model="newCompra.nombre_vendedor">
         </md-input-container>
-        <md-datepicker ng-model="newCompra.fecha" style="margin:13px 0;"
+        <md-input-container>
+          <label>Numero de Guia</label>
+          <input ng-model="newCompra.numero_guia" type="number">
+        </md-input-container>
+        <md-datepicker ng-model="fecha_compra" style="margin:13px 0;"
                        md-placeholder="Fecha de compra"></md-datepicker>
       </div>
     </md-content>
   </md-card>
+
   <md-card>
     <!-- Este es el formulario de carga de detalles -->
     <md-content layout-padding>
@@ -102,7 +107,8 @@
             </td>
           </tr>
           <tr>
-            <td md-cell colspan="6" ng-show="newCompra.detalle_compra.length == 0"><p style="text-align: center;" flex>No hay detalles
+            <td md-cell colspan="6" ng-show="newCompra.detalle_compra.length == 0"><p style="text-align: center;" flex>
+              No hay detalles
               de compras
               cargados</p></td>
           </tr>
@@ -120,4 +126,5 @@
     <md-button flex-order="1" ng-click="guardarCompra(newCompra)" class="md-primary">Guardar</md-button>
     <md-button ng-click="cancel()">Cancelar</md-button>
   </md-dialog-actions>
+  [[newCompra]]
 </md-dialog>

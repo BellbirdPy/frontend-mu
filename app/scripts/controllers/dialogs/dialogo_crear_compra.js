@@ -13,6 +13,7 @@ angular.module('frontendmuApp')
     $scope.newCompra = {};
     $scope.newDetalle = {};
     $scope.newCompra.detalle_compra = [];
+    $scope.fecha_compra = new Date();
 
     $scope.seleccionDetalleCompra = [];
     $scope.categorias = Categoria.get(function (response) {
@@ -42,8 +43,12 @@ angular.module('frontendmuApp')
       $scope.DetalleCompra = {};
     };
 
+
     $scope.guardarCompra = function (newCompra) {
       $scope.newCompra.establecimiento = 1; //Esto se tieen que poner el establecimiento despues
+      //Formateamos la fecha
+      $scope.newCompra.fecha_compra = $scope.fecha_compra.getFullYear() + '-'
+        + $scope.fecha_compra.getMonth() + '-' + $scope.fecha_compra.getDate();
       var nuevaCompra = new Compra($scope.newCompra);
       nuevaCompra.$save(function () {
           console.log('Compra realizada');
