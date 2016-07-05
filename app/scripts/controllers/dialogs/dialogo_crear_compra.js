@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearCompraCtrl', function ($scope, $mdDialog, Animal, Categoria, Raza, ServerData, Compra) {
+  .controller('DialogsDialogoCrearCompraCtrl', function ($scope, $mdDialog, Animal, Categoria, Raza, ServerData, Compra, Lote) {
     var obj = ServerData;
     $scope.newCompra = {};
     $scope.newDetalle = {};
@@ -23,6 +23,11 @@ angular.module('frontendmuApp')
     $scope.razas = Raza.get(function (response) {
       $scope.razas = response.results;
     });
+
+    $scope.lotes = Lote.get({establecimiento: obj.establecimiento.id}, function (response) {
+      $scope.lotes = response.results;
+    });
+
     $scope.hide = function () {
       $mdDialog.hide();
     };
@@ -38,6 +43,7 @@ angular.module('frontendmuApp')
       detalle_compra.raza = newDetalle.raza;
       detalle_compra.cantidad = newDetalle.cantidad;
       detalle_compra.caravana_inicial = newDetalle.nro_caravana_inicial;
+      detalle_compra.lote = newDetalle.lote;
 
       $scope.newCompra.detalle_compra.push(detalle_compra);
       $scope.DetalleCompra = {};
@@ -45,7 +51,7 @@ angular.module('frontendmuApp')
 
 
     $scope.guardarCompra = function (newCompra) {
-      $scope.newCompra.establecimiento = 1; //Esto se tieen que poner el establecimiento despues
+      $scope.newCompra.establecimiento = obj.establecimiento.id; //Esto se tieen que poner el establecimiento despues
       //Formateamos la fecha
       $scope.newCompra.fecha_compra = $scope.fecha_compra.getFullYear() + '-'
         + $scope.fecha_compra.getMonth() + '-' + $scope.fecha_compra.getDate();

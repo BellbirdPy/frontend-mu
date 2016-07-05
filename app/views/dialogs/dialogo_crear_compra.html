@@ -28,6 +28,10 @@
         </md-input-container>
         <md-datepicker ng-model="fecha_compra" style="margin:13px 0;"
                        md-placeholder="Fecha de compra"></md-datepicker>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Precio</label>
+          <input type="number" ng-model="newCompra.precio_total">
+        </md-input-container>
       </div>
     </md-content>
   </md-card>
@@ -68,6 +72,8 @@
             </md-option>
           </md-select>
         </md-input-container>
+      </div>
+      <div layout="row">
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Cantidad</label>
           <input type="number" ng-model="newDetalle.cantidad">
@@ -75,6 +81,17 @@
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Nro de caravana inicial</label>
           <input type="number" ng-model="newDetalle.nro_caravana_inicial">
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Lote</label>
+          <md-select ng-model="newDetalle.lote">
+            <md-option value="">
+              No asignar
+            </md-option>
+            <md-option ng-repeat="lote in lotes" value="[[lote.id]]">
+              [[lote.nombre]]
+            </md-option>
+          </md-select>
         </md-input-container>
         <md-button class="md-icon-button" ng-click="cargarDetalleCompra(newDetalle)">
           <md-icon><i class="material-icons">add</i></md-icon>
