@@ -20,7 +20,7 @@ angular
     'ur.file',
     'ngMaterialSidemenu'
   ])
-  .config(function ($routeProvider,$mdThemingProvider,$httpProvider,$resourceProvider,$interpolateProvider) {
+  .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider, $interpolateProvider) {
 
     // Force angular to use square brackets for template tag
     // The alternative is using {% verbatim %}
@@ -110,19 +110,23 @@ angular
         controller: 'EmpleadoCtrl',
         controllerAs: 'empleado'
       })
+      .when('/compra', {
+        templateUrl: '/views/compra.html',
+        controller: 'CompraCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
 
-  }).run( function($rootScope, $location) {
-    $rootScope.$on( "$routeChangeStart", function(event, next, current,$templateCache) {
-      if ( $rootScope.establecimiento == null ) {
-          $location.path( "" );
-      }
-    });
-
-    $rootScope.Utils = {
-      keys : Object.keys
+  }).run(function ($rootScope, $location) {
+  $rootScope.$on("$routeChangeStart", function (event, next, current, $templateCache) {
+    if ($rootScope.establecimiento == null) {
+      $location.path("");
     }
   });
+
+  $rootScope.Utils = {
+    keys: Object.keys
+  }
+});
 
