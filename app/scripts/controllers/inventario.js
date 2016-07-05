@@ -43,7 +43,7 @@ angular.module('frontendmuApp')
 
     $scope.editAnimal = function(animalSeleccionado) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_animal.html',
+        templateUrl: '/views/dialogs/dialogo_animal.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Animal','Categoria','Raza','Lote' ,function ($scope, $mdDialog, Animal, Categoria,Raza, Lote) {
           $scope.categorias =[];
@@ -142,7 +142,7 @@ angular.module('frontendmuApp')
 
     $scope.deleteListaAnimal = function(lista) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_eliminar.html',
+        templateUrl: '/views/dialogs/dialogo_eliminar.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Animal','$filter' ,function ($scope, $mdDialog, Animal,$filter) {
           $scope.lista = lista;
@@ -183,7 +183,7 @@ angular.module('frontendmuApp')
 
     $scope.mudarAnimales = function(lista) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_mudar.html',
+        templateUrl: '/views/dialogs/dialogo_mudar.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Lote','Animal','$filter' ,function ($scope, $mdDialog, Lote, Animal, $filter) {
           $scope.lotes =[];
@@ -241,7 +241,7 @@ angular.module('frontendmuApp')
 
     $scope.recategorizar = function(lista) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_recategorizar.html',
+        templateUrl: '/views/dialogs/dialogo_recategorizar.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Categoria','Animal','$filter' ,function ($scope, $mdDialog, Categoria, Animal,$filter) {
           $scope.categorias =[];
@@ -301,7 +301,7 @@ angular.module('frontendmuApp')
     $scope.agruparEnLote = function(lista) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_lote.html',
+        templateUrl: '/views/dialogs/dialogo_lote.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Potrero','ServerData' ,function ($scope, $mdDialog, Potrero,ServerData) {
           $scope.potreros =[];
@@ -372,7 +372,7 @@ angular.module('frontendmuApp')
 
     $scope.mortandad = function(lista) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_mortandad.html',
+        templateUrl: '/views/dialogs/dialogo_mortandad.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Animal','Mortandad','ServerData' ,function ($scope, $mdDialog, Animal, Mortandad,ServerData) {
 
@@ -462,7 +462,7 @@ angular.module('frontendmuApp')
     $scope.editLote = function(loteSeleccionado) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_lote.html',
+        templateUrl: '/views/dialogs/dialogo_lote.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Potrero','ServerData','Establecimiento' ,function ($scope, $mdDialog, Potrero,ServerData,Establecimiento) {
           $scope.potreros =[];
@@ -540,7 +540,7 @@ angular.module('frontendmuApp')
 
     $scope.editMortandad = function(mortandad) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_mortandad.html',
+        templateUrl: '/views/dialogs/dialogo_mortandad.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Animal','Mortandad' ,function ($scope, $mdDialog, Animal, Mortandad) {
           $scope.hola = 'hola';
@@ -588,7 +588,7 @@ angular.module('frontendmuApp')
     $scope.cargarArchivo = function(result) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_archivo.html',
+        templateUrl: '/views/dialogs/dialogo_archivo.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Animal','ServerData' ,function ($scope, $mdDialog, Animal,ServerData) {
 

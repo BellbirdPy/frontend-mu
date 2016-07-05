@@ -28,7 +28,7 @@ angular.module('frontendmuApp')
 
     $scope.deleteCat = function(lista) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_eliminar_categoria.html',
+        templateUrl: '/views/dialogs/dialogo_eliminar_categoria.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Categoria','$filter' ,function ($scope, $mdDialog, Categoria) {
           $scope.options = {
@@ -81,7 +81,7 @@ angular.module('frontendmuApp')
     $scope.editCat = function(categoriaModificar) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_categoria.html',
+        templateUrl: '/views/dialogs/dialogo_categoria.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Raza','ServerData' ,function ($scope, $mdDialog, Raza, ServerData) {
           $scope.newCategoria = {};

@@ -28,7 +28,7 @@ angular.module('frontendmuApp')
 
     $scope.deleteEmp = function(lista) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_eliminar_empleado.html',
+        templateUrl: '/views/dialogs/dialogo_eliminar_empleado.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Empleado','$filter' ,function ($scope, $mdDialog, Empleado) {
           $scope.options = {
@@ -81,7 +81,7 @@ angular.module('frontendmuApp')
     $scope.editEmp = function(empleadoModificar) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_empleado.html',
+        templateUrl: '/views/dialogs/dialogo_empleado.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Raza','ServerData','$http' ,function ($scope, $mdDialog, Raza, ServerData,$http) {
           $scope.newEmpleado = {};
@@ -165,7 +165,7 @@ angular.module('frontendmuApp')
     $scope.deleteCon = function(lista) {
       console.log(lista);
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_eliminar_contratista.html',
+        templateUrl: '/views/dialogs/dialogo_eliminar_contratista.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Contratista','$filter' ,function ($scope, $mdDialog, Contratista) {
           $scope.options = {
@@ -218,7 +218,7 @@ angular.module('frontendmuApp')
     $scope.editCon = function(contratistaModificar) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_contratista.html',
+        templateUrl: '/views/dialogs/dialogo_contratista.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Contratista','ServerData' ,function ($scope, $mdDialog, Contratista, ServerData) {
           $scope.newContratista = {};

@@ -28,7 +28,7 @@ angular.module('frontendmuApp')
 
     $scope.deleteRaza = function(lista) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_eliminar_raza.html',
+        templateUrl: '/views/dialogs/dialogo_eliminar_raza.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Raza','$filter' ,function ($scope, $mdDialog, Raza) {
           $scope.options = {
@@ -81,7 +81,7 @@ angular.module('frontendmuApp')
     $scope.editRaza = function(razaModificar) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_raza.html',
+        templateUrl: '/views/dialogs/dialogo_raza.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Raza','ServerData' ,function ($scope, $mdDialog, Raza, ServerData) {
           $scope.newRaza = {};

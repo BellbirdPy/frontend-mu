@@ -58,7 +58,7 @@ angular.module('frontendmuApp')
 
     $scope.deleteReg = function(lista) {
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_eliminar_registro.html',
+        templateUrl: '/views/dialogs/dialogo_eliminar_registro.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Meteorologia','$filter' ,function ($scope, $mdDialog, Meteorologia) {
           $scope.options = {
@@ -111,7 +111,7 @@ angular.module('frontendmuApp')
     $scope.editReg = function(registroModificar) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_meteorologia.html',
+        templateUrl: '/views/dialogs/dialogo_meteorologia.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','ServerData' ,function ($scope, $mdDialog, ServerData) {
           $scope.newRegistro = {};

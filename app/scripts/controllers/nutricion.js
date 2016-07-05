@@ -70,7 +70,7 @@ angular.module('frontendmuApp')
     $scope.editDieta = function (nutricion_modificar) {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_nutricion.html',
+        templateUrl: '/views/dialogs/dialogo_nutricion.html',
         targetEvent: nutricion_modificar,
         controller: ['$scope', '$mdDialog', 'Nutricion', 'Lote', 'ServerData', function ($scope, $mdDialog, Nutricion, Lote, ServerData) {
           var _MS_PER_DAY = 1000 * 60 * 60 * 24;

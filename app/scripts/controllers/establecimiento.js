@@ -26,7 +26,7 @@ angular.module('frontendmuApp')
     $scope.cargaAnimales = function () {
 
       $mdDialog.show({
-        templateUrl: '/staticfiles/views/dialogs/dialogo_carga_animales.html',
+        templateUrl: '/views/dialogs/dialogo_carga_animales.html',
         targetEvent: null,
         controller: ['$scope', '$mdDialog', 'Raza', 'Categoria', 'ServerData', '$filter', 'Animal', 'AnimalCaravana', 'Potrero', '$rootScope', function ($scope, $mdDialog, Raza, Categoria, ServerData, $filter, Animal, AnimalCaravana, Potrero, $rootScope) {
 
