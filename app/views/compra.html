@@ -11,10 +11,13 @@
       <!--Aca va ir el listado-->
       <md-card>
         <!-- Toolbar del listado-->
-        <md-toolbar class="md-table-toolbar md-default">
+        <md-toolbar class="md-table-toolbar md-default" ng-hide="searchState">
           <div class="md-toolbar-tools">
             <span>Listado de compras</span>
             <span flex></span>
+            <md-button class="md-icon-button" ng-click="search()">
+              <md-icon class="material-icons">search</md-icon>
+            </md-button>
             <md-menu md-position-mode="target-right target">
 
               <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
@@ -32,16 +35,19 @@
           </div>
         </md-toolbar>
         <!-- Toolbar de seleccion -->
-        <md-toolbar class="md-table-toolbar alternate" ng-show="false">
+        <md-toolbar class="md-table-toolbar alternate" ng-show="seleccion">
 
         </md-toolbar>
         <!-- Toolbar del buscador -->
-        <md-toolbar class="md-table-toolbar md-default">
+        <md-toolbar class="md-table-toolbar md-default" ng-show="searchState">
           <div class="md-toolbar-tools">
+            <md-icon class="material-icons">search</md-icon>
             <md-input-container flex>
-              <label>Búsqueda</label>
-              <input ng-model="buscarCompra">
+              <input ng-model="searchCompra">
             </md-input-container>
+            <md-button class="md-icon-button">
+              <md-icon class="material-icons">close</md-icon>
+            </md-button>
           </div>
         </md-toolbar>
 
@@ -56,11 +62,14 @@
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row md-select="compra" md-select-id="id" md-auto-select ng-repeat="compra in compras">
+            <tr md-row md-select="compra" md-select-id="id" md-auto-select
+                ng-repeat="compra in compras | filter: searchCompra"
+                ng-right-click="prueba($event)">
               <td md-cell>[[compra.cod_establecimiento_vendedor]]</td>
               <td md-cell>[[compra.nombre_vendedor]]</td>
               <td md-cell>[[compra.fecha_compra]]</td>
             </tr>
+
             <tr>
               <td md-cell colspan="4" ng-hide="comprasCargadas"><p style="text-align: center;" flex>No hay compras
                 cargadas</p></td>

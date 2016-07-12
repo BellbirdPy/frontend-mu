@@ -10,19 +10,26 @@
 /**
  * The ur.file module implements native support for file uploads in AngularJS.
  */
-"use strict";
-
-angular.module('ur.file', []).config(['$provide', function($provide) {
+angular.module('ur.file', []).config(['$provide', function ($provide) {
 
   /**
    * XHR initialization, copied from Angular core, because it's buried inside $HttpProvider.
    */
-  var XHR = window.XMLHttpRequest || function() {
-    try { return new ActiveXObject("Msxml2.XMLHTTP.6.0"); } catch (e1) {}
-    try { return new ActiveXObject("Msxml2.XMLHTTP.3.0"); } catch (e2) {}
-    try { return new ActiveXObject("Msxml2.XMLHTTP"); } catch (e3) {}
-    throw new Error("This browser does not support XMLHttpRequest.");
-  };
+  var XHR = window.XMLHttpRequest || function () {
+      try {
+        return new ActiveXObject("Msxml2.XMLHTTP.6.0");
+      } catch (e1) {
+      }
+      try {
+        return new ActiveXObject("Msxml2.XMLHTTP.3.0");
+      } catch (e2) {
+      }
+      try {
+        return new ActiveXObject("Msxml2.XMLHTTP");
+      } catch (e3) {
+      }
+      throw new Error("This browser does not support XMLHttpRequest.");
+    };
 
   /**
    * Initializes XHR object with parameters from $httpBackend.
@@ -38,13 +45,13 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
       headers['Content-Type'] = type;
     }
 
-    angular.forEach(headers, function(value, key) {
+    angular.forEach(headers, function (value, key) {
       (value) ? xhr.setRequestHeader(key, value) : null;
     });
 
     manager.register(xhr);
 
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (xhr.readyState == 4) {
         manager.unregister(xhr);
         var response = xhr.response || xhr.responseText;
@@ -61,8 +68,8 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
   /**
    * Hook into $httpBackend to intercept requests containing files.
    */
-  $provide.decorator('$httpBackend', ['$delegate', '$window', 'uploadManager', function($delegate, $window, uploadManager) {
-    return function(method, url, post, callback, headers, timeout, wc) {
+  $provide.decorator('$httpBackend', ['$delegate', '$window', 'uploadManager', function ($delegate, $window, uploadManager) {
+    return function (method, url, post, callback, headers, timeout, wc) {
       var containsFile = false, result = null, manager = uploadManager;
 
       if (post && angular.isObject(post)) {
@@ -77,7 +84,7 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
         angular.forEach({
           size: 'X-File-Size',
           lastModifiedDate: 'X-File-Last-Modified'
-        }, function(header, key) {
+        }, function (header, key) {
           if (post && post[key]) {
             if (!headers[header]) headers[header] = post[key];
           }
@@ -95,7 +102,7 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
    * Checks an object hash to see if it contains a File object, or, if legacy is true, checks to
    * see if an object hash contains an <input type="file" /> element.
    */
-  var hasFile = function(data) {
+  var hasFile = function (data) {
     for (var n in data) {
       if (data[n] instanceof Blob) {
         return true;
@@ -111,35 +118,35 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
    * Prevents $http from executing its default transformation behavior if the data to be
    * transformed contains file data.
    */
-  $provide.decorator('$http', ['$delegate', function($delegate) {
+  $provide.decorator('$http', ['$delegate', function ($delegate) {
     var transformer = $delegate.defaults.transformRequest[0];
 
-    $delegate.defaults.transformRequest = [function(data) {
+    $delegate.defaults.transformRequest = [function (data) {
       return data instanceof Blob ? data : transformer(data);
     }];
     return $delegate;
   }]);
 
-}]).service('fileHandler', ['$q', '$rootScope', function($q, $rootScope) {
+}]).service('fileHandler', ['$q', '$rootScope', function ($q, $rootScope) {
 
   return {
 
     /**
      * Loads a file as a data URL and returns a promise representing the file's value.
      */
-    load: function(file) {
+    load: function (file) {
       var deferred = $q.defer();
 
       var reader = angular.extend(new FileReader(), {
-        onload: function(e) {
+        onload: function (e) {
           deferred.resolve(e.target.result);
           if (!$rootScope.$$phase) $rootScope.$apply();
         },
-        onerror: function(e) {
+        onerror: function (e) {
           deferred.reject(e);
           if (!$rootScope.$$phase) $rootScope.$apply();
         },
-        onabort: function(e) {
+        onabort: function (e) {
           deferred.reject(e);
           if (!$rootScope.$$phase) $rootScope.$apply();
         }
@@ -148,14 +155,16 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
       reader.readAsDataURL(file);
 
       return angular.extend(deferred.promise, {
-        abort: function() { reader.abort(); }
+        abort: function () {
+          reader.abort();
+        }
       });
     },
 
     /**
      * Returns the metadata from a File object, including the name, size and last modified date.
      */
-    meta: function(file) {
+    meta: function (file) {
       return {
         name: file.name,
         size: file.size,
@@ -166,7 +175,7 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
     /**
      * Converts a File object or data URL to a Blob.
      */
-    toBlob: function(data) {
+    toBlob: function (data) {
       var extras = {};
 
       if (data instanceof File) {
@@ -185,16 +194,16 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
       for (var i = 0; i < length; i++) {
         bytes[i] = body.charCodeAt(i);
       }
-      return angular.extend(new Blob([bytes], { type: headers[0] }), extras);
+      return angular.extend(new Blob([bytes], {type: headers[0]}), extras);
     }
   };
 
-}]).service('uploadManager', ['$rootScope', function($rootScope) {
+}]).service('uploadManager', ['$rootScope', function ($rootScope) {
 
   angular.extend(this, {
-    id : null,
+    id: null,
     uploads: {},
-    capture: function(id) {
+    capture: function (id) {
       this.id = id;
       this.uploads[id] = {
         loaded: 0,
@@ -203,7 +212,7 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
         object: null
       };
     },
-    register: function(xhr) {
+    register: function (xhr) {
       if (this.id === null) {
         return false;
       }
@@ -212,7 +221,7 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
       this.uploads[xhr._idXhr]['object'] = xhr;
       var self = this;
 
-      xhr.upload.onprogress = function(e) {
+      xhr.upload.onprogress = function (e) {
         if (e.lengthComputable) {
           self.uploads[xhr._idXhr]['loaded'] = e.loaded;
           self.uploads[xhr._idXhr]['total'] = e.total;
@@ -222,16 +231,16 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
       };
       return true;
     },
-    unregister: function(xhr) {
+    unregister: function (xhr) {
       delete this.uploads[xhr._idXhr];
     },
-    get: function(id) {
+    get: function (id) {
       if (this.uploads[id]) {
         return this.uploads[id];
       }
       return false;
     },
-    abort: function(id) {
+    abort: function (id) {
       if (this.uploads[id]) {
         return this.uploads[id]['object'].abort();
       }
@@ -254,14 +263,15 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
         return;
       }
 
-      element.bind('change', function(e) {
+      element.bind('change', function (e) {
         if (!e.target.files || !e.target.files.length || !e.target.files[0]) {
           return true;
         }
         var index, fileData = attrs.multiple ? e.target.files : e.target.files[0];
-        ngModel.$render = function() {};
+        ngModel.$render = function () {
+        };
 
-        scope.$apply(function(scope) {
+        scope.$apply(function (scope) {
           index = scope.$index;
           $parse(attrs.ngModel).assign(scope, fileData);
         });
@@ -282,11 +292,12 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
     restrict: "EAC",
     require: "?ngModel",
     link: function urDropTargetLink(scope, element, attrs, ngModel) {
-      var multiple  = attrs.multiple,
-          dropExpr  = attrs.drop ? $parse(attrs.drop) : null,
-          modelExpr = attrs.ngModel ? $parse(attrs.ngModel) : null;
+      var multiple = attrs.multiple,
+        dropExpr = attrs.drop ? $parse(attrs.drop) : null,
+        modelExpr = attrs.ngModel ? $parse(attrs.ngModel) : null;
 
-      if (ngModel) ngModel.$render = function() {};
+      if (ngModel) ngModel.$render = function () {
+      };
 
       function stop(e) {
         e.stopPropagation();
@@ -315,11 +326,11 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
         toIgnore.pop();
       });
 
-      element.bind("dragover", function(e) {
+      element.bind("dragover", function (e) {
         stop(e);
       });
 
-      element.bind("drop", function(e) {
+      element.bind("drop", function (e) {
         stop(e);
         if (attrs.overClass) element.removeClass(attrs.overClass);
         isOver = false;
@@ -332,9 +343,11 @@ angular.module('ur.file', []).config(['$provide', function($provide) {
         if (modelExpr) modelExpr.assign(scope, files);
         if (!dropExpr) return (scope.$$phase) ? null : scope.$apply();
 
-        var local = { $event: e };
+        var local = {$event: e};
         local['$file' + (multiple ? 's' : '')] = files;
-        var result = function() { dropExpr(scope, local); };
+        var result = function () {
+          dropExpr(scope, local);
+        };
         (scope.$$phase) ? result() : scope.$apply(result);
       });
     }

@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- load-staticfiles -->
 <html>
 <head>
   <meta charset="utf-8">
@@ -18,6 +19,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="../bower_components/angular-material-sidemenu/dest/angular-material-sidemenu.css">
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- endbuild -->
 </head>
 <body layout="row" ng-app="frontendmuApp" ng-controller="MasterCtrl" style="background-color: lightgray;">
@@ -209,6 +211,7 @@
       </md-menu>
     </div>
   </md-toolbar>
+
   <md-content md-scroll-y layout="column" flex>
     <div ng-view layout-padding flex="noshrink" ng-if="obj.establecimiento"></div>
     <div layout-padding flex="noshrink" ng-if="obj.establecimiento == ''">
