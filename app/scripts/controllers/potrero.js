@@ -57,7 +57,7 @@ angular.module('frontendmuApp')
     $scope.editPotrero = function(potreroModificar) {
 
       $mdDialog.show({
-        templateUrl: '/views/dialogs/dialogo_potrero.html',
+        templateUrl: 'views/dialogs/dialogo_potrero.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Potrero','ServerData','Establecimiento' ,function ($scope, $mdDialog, Potrero, ServerData, Establecimiento) {
           $scope.newPotrero = {};
