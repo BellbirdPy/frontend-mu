@@ -434,13 +434,16 @@ module.exports = function (grunt) {
         }, {
           from: "http://localhost:8000/",
           to: "/"
+        }, {
+          from: "http://127.0.0.1:8000/",
+          to: "/"
         }]
       }
     },
 
     /*
-    * Esta parte agrega los static antes de cada src de css/js e imagenes que encuentre en el index
-    * */
+     * Esta parte agrega los static antes de cada src de css/js e imagenes que encuentre en el index
+     * */
     bridge: {
       django: {
         options: {
@@ -522,7 +525,7 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin',
+    'htmlmin'
   ]);
 
   grunt.registerTask('default', [

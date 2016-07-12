@@ -85,37 +85,37 @@ angular
         controllerAs: 'dashboard'
       })
       .when('/mortandad', {
-        templateUrl: '/views/mortandad.html',
+        templateUrl: 'views/mortandad.html',
         controller: 'MortandadCtrl',
         controllerAs: 'mortandad'
       })
       .when('/categoria', {
-        templateUrl: '/views/categoria.html',
+        templateUrl: 'views/categoria.html',
         controller: 'CategoriaCtrl',
         controllerAs: 'categoria'
       })
       .when('/raza', {
-        templateUrl: '/views/raza.html',
+        templateUrl: 'views/raza.html',
         controller: 'RazaCtrl',
         controllerAs: 'raza'
       })
       .when('/meteorologia', {
-        templateUrl: '/views/meteorologia.html',
+        templateUrl: 'views/meteorologia.html',
         controller: 'MeteorologiaCtrl',
         controllerAs: 'meteorologia'
       })
 
       .when('/empleados', {
-        templateUrl: '/views/empleado.html',
+        templateUrl: 'views/empleado.html',
         controller: 'EmpleadoCtrl',
         controllerAs: 'empleado'
       })
       .when('/compra', {
-        templateUrl: '/views/compra.html',
+        templateUrl: 'views/compra.html',
         controller: 'CompraCtrl'
       })
       .when('/venta', {
-        templateUrl: '/views/venta.html',
+        templateUrl: 'views/venta.html',
         controller: 'VentaCtrl'
       })
       .otherwise({

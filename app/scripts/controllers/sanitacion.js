@@ -61,7 +61,7 @@ angular.module('frontendmuApp')
 
     $scope.agregarEvento = function(evento) {
       $mdDialog.show({
-        templateUrl: '/views/dialogs/dialogo_evento.html',
+        templateUrl: 'views/dialogs/dialogo_evento.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','EventoEstablecimiento','$filter','ServerData' ,function ($scope, $mdDialog, EventoEstablecimiento,$filter,ServerData) {
 

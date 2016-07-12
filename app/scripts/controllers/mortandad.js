@@ -29,7 +29,7 @@ angular.module('frontendmuApp')
 
     $scope.deleteMortandad = function(lista) {
       $mdDialog.show({
-        templateUrl: '/views/dialogs/dialogo_eliminar_mortandad.html',
+        templateUrl: 'views/dialogs/dialogo_eliminar_mortandad.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Mortandad','$filter' ,function ($scope, $mdDialog, Mortandad,$filter) {
           $scope.options = {
@@ -81,7 +81,7 @@ angular.module('frontendmuApp')
 
     $scope.editMortandad = function(mortandad) {
       $mdDialog.show({
-        templateUrl: '/views/dialogs/dialogo_mortandad.html',
+        templateUrl: 'views/dialogs/dialogo_mortandad.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog','Animal','Mortandad' ,function ($scope, $mdDialog, Animal, Mortandad) {
           $scope.hola = 'hola';
@@ -135,7 +135,7 @@ angular.module('frontendmuApp')
 
     $scope.viewMortandad = function(mortandad) {
       $mdDialog.show({
-        templateUrl: '/views/dialogs/dialogo_view_mortandad.html',
+        templateUrl: 'views/dialogs/dialogo_view_mortandad.html',
         targetEvent: null,
         controller: ['$scope','$mdDialog' ,function ($scope, $mdDialog) {
           $scope.mortandad = mortandad;
