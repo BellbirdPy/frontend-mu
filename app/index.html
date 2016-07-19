@@ -192,11 +192,6 @@
         </md-button>
 
         <md-menu-content width="4">
-          <md-menu-item ng-hide="true">
-            <md-button>
-              <p>Nada</p>
-            </md-button>
-          </md-menu-item>
           <md-menu-item>
             <md-button ng-href="#/main">
               <p>Cambiar establecimiento</p>
@@ -265,7 +260,6 @@
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
 <script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
-<script src="bower_components/js-xlsx/dist/xlsx.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-material-sidemenu/dest/angular-material-sidemenu.js"></script>
@@ -275,7 +269,7 @@
 
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
-<script src="bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
+<script src="../bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
 <script src="../bower_components/fullcalendar/dist/lang/es.js"></script>
 <script src="scripts/angular-locale_es-py.js"></script>
 <script src="scripts/angular-file.js"></script>
@@ -331,6 +325,8 @@
 <script src="scripts/services/compra.js"></script>
 <script src="scripts/controllers/venta.js"></script>
 <script src="scripts/services/venta.js"></script>
+<script src="scripts/services/noticia.js"></script>
+<script src="scripts/filters/limittohtml.js"></script>
 <!-- endbuild -->
 </body>
 </html>

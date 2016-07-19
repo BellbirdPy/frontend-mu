@@ -12,4 +12,26 @@
     <md-button ng-click="seleccionar(e)" class="white-text">Continuar</md-button>
   </md-card-actions>
 </md-card>
+
 </div>
+<br>
+<div >
+  <div class="md-headline grey-text">Portal de Noticias</div>
+  <div layout="row" layout-xs="column">
+    <md-card ng-repeat="e in noticias" flex-gt-sm="20" layout-gt-xs="25" flex>
+      <img class="md-card-image"  src="[[e.imagen]]" width="100%">
+      <md-card-title>
+        <md-card-title-text>
+          <small><span class="md-title">[[e.titulo]]</span></small>
+        </md-card-title-text>
+
+      </md-card-title>
+
+      <md-card-content ng-bind-html="e.texto | limitHtml:140">
+      </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="verNoticia(e)">Ver más</md-button>
+      </md-card-actions>
+    </md-card>
+  </div>
+  </div>
