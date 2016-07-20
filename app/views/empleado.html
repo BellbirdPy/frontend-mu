@@ -7,19 +7,11 @@
     <md-card>
         <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedEmp.length">
             <div class="md-toolbar-tools">
-                <span>Empleados</span>
-                <md-menu md-position-mode="target-right target" >
-                    <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-                        <md-icon><i class="material-icons">more_vert</i> </md-icon>
+                <span flex>Empleados</span>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="editEmp()">
+                        <md-icon><i class="material-icons">add</i> </md-icon>
                     </md-button>
-                    <md-menu-content width="4" >
-                        <md-menu-item>
-                            <md-button ng-click="editEmp()">
-                                <p>Agregar</p>
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
+
             </div>
         </md-toolbar>
         <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedEmp.length">
@@ -88,19 +80,10 @@
     <md-card>
         <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedCon.length">
             <div class="md-toolbar-tools">
-                <span>Contratistas</span>
-                <md-menu md-position-mode="target-right target" >
-                    <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-                        <md-icon><i class="material-icons">more_vert</i> </md-icon>
+                <span flex>Contratistas</span>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="editCon()">
+                        <md-icon><i class="material-icons">add</i> </md-icon>
                     </md-button>
-                    <md-menu-content width="4" >
-                        <md-menu-item>
-                            <md-button ng-click="editCon()">
-                                <p>Agregar</p>
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
             </div>
         </md-toolbar>
         <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedCon.length">

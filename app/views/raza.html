@@ -11,18 +11,9 @@
       <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedRazas.length">
         <div class="md-toolbar-tools">
           <span>Razas</span>
-          <md-menu md-position-mode="target-right target" >
-            <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-              <md-icon><i class="material-icons">more_vert</i> </md-icon>
+            <md-button class="md-icon-button" aria-label="More" ng-click="editRaza()">
+              <md-icon><i class="material-icons">add</i> </md-icon>
             </md-button>
-            <md-menu-content width="4" >
-              <md-menu-item>
-                <md-button ng-click="editRaza()">
-                  <p>Agregar</p>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
         </div>
       </md-toolbar>
       <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedRazas.length">

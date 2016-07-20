@@ -45,19 +45,13 @@
     <md-card>
         <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedDietas.length">
             <div class="md-toolbar-tools">
-                <span>Dietas Activas</span>
-                <md-menu md-position-mode="target-right target" >
-                    <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-                        <md-icon><i class="material-icons">more_vert</i> </md-icon>
+
+                <span flex>Dietas Activas</span>
+              
+                    <md-button class="md-icon-button" aria-label="More" ng-click="editDieta()">
+                        <md-icon><i class="material-icons">add</i> </md-icon>
                     </md-button>
-                    <md-menu-content width="4" >
-                        <md-menu-item>
-                            <md-button ng-click="editDieta()">
-                                <p>Agregar</p>
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
+
             </div>
         </md-toolbar>
         <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedDietas.length">

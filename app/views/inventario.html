@@ -10,19 +10,11 @@
     <md-card>
       <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedLotes.length">
         <div class="md-toolbar-tools">
-          <span>Lotes</span>
-          <md-menu md-position-mode="target-right target" >
-            <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-              <md-icon><i class="material-icons">more_vert</i> </md-icon>
+          <span flex>Lotes</span>
+            <md-button class="md-icon-button" aria-label="More" ng-click="editLote()">
+              <md-icon><i class="material-icons">add</i> </md-icon>
             </md-button>
-            <md-menu-content width="4" >
-              <md-menu-item>
-                <md-button ng-click="editLote()">
-                  <p>Agregar</p>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
+
         </div>
       </md-toolbar>
       <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedLotes.length">
@@ -138,18 +130,9 @@
         <div class="md-toolbar-tools">
           <span>Animales</span>
           <span flex></span>
-          <md-menu md-position-mode="target-right target" >
-            <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-              <md-icon><i class="material-icons">more_vert</i> </md-icon>
+            <md-button class="md-icon-button" aria-label="More" ng-click="editAnimal()">
+              <md-icon><i class="material-icons">add</i> </md-icon>
             </md-button>
-            <md-menu-content width="4" >
-              <md-menu-item ng-hide="selection.length">
-                <md-button ng-click="editAnimal()">
-                  <p>Agregar</p>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
         </div>
       </md-toolbar>
       <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedAnimales.length">
