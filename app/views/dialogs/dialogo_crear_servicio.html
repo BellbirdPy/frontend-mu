@@ -1,0 +1,81 @@
+<md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="white-text">Servicio Animal</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()">
+        <md-icon class="md-icon-button white-text"><i class="material-icons">close</i></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <section layout="row">
+    <md-card flex>
+      <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedLotes.length">
+        <div class="md-toolbar-tools">
+          <span flex>Seleccione los lotes para el servicio</span>
+        </div>
+      </md-toolbar>
+      <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedLotes.length">
+        <div class="md-toolbar-tools">
+          <span>[[selectedLotes.length]] [[selectedLotes.length > 1 ? 'lotes seleccionados' : 'lote seleccionado']]</span>
+        </div>
+      </md-toolbar>
+      <!-- exact table from live demo -->
+      <md-table-container>
+        <table md-table md-row-select multiple ng-model="selectedLotes" md-progress="promiseLotes">
+          <thead md-head md-order="queryLotes.ordering" md-on-reorder="getLotes">
+          <tr md-row md-select-id="id">
+            <th md-column md-numeric md-order-by="id"><span>Código</span></th>
+            <th md-column md-order-by="nombre"><span>Nombre</span></th>
+            <th md-column md-order-by="potrero__nombre"><span>Potrero</span></th>
+            <th md-column md-numeric md-order-by="peso_promedio">Peso promedio (Kg.)</th>
+            <th md-column md-numeric md-order-by="cantidad">Cantidad</th>
+          </tr>
+          </thead>
+          <tbody md-body>
+          <tr md-row md-select="lote.id" md-select-id="id" md-auto-select ng-repeat="lote in lotes.results">
+            <td md-cell>[[lote.id]]</td>
+            <td md-cell>[[lote.nombre]]</td>
+            <td md-cell>[[lote.potrero_nombre]]</td>
+            <td md-cell>[[lote.peso_promedio]]</td>
+            <td md-cell>[[lote.animales.length]]</td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryLotes.page" md-total="[[lotes.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getLotes" md-page-select></md-table-pagination>
+    </md-card>
+    <md-card>
+      <md-content layout-padding>
+        <h4 class="green-text">Encabezado</h4>
+        <div>
+          <div layout="column">
+            <md-input-container >
+              <label>Tipo de servicio</label>
+              <md-select ng-model="newNutricion.tipo">
+                <md-option ng-repeat="tipo in tipos" value="[[tipo.simbolo]]">
+                  [[tipo.nombre]]
+                </md-option>
+              </md-select>
+            </md-input-container>
+          <span>Fecha de Inicio</span>
+          <md-datepicker ng-model="fecha_inicio" style="margin:13px 0;"
+                         md-placeholder="Fecha de Inicio"></md-datepicker>
+          <span>Fecha de Finalización</span>
+          <md-datepicker ng-model="fecha_fin" style="margin:13px 0;"
+                         md-placeholder="Fecha de Finalización"></md-datepicker>
+          </div>
+        </div>
+      </md-content>
+    </md-card>
+  </section>
+
+
+
+  <md-dialog-actions layout="row">
+    <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
+    <span flex></span>
+    <md-button flex-order="1" ng-click="guardarServicio()" class="md-primary">Guardar</md-button>
+    <md-button ng-click="cancel()">Cancelar</md-button>
+  </md-dialog-actions>
+</md-dialog>

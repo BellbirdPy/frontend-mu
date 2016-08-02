@@ -1,0 +1,58 @@
+<section>
+  <div >
+    <h1 class="md-display-1 green-text">Manejo</h1>
+  </div>
+</section>
+<section>
+  <div layout-padding>
+    <h2 class="md-headline green-text">Servicios</h2>
+  </div>
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedServicios.length">
+      <div class="md-toolbar-tools">
+        <span flex> Listado de Servicios</span>
+        <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCarga(null)">
+          <md-icon><i class="material-icons">add</i> </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedServicios.length">
+      <div class="md-toolbar-tools">
+        <span>[[selectedServicios.length]] [[selectedServicios.length > 1 ? 'servicios seleccionadas' : 'servicio seleccionada']]</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-show="selectedServicios.length == 1" ng-click="abrirFormCarga(selectedServicios[0])" aria-label="Editar Servicio">
+          <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+        </md-button>
+        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedServicios.length >= 1" ng-click="deleteServicio(selectedServicios)"  aria-label="Delete Servicio">
+          <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+        </md-button>
+      </div>
+
+    </md-toolbar>
+
+    <!-- exact table from live demo -->
+    <md-table-container>
+      <table md-table md-row-select multiple ng-model="selectedServicios" md-progress="promiseServicios">
+        <thead md-head md-order="queryServicios.ordering" md-on-reorder="getServicios">
+        <tr md-row>
+          <th md-column md-order-by="fecha_inicio"><span>Fecha de inicio</span></th>
+          <th md-column md-order-by="fecha_fin"><span>Fecha de finalización</span></th>
+          <th md-column md-order-by="tipo"><span>Tipo de servicio</span></th>
+          <th md-column><span>Lotes</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="servicio" md-select-id="id" ng-disabled="!servicio.establecimiento" md-auto-select ng-repeat="servicio in servicios.results">
+          <td md-cell>[[servicio.fecha_inicio]]</td>
+          <td md-cell>[[servicio.fecha_fin]]</td>
+          <td md-cell>[[servicio.tipo_display]]</td>
+          <td md-cell><div ng-repeat="l in servicio.lotes_completo">[[l.nombre]]</div></td>
+        </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+    <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryServicios.page" md-total="[[servicios.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getServicios" md-page-select></md-table-pagination>
+  </md-card>
+</section>
+
+

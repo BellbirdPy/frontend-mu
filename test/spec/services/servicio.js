@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Service: Venta', function () {
+describe('Service: Servicio', function () {
 
   // load the service's module
   beforeEach(module('frontendmuApp'));
 
   // instantiate service
-  var Venta;
-  beforeEach(inject(function (_Venta_) {
-    Venta = _Venta_;
+  var Servicio;
+  beforeEach(inject(function (_Servicio_) {
+    Servicio = _Servicio_;
   }));
 
   it('should do something', function () {
-    expect(!!Venta).toBe(true);
+    expect(!!Servicio).toBe(true);
   });
 
 });

@@ -1,13 +1,13 @@
+<section>
+  <div >
+    <h1 class="md-display-1 green-text">Manejo</h1>
+  </div>
+</section>
 <!--Section Compras -->
 <section>
-  <md-card>
-    <!-- Toolbar principal-->
-    <md-toolbar class="green">
-      <div class="md-toolbar-tools white-text">
-        <div class="md-title">Compra</div>
-      </div>
-    </md-toolbar>
-    <md-content>
+  <div layout-padding>
+    <h2 class="md-headline green-text">Compras</h2>
+  </div>
       <!--Aca va ir el listado-->
       <md-card>
         <!-- Toolbar del listado-->
@@ -70,8 +70,5 @@
         <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page"
                              md-total="[[compras.count]]" md-on-paginate="updateListadoCompras"
                              md-page-select></md-table-pagination>
-
       </md-card>
-    </md-content>
-  </md-card>
 </section>

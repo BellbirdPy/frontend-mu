@@ -209,24 +209,7 @@
   </md-toolbar>
 
   <md-content md-scroll-y layout="column" flex>
-    <div ng-view layout-padding flex="noshrink" ng-if="obj.establecimiento"></div>
-    <div layout-padding flex="noshrink" ng-if="obj.establecimiento == ''">
-      <div layout="row">
-        <md-card flex="20" ng-repeat="e in establecimientos" class="green">
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline white-text">[[e.nombre]]</span>
-            </md-card-title-text>
-            <md-card-title-media>
-              <div class="md-media-lg card-media"></div>
-            </md-card-title-media>
-          </md-card-title>
-          <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-click="seleccionar(e)" class="white-text">Continuar</md-button>
-          </md-card-actions>
-        </md-card>
-      </div>
-    </div>
+    <div ng-view layout-padding flex="noshrink" class="grey lighten-4" ng-if="obj.establecimiento"></div>
   </md-content>
 </div>
 
@@ -328,6 +311,10 @@
 <script src="scripts/services/venta.js"></script>
 <script src="scripts/services/noticia.js"></script>
 <script src="scripts/filters/limittohtml.js"></script>
+<script src="scripts/controllers/dialogs/dialogo_crear_venta.js"></script>
+<script src="scripts/services/servicio.js"></script>
+<script src="scripts/controllers/servicio.js"></script>
+<script src="scripts/controllers/dialogs/dialogo_crear_servicio.js"></script>
 <!-- endbuild -->
 </body>
 </html>

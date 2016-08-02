@@ -50,7 +50,7 @@ angular.module('frontendmuApp')
           $scope.razas = [];
           $scope.lotes = [];
 
-          $scope.lotes = Lote.get({establecimiento:obj.establecimiento.id},function(response){
+          $scope.lotes = Lote.get({establecimiento:obj.establecimiento.id,estado:'N'},function(response){
             $scope.lotes = response.results;
           });
 
@@ -187,7 +187,7 @@ angular.module('frontendmuApp')
         targetEvent: null,
         controller: ['$scope','$mdDialog','Lote','Animal','$filter' ,function ($scope, $mdDialog, Lote, Animal, $filter) {
           $scope.lotes =[];
-          $scope.lotes = Lote.get({establecimiento:obj.establecimiento.id},function(response){
+          $scope.lotes = Lote.get({establecimiento:obj.establecimiento.id,estado:'N'},function(response){
             $scope.lotes = response.results;
           });
 
@@ -419,7 +419,7 @@ angular.module('frontendmuApp')
     };
 
     //-----------------------------------LOTES---------------------------------------------------
-    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
+    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id,estado: 'N',ordering: 'id',page: 1};
     $scope.selectedLotes = [];
 
     function successLotes(lotes) {

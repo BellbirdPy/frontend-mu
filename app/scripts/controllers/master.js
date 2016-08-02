@@ -35,7 +35,7 @@ angular.module('frontendmuApp')
         $mdSidenav(navID)
           .toggle()
           .then(function () {
-            $log.debug("toggle " + navID + " is done");
+            console.log("toggle " + navID + " is done");
           });
       }, 200);
     }
