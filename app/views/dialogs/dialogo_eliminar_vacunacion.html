@@ -1,0 +1,56 @@
+<md-dialog aria-label="Vacunacion"  style="min-width: 800px; width: 800px;">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Eliminar Vacunacion</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon><i class="material-icons">close</i> </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Estas seguro que quieres eliminar?</h2>
+        <md-card>
+          <md-toolbar class="md-table-toolbar md-default">
+            <div class="md-toolbar-tools">
+              <span>Vacunacion</span>
+            </div>
+          </md-toolbar>
+          <!-- exact table from live demo -->
+          <md-table-container>
+            <table md-table>
+              <thead md-head>
+              <tr md-row>
+                <th md-column md-order-by="fecha_vacunacion"><span>Fecha de vacunacion</span></th>
+                <th md-column md-order-by="nombre"><span>Nombre</span></th>
+                <th md-column md-order-by="nombre_cientifico"><span>Nombre científico</span></th>
+
+              </tr>
+              </thead>
+              <tbody md-body>
+              <tr md-row ng-repeat="vacunacion in lista | limitTo: query.limit : (query.page -1) * query.limit">
+                <td md-cell>[[vacunacion.fecha_vacunacion]]</td>
+                <td md-cell>[[vacunacion.nombre]]</td>
+                <td md-cell>[[vacunacion.nombre_cientifico]]</td>
+
+              </tr>
+              </tbody>
+            </table>
+          </md-table-container>
+          <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="[[lista.length]]" md-page-select="options.pageSelect" md-on-paginate="logPagination"></md-table-pagination>
+        </md-card>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="answer('cancelar')">
+        No estoy seguro.
+      </md-button>
+      <md-button ng-click="answer('guardar')" style="margin-right:20px;">
+        Sí, eliminar.
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
