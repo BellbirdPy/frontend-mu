@@ -6,6 +6,7 @@
         <h2 class="md-headline green-text">Dietas Activas</h2>
     </div>
     <md-card layout-padding>
+      Filtrar por:
       <div layout="row">
       <md-input-container class="md-block" flex>
           <label>Lote</label>
@@ -47,7 +48,7 @@
             <div class="md-toolbar-tools">
 
                 <span flex>Dietas Activas</span>
-              
+
                     <md-button class="md-icon-button" aria-label="More" ng-click="editDieta()">
                         <md-icon><i class="material-icons">add</i> </md-icon>
                     </md-button>
@@ -74,7 +75,7 @@
                 <thead md-head md-order="queryDietas.ordering" md-on-reorder="getDietas">
                 <tr md-row md-select-id="id">
                     <th md-column md-order-by="fecha_inicio">Periodo</th>
-                    <th md-column md-order-by="tipo_nutricion">Tipo de Nutrición</th>
+                    <th md-column md-order-by="tipo_nutricion">Dieta para</th>
                     <th md-column md-order-by="tipo_comida">Tipo de Alimento</th>
                     <th md-column md-order-by="descripcion_comida">Descrip. de Alimento</th>
                     <th md-column md-numeric md-order-by="kilos">Total kg.(p/cabeza)</th>

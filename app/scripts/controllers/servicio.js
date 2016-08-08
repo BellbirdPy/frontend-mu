@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('ServicioCtrl', function ($scope, ServerData, Servicio,$mdDialog) {
+  .controller('ServicioCtrl', function ($scope, ServerData, Servicio, Palpacion, $mdDialog) {
     $scope.queryServicios = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
     $scope.selectedServicios = [];
 
@@ -86,6 +86,24 @@ angular.module('frontendmuApp')
           $scope.alert = 'You cancelled the dialog.';
         });
     };
+
+
+  //---------------------------TERMINA SERVICIO -----------------------//
+    //--------------------------------------------------------------//
+    $scope.queryPalpaciones = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
+    $scope.selectedPalpaciones = [];
+
+    function successPalpaciones(palpaciones) {
+      $scope.palpaciones = palpaciones;
+      console.log($scope.palpaciones);
+    }
+
+    $scope.getPalpaciones = function () {
+      $scope.promisePalpaciones = Palpacion.get($scope.queryPalpaciones,successPalpaciones).$promise;
+      $scope.selectedPalpaciones = [];
+    };
+
+    $scope.getPalpaciones();
 
 
 

@@ -55,4 +55,57 @@
   </md-card>
 </section>
 
+<section>
+  <div layout-padding>
+    <h2 class="md-headline green-text">Palpaciones</h2>
+  </div>
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedPalpaciones.length">
+      <div class="md-toolbar-tools">
+        <span flex> Listado de Palpaciones</span>
+        <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCargaPalpacion(null)">
+          <md-icon><i class="material-icons">add</i> </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedPalpaciones.length">
+      <div class="md-toolbar-tools">
+        <span>[[selectedPalpaciones.length]] [[selectedPalpaciones.length > 1 ? 'palpaciones seleccionadas' : 'palpacion seleccionada']]</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-show="selectedPalpaciones.length == 1" ng-click="abrirFormCarga(selectedPalpaciones[0])" aria-label="Editar Palpacion">
+          <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+        </md-button>
+        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedPalpaciones.length >= 1" ng-click="deletePalpacion(selectedPalpaciones)"  aria-label="Delete Palpacion">
+          <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+        </md-button>
+      </div>
+
+    </md-toolbar>
+
+    <!-- exact table from live demo -->
+    <md-table-container>
+      <table md-table md-row-select multiple ng-model="selectedPalpaciones" md-progress="promisePalpaciones">
+        <thead md-head md-order="queryPalpaciones.ordering" md-on-reorder="getPalpaciones">
+        <tr md-row>
+          <th md-column md-order-by="fecha"><span>Fecha</span></th>
+          <th md-column><span>Lotes</span></th>
+          <th md-column md-order-by="metodo_manual"><span>Método</span></th>
+          <th md-column md-order-by="servicio_completo.tipo"><span>Tipo de servicio</span></th>
+
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="palpacion" md-select-id="id" ng-disabled="!palpacion.establecimiento" md-auto-select ng-repeat="palpacion in palpaciones.results">
+          <td md-cell>[[palpacion.fecha]]</td>
+          <td md-cell><span ng-repeat="lote in palpacion.servicio_completo.lotes_completo">[[lote.nombre]]</span></td>
+          <td md-cell><span ng-show="palpacion.metodo_manual">Manual</span><span ng-hide="palpacion.metodo_manual">Ecógrafo</span></td>
+          <td md-cell>[[palpacion.servicio_completo.tipo_display]]</td>
+        </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+    <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryPalpaciones.page" md-total="[[palpaciones.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getPalpaciones" md-page-select></md-table-pagination>
+  </md-card>
+</section>
+
 
