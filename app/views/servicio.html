@@ -1,12 +1,9 @@
 <section>
-  <div >
-    <h1 class="md-display-1 green-text">Manejo</h1>
+  <div layout-padding>
+    <div class="md-display-1 green-text">Manejo <div class="md-headline grey-text">Servicio</div> </div>
   </div>
 </section>
 <section>
-  <div layout-padding>
-    <h2 class="md-headline green-text">Servicios</h2>
-  </div>
   <md-card>
     <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedServicios.length">
       <div class="md-toolbar-tools">
@@ -26,6 +23,18 @@
         <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedServicios.length >= 1" ng-click="deleteServicio(selectedServicios)"  aria-label="Delete Servicio">
           <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
         </md-button>
+        <md-menu md-position-mode="target-right target" >
+          <md-button class="md-icon-button green-text text-darken-4" aria-label="More" ng-click="$mdOpenMenu($event)">
+            <md-icon><i class="material-icons green-text text-darken-4">more_vert</i> </md-icon>
+          </md-button>
+          <md-menu-content width="4" >
+            <md-menu-item ng-show="selectedServicios.length == 1">
+              <md-button ng-click="abrirFormPalpacion(selectedServicios[0])">
+                <p>Realizar palpación</p>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
       </div>
 
     </md-toolbar>
@@ -57,7 +66,7 @@
 
 <section>
   <div layout-padding>
-    <h2 class="md-headline green-text">Palpaciones</h2>
+    <div class="md-headline grey-text">Palpación</div>
   </div>
   <md-card>
     <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedPalpaciones.length">

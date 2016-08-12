@@ -35,6 +35,7 @@ angular.module('frontendmuApp')
       });
     };
 
+
     $scope.deleteServicio = function(lista) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_eliminar_servicio.html',
@@ -104,6 +105,18 @@ angular.module('frontendmuApp')
     };
 
     $scope.getPalpaciones();
+
+    $scope.abrirFormPalpacion = function (servicio){
+      ServerData.servicio_seleccionada = servicio;
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_crear_palpacion.html',
+        targetEvent: null,
+        controller: 'DialogsDialogoCrearPalpacionCtrl'
+      }).then(function () {
+        $scope.getPalpaciones();
+      });
+    };
+
 
 
 

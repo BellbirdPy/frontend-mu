@@ -8,10 +8,10 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearServicioCtrl', function ($scope, $mdDialog, ServerData, Servicio, Lote) {
+  .controller('DialogsDialogoCrearServicioCtrl', function ($scope, $mdDialog, ServerData, Servicio, Lote, Animal) {
     var obj = ServerData;
 
-    $scope.tipos = [{simbolo:'N',nombre:'Monta Natural'},{simbolo:'I',nombre:'Inseminación Artificial'}]
+    $scope.tipos = [{simbolo:'N',nombre:'Monta Natural'},{simbolo:'I',nombre:'Inseminación Artificial'}];
     $scope.selectedLotes = [];
     if (obj.servicio_seleccionada){
       $scope.editar = true;
@@ -21,10 +21,12 @@ angular.module('frontendmuApp')
       $scope.fecha_fin = new Date($scope.newServicio.fecha_fin);
     }else {
       $scope.editar = false;
-      $scope.newServicio = {};
+      $scope.newServicio = {tipo:'N'};
       $scope.fecha_fin = new Date();
       $scope.fecha_inicio = new Date();
     }
+
+    //---------------------------------LOTES--------------------//
     $scope.queryLotes = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
 
 
@@ -38,6 +40,23 @@ angular.module('frontendmuApp')
     };
 
     $scope.getLotes();
+
+    //---------------------------------TOROS--------------------//
+    $scope.selectedAnimales = [];
+    $scope.queryAnimales = {establecimiento: ServerData.establecimiento.id,estado:'V',categoria__codigo:'TORO',ordering: 'id',page: 1};
+
+
+    function successAnimales(animales) {
+      $scope.animales = animales;
+    }
+
+    $scope.getAnimales = function () {
+      $scope.promiseAnimales = Animal.get($scope.queryAnimales,successAnimales).$promise;
+    };
+
+    $scope.getAnimales();
+
+
 
     $scope.hide = function () {
       $mdDialog.hide();

@@ -1,0 +1,92 @@
+<md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="white-text">Palpación</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()">
+        <md-icon class="md-icon-button white-text"><i class="material-icons">close</i></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <section layout="row">
+    <!-- Card Encabezado -->
+    <section flex ng-hide="editar">
+      <md-card>
+        <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedAnimales.length">
+          <div class="md-toolbar-tools">
+            <span>Seleccione los animales preñados</span>
+          </div>
+        </md-toolbar>
+        <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedAnimales.length">
+          <div class="md-toolbar-tools">
+            <span>[[selectedAnimales.length]] [[selectedAnimales.length > 1 ? 'animales preñados' : 'animal preñado']]</span>
+          </div>
+        </md-toolbar>
+
+        <!-- exact table from live demo -->
+        <md-table-container>
+          <table md-table md-row-select multiple ng-model="selectedAnimales" md-progress="promiseLotes">
+            <thead md-head md-order="queryAnimales.ordering" md-on-reorder="getAnimales">
+            <tr md-row md-select-id="id">
+
+              <th md-column md-order-by="lote__nombre">Lote</th>
+              <th md-column md-order-by="categoria__nombre"><span>Categoria</span></th>
+              <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
+              <th md-column md-numeric md-order-by="peso_especifico">Peso específico (Kg.)</th>
+              <th md-column md-order-by="estado_sanitario">Estado Sanitario</th>
+              <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
+              <th md-column md-order-by="raza__nombre">Raza</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in lotes.results[0].animales_completo">
+
+              <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
+              <td md-cell>[[animal.categoria_nombre]]</td>
+              <td md-cell>[[animal.carimbo]]</td>
+              <td md-cell>[[animal.peso_especifico]]</td>
+              <td md-cell>[[animal.estado_sanitario_display]]</td>
+              <td md-cell>[[animal.caravana]]</td>
+              <td md-cell>[[animal.raza_nombre]]</td>
+            </tr>
+            </tbody>
+          </table>
+        </md-table-container></md-card>
+    </section>
+    <section>
+    <md-card>
+      <md-content layout-padding>
+        <h4 class="green-text">Encabezado</h4>
+        <div layout="column">
+          <h4 class="green-text">Método de Palpación</h4>
+          <md-radio-group ng-model="newPalpacion.metodo_manual">
+            <md-radio-button value="true">Manual</md-radio-button>
+            <md-radio-button value="false">Ecógrafo</md-radio-button>
+          </md-radio-group>
+          <span flex></span>
+          <md-datepicker ng-model="fecha" style="margin:13px 0;"
+                         md-placeholder="Fecha"></md-datepicker>
+        </div>
+      </md-content>
+    </md-card>
+    </section>
+
+
+  </section>
+
+
+
+  <!-- ANIMALES -->
+
+
+
+
+
+
+  <md-dialog-actions layout="row">
+    <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
+    <span flex></span>
+    <md-button flex-order="1" ng-click="guardarPalpacion()" class="md-primary">Guardar</md-button>
+    <md-button ng-click="cancel()">Cancelar</md-button>
+  </md-dialog-actions>
+</md-dialog>
