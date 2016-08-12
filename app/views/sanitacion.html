@@ -13,4 +13,62 @@
       <div id='calendar' style="cursor:pointer"></div>
     </md-content>
   </md-card>
+
 </section>
+<section>
+  <div layout-padding>
+    <h2 class="md-headline green-text">Vacunaciones</h2>
+  </div>
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedVacunaciones.length">
+      <div class="md-toolbar-tools">
+        <span flex> Listado de Vacunaciones</span>
+        <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCarga(null)">
+          <md-icon><i class="material-icons">add</i> </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedVacunaciones.length">
+      <div class="md-toolbar-tools">
+        <span>[[selectedVacunaciones.length]] [[selectedVacunaciones.length > 1 ? 'vacunaciones seleccionadas' : 'vacunacion seleccionada']]</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-show="selectedVacunaciones.length == 1" ng-click="abrirFormCarga(selectedVacunaciones[0])" aria-label="Editar Vacunacion">
+          <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+        </md-button>
+        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedVacunaciones.length >= 1" ng-click="deleteVacunacion(selectedVacunaciones)"  aria-label="Delete Vacunacion">
+          <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+        </md-button>
+      </div>
+
+    </md-toolbar>
+
+    <!-- exact table from live demo -->
+    <md-table-container>
+      <table md-table md-row-select multiple ng-model="selectedVacunaciones" md-progress="promiseVacunaciones">
+        <thead md-head md-order="queryVacunaciones.ordering" md-on-reorder="getVacunaciones">
+        <tr md-row>
+          <th md-column md-order-by="fecha_vacunacion"><span>Fecha de vacunación</span></th>
+          <th md-column md-order-by="nombre"><span>Nombre de la vacuna</span></th>
+          <th md-column md-order-by="nombre_cientifico"><span>Nombre científico</span></th>
+          <th md-column md-order-by="veterinario"><span>Veterinario</span></th>
+          <th md-column md-order-by="enfermedad"><span>Enfermedad</span></th>
+          <th md-column md-order-by="codigo"><span>Código</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="vacunacion" md-select-id="id" ng-disabled="!vacunacion.establecimiento" md-auto-select ng-repeat="vacunacion in vacunaciones.results">
+          <td md-cell>[[vacunacion.fecha_vacunacion]]</td>
+          <td md-cell>[[vacunacion.nombre]]</td>
+          <td md-cell>[[vacunacion.nombre_cientifico]]</td>
+          <td md-cell>[[vacunacion.veterinario]]</td>
+          <td md-cell>[[vacunacion.enfermedad]]</td>
+          <td md-cell>[[vacunacion.codigo]]</td>
+        </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+    <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryVacunaciones.page" md-total="[[vacunaciones.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getVacunaciones" md-page-select></md-table-pagination>
+  </md-card>
+</section>
+
+
