@@ -1,0 +1,33 @@
+<section>
+  <div layout-padding>
+    <h2 class="md-headline green-text">Elaboración y Control de Presupuestos</h2>
+  </div>
+  <md-content layout-padding>
+  <md-table-container >
+    <table md-table  md-progress="promiseEgresos">
+      <tbody md-body ng-repeat="rubro in reporteEgresos.results">
+      <tr md-row >
+
+        <th md-cell> [[rubro.rubro]]</th>
+        <th md-cell> Monto</th>
+        <th md-cell> % de Incidencia</th>
+      </tr>
+      <tr md-row ng-repeat="descripcion in rubro.descripciones">
+          <td md-cell>[[descripcion.nombre]]</td>
+          <td md-cell>[[descripcion.monto]]</td>
+          <td md-cell>[[descripcion.porcentaje]]%</td>
+      </tr>
+      <tr md-row >
+
+        <th md-cell>Sub Total:</th>
+        <th md-cell>[[rubro.monto_rubro]]</th>
+        <th md-cell>100%</th>
+      </tr>
+      <tr md-row  >
+      </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+  <md-button ng-click="hide()">Cerrar</md-button>
+    </md-content>
+</section>
