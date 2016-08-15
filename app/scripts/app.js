@@ -123,6 +123,11 @@ angular
         controller: 'ServicioCtrl',
         controllerAs: 'servicio'
       })
+      .when('/genetica', {
+        templateUrl: 'views/genetica.html',
+        controller: 'GeneticaCtrl',
+        controllerAs: 'genetica'
+      })
       .otherwise({
         redirectTo: '/'
       });

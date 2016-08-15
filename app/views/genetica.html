@@ -1,6 +1,6 @@
 <div layout="column">
   <div >
-    <h1 class="md-display-1 green-text">Manejo</h1>
+    <h1 class="md-display-1 green-text">Genetica</h1>
   </div>
   <!-- LOTES -->
   <section>
@@ -11,7 +11,7 @@
       <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedLotes.length">
         <div class="md-toolbar-tools">
           <span flex>Lotes</span>
-          <md-button class="md-icon-button" aria-label="More" ng-click="editLote()">
+          <md-button class="md-icon-button" aria-label="More" ng-click="agregarLoteGenetica()">
             <md-icon><i class="material-icons">add</i> </md-icon>
           </md-button>
 
@@ -47,11 +47,11 @@
           </thead>
           <tbody md-body>
           <tr md-row md-select="lote" md-select-id="id" md-auto-select ng-repeat="lote in lotes.results">
-            <td md-cell>[[lote.id]]</td>
-            <td md-cell>[[lote.nombre]]</td>
-            <td md-cell>[[lote.potrero_nombre]]</td>
-            <td md-cell>[[lote.peso_promedio]]</td>
-            <td md-cell>[[lote.animales.length]]</td>
+            <td md-cell>[[lote.lote.id]]</td>
+            <td md-cell>[[lote.lote.nombre]]</td>
+            <td md-cell>[[lote.lote.potrero_nombre]]</td>
+            <td md-cell>[[lote.lote.peso_promedio]]</td>
+            <td md-cell>[[lote.lote.animales.length]]</td>
             <td md-cell>No</td>
             <td md-cell>Ninguna</td>
           </tr>
@@ -62,7 +62,7 @@
     </md-card>
   </section>
   <!-- ANIMALES -->
-  <section ng-show="lotes.results.length">
+  <section>
     <div layout-padding>
       <h2 class="md-headline green-text">Animales</h2>
     </div>
