@@ -42,13 +42,13 @@ angular.module('frontendmuApp')
       }
       if ($scope.editar){
         $scope.newIngresoVario.fecha = $scope.fecha.getFullYear() + '-'
-          + $scope.fecha.getMonth() + '-' + $scope.fecha.getDate();
+          + $scope.fecha.getMonth()+1 + '-' + $scope.fecha.getDate();
 
         IngresoVario.update({id:$scope.newIngresoVario.id},$scope.newIngresoVario,function(data){
           $scope.newIngresoVario = data;
           $mdDialog.hide($scope.newIngresoVario);
         });
-      }
+      }else {
 
       console.log($scope.newIngresoVario);
 
@@ -66,5 +66,5 @@ angular.module('frontendmuApp')
           console.log(error);
         });
       $scope.hide();
-    }
+    }}
   });

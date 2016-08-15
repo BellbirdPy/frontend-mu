@@ -95,13 +95,13 @@ angular.module('frontendmuApp')
       }
       if ($scope.editar){
         $scope.newEgreso.fecha = $scope.fecha.getFullYear() + '-'
-          + $scope.fecha.getMonth() + '-' + $scope.fecha.getDate();
+          + $scope.fecha.getMonth()+1 + '-' + $scope.fecha.getDate();
 
         Egreso.update({id:$scope.newEgreso.id},$scope.newEgreso,function(data){
           $scope.newEgreso = data;
           $mdDialog.hide($scope.newEgreso);
         });
-      }
+      }else{
 
       console.log($scope.newEgreso);
 
@@ -118,6 +118,6 @@ angular.module('frontendmuApp')
         function (error) {
           console.log(error);
         });
-      $scope.hide();
+      $scope.hide();}
     }
   });
