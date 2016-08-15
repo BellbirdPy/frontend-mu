@@ -92,6 +92,20 @@
               </md-select>
         </md-input-container>
         <md-input-container class="md-block" flex>
+          <label>Preñadas</label>
+          <md-select ng-model="queryAnimales.prenada" aria-label="Categoria" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option value="True">
+              Sí
+            </md-option>
+            <md-option value="False">
+              No
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
           <label>Raza</label>
           <md-select ng-model="queryAnimales.raza" aria-label="Raza" ng-change="getAnimales()">
             <md-option value="">
@@ -201,7 +215,7 @@
           <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in animales.results">
 
             <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
-            <td md-cell>[[animal.categoria_nombre]]</td>
+            <td md-cell>[[animal.categoria_nombre]]  <md-icon ng-show="animal.prenada == true"><i class="material-icons green-text text-darken-4">child_friendly</i> </md-icon></td>
             <td md-cell>[[animal.carimbo]]</td>
             <td md-cell>[[animal.peso_especifico]]</td>
             <td md-cell>[[animal.estado_sanitario_display]]</td>

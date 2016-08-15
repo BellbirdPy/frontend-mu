@@ -1,0 +1,51 @@
+<section>
+  <div layout-padding>
+    <div class="md-display-1 green-text">Establecimiento <div class="md-headline grey-text">Stock de pajuelas</div> </div>
+  </div>
+</section>
+<section>
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedPajuelas.length">
+      <div class="md-toolbar-tools">
+        <span flex>Pajuelas</span>
+        <md-button class="md-icon-button" aria-label="More" ng-click="editPajuela()">
+          <md-icon><i class="material-icons">add</i> </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedPajuelas.length">
+      <div class="md-toolbar-tools">
+        <span>[[selectedPajuelas.length]] [[selectedPajuelas.length > 1 ? 'pajuelas seleccionadas' : 'pajuela seleccionada']]</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-show="selectedPajuelas.length == 1" ng-click="editPajuela(selectedPajuelas[0])" aria-label="Editar Pajuela">
+          <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+        </md-button>
+        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedPajuelas.length >= 1" ng-click="deletePajuela(selectedPajuelas)"  aria-label="Delete Pajuela">
+          <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+        </md-button>
+      </div>
+
+    </md-toolbar>
+
+    <!-- exact table from live demo -->
+    <md-table-container>
+      <table md-table md-row-select multiple ng-model="selectedPajuelas" md-progress="promisePajuelas">
+        <thead md-head md-order="queryPajuelas.ordering" md-on-reorder="getPajuelas">
+        <tr md-row>
+          <th md-column md-order-by="nombre"><span>Nombre</span></th>
+          <th md-column md-order-by="descripcion"><span>Descripción</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="pajuela" md-select-id="id" ng-disabled="!pajuela.establecimiento" md-auto-select ng-repeat="pajuela in pajuelas.results">
+          <td md-cell>[[pajuela.nombre]]</td>
+          <td md-cell>[[pajuela.descripcion || "Sin descripción"]]</td>
+        </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+    <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryPajuelas.page" md-total="[[pajuelas.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getPajuelas" md-page-select></md-table-pagination>
+  </md-card>
+</section>
+
+

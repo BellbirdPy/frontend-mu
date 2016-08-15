@@ -8,13 +8,32 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearPalpacionCtrl', function ($scope, $mdDialog, ServerData, Palpacion, LoteAnimalCompleto) {
+  .controller('DialogsDialogoCrearPalpacionCtrl', function ($scope, $mdDialog, ServerData, Palpacion, Animal,Lote) {
     var obj = ServerData;
+
+
+    //-----------------------------LOTES----------------//
+    $scope.lotes = {};
+    $scope.loteSeleccionado = null;
+    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
+
+
+    function successLotes(lotes) {
+      $scope.lotes = lotes;
+    }
+
+    $scope.getLotes = function () {
+      $scope.promiseLotes = Lote.get($scope.queryLotes,successLotes).$promise;
+    };
+
+    $scope.getLotes();
+    //---------------------------FIN-LOTES--------------//
 
     $scope.tipos = [{simbolo:'N',nombre:'Monta Natural'},{simbolo:'I',nombre:'Inseminación Artificial'}]
     $scope.selectedAnimales = [];
     if (obj.servicio_seleccionada){
       $scope.servicio = obj.servicio_seleccionada;
+      var cant = $scope.servicio.lote_completo.animales.length;
     }
 
     if (obj.palpacion_seleccionada){
@@ -23,29 +42,38 @@ angular.module('frontendmuApp')
       $scope.fecha = new Date($scope.newPalpacion.fecha);
     }else {
       $scope.editar = false;
-      $scope.newPalpacion = {};
+      $scope.newPalpacion = {metodo:'M'};
       $scope.fecha= new Date();
     }
-    $scope.animales = [];
-    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id,filter:100,servicio:$scope.servicio.id,ordering: 'id',page: 1};
+    $scope.queryAnimales = {establecimiento: ServerData.establecimiento.id,limit:cant,lote:$scope.servicio.lote,categoria__is_hembra:true,ordering: 'id',page: 1};
 
-
-    function successLotes(lotes) {
-      $scope.lotes = lotes;
-      console.log(lotes);
-      angular.forEach(lotes.results,function (lote) {
-        console.log(lote);
-        $scope.animales.concat(lote.animales_completo);
-        console.log($scope.animales);
-      });
-    }
-
-    $scope.getLotes = function () {
-      $scope.promiseLotes = LoteAnimalCompleto.get($scope.queryLotes,successLotes).$promise;
-      $scope.selectedAnimales = [];
+    $scope.deseleccionar = function (animal) {
+      if ($scope.selectedAnimales.indexOf(animal) == -1) {
+        animal.gestacion = null;
+      }
     };
 
-    $scope.getLotes();
+    $scope.seleccionar = function (animal) {
+      if ($scope.selectedAnimales.indexOf(animal) != -1) {
+        $scope.selectedAnimales.push(animal);
+      }
+    };
+
+    $scope.setDefaultGestacion = function (animal) {
+      if (animal.gestacion == null) {
+        animal.gestacion = 'chico';
+      }
+    };
+
+    function successAnimales(animales) {
+      $scope.animales = animales.results;
+    }
+
+    $scope.getAnimales = function () {
+      $scope.promiseAnimales = Animal.get($scope.queryAnimales,successAnimales).$promise;
+    };
+
+    $scope.getAnimales();
 
     $scope.hide = function () {
       $mdDialog.hide();
@@ -59,13 +87,18 @@ angular.module('frontendmuApp')
     $scope.cargarDetallePalpacion = function () {
       $scope.newPalpacion.detalles = [];
       angular.forEach($scope.selectedAnimales,function (animal) {
-        animal.prenado = true;
+        animal.prenada= true;
+        animal.lote = $scope.loteSeleccionado;
       });
-      angular.forEach($scope.lotes.results[0].animales_completo,function (animal) {
-        if (animal.prenado == true){
-        $scope.newPalpacion.detalles.push({animal:animal.id,resultado:true});
+      angular.forEach($scope.animales,function (animal) {
+        console.log(animal);
+        if (animal.prenada== true){
+          if ($scope.newPalpacion.metodo= 'M'){
+            animal.gestacion = null;
+          }
+          $scope.newPalpacion.detalles.push({animal:animal.id,resultado:true,gestacion:animal.gestacion});
         }else{
-          $scope.newPalpacion.detalles.push({animal:animal.id,resultado:false});
+          $scope.newPalpacion.detalles.push({animal:animal.id,resultado:false,gestacion:animal.gestacion});
         }
       });
 
@@ -78,14 +111,25 @@ angular.module('frontendmuApp')
 
       $scope.cargarDetallePalpacion();
       console.log($scope.newPalpacion);
+      $scope.newPalpacion.cantidad_total = $scope.animales.length;
+      $scope.newPalpacion.cantidad_prenados = $scope.selectedAnimales.length;
       $scope.newPalpacion.servicio = $scope.servicio.id;
       $scope.newPalpacion.establecimiento = obj.establecimiento.id; //Esto se tieen que poner el establecimiento despues
       //Formateamos la fecha
+      console.log($scope.fecha);
+      console.log($scope.fecha.getMonth());
+      var currentMonth = $scope.fecha.getMonth() + 1;
       $scope.newPalpacion.fecha = $scope.fecha.getFullYear() + '-'
-        + $scope.fecha.getMonth() + '-' + $scope.fecha.getDate();
+        + currentMonth + '-' + $scope.fecha.getDate();
       var nuevaPalpacion = new Palpacion($scope.newPalpacion);
       nuevaPalpacion.$save(function () {
           console.log('Palpacion realizada');
+        angular.forEach($scope.selectedAnimales,function (animal) {
+          Animal.update({id:animal.id},animal,function(data){
+            console.log(data);
+          });
+        });
+
         },
         function (error) {
           console.log(error);

@@ -123,6 +123,11 @@ angular
         controller: 'ServicioCtrl',
         controllerAs: 'servicio'
       })
+      .when('/pajuela', {
+        templateUrl: 'views/pajuela.html',
+        controller: 'PajuelaCtrl',
+        controllerAs: 'pajuela'
+      })
       .otherwise({
         redirectTo: '/'
       });

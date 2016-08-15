@@ -25,33 +25,39 @@
 
         <!-- exact table from live demo -->
         <md-table-container>
-          <table md-table md-row-select multiple ng-model="selectedAnimales" md-progress="promiseLotes">
-            <thead md-head md-order="queryAnimales.ordering" md-on-reorder="getAnimales">
+          <table md-table md-row-select  multiple ng-model="selectedAnimales" md-progress="promiseAnimales">
+            <thead md-head>
             <tr md-row md-select-id="id">
 
-              <th md-column md-order-by="lote__nombre">Lote</th>
-              <th md-column md-order-by="categoria__nombre"><span>Categoria</span></th>
-              <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
-              <th md-column md-numeric md-order-by="peso_especifico">Peso específico (Kg.)</th>
-              <th md-column md-order-by="estado_sanitario">Estado Sanitario</th>
-              <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
-              <th md-column md-order-by="raza__nombre">Raza</th>
+              <th md-column>Lote</th>
+              <th md-column><span>Categoría</span></th>
+              <th md-column>Carimbo</th>
+              <th md-column><span>Caravana</span></th>
+              <th md-column>Raza</th>
+              <th md-column ng-show="newPalpacion.metodo == 'E'">Gestación</th>
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in lotes.results[0].animales_completo">
+            <tr md-row md-auto-select md-select="animal" md-on-select="setDefaultGestacion" md-on-deselect="deseleccionar" ng-repeat="animal in animales">
 
               <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
               <td md-cell>[[animal.categoria_nombre]]</td>
               <td md-cell>[[animal.carimbo]]</td>
-              <td md-cell>[[animal.peso_especifico]]</td>
-              <td md-cell>[[animal.estado_sanitario_display]]</td>
               <td md-cell>[[animal.caravana]]</td>
               <td md-cell>[[animal.raza_nombre]]</td>
+              <td md-cell ng-show="newPalpacion.metodo == 'E'">
+                <md-radio-group ng-model="animal.gestacion" ng-change="seleccionar(animal)" layout="row">
+                  <md-radio-button value="Chico">Chico</md-radio-button>
+                  <md-radio-button value="Mediano">Mediano</md-radio-button>
+                  <md-radio-button value="Grande">Grande</md-radio-button>
+                </md-radio-group>
+              </td>
             </tr>
             </tbody>
           </table>
-        </md-table-container></md-card>
+        </md-table-container>
+        <md-table-pagination md-limit="queryAnimales.limit" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryAnimales.page" md-total="[[animales.count]]"  md-boundary-links="options.boundaryLinks"></md-table-pagination>
+      </md-card>
     </section>
     <section>
     <md-card>
@@ -59,10 +65,19 @@
         <h4 class="green-text">Encabezado</h4>
         <div layout="column">
           <h4 class="green-text">Método de Palpación</h4>
-          <md-radio-group ng-model="newPalpacion.metodo_manual">
-            <md-radio-button value="true">Manual</md-radio-button>
-            <md-radio-button value="false">Ecógrafo</md-radio-button>
+          <md-radio-group ng-model="newPalpacion.metodo">
+            <md-radio-button value="M">Manual</md-radio-button>
+            <md-radio-button value="E">Ecógrafo</md-radio-button>
           </md-radio-group>
+          <md-input-container class="block" >
+            <label>Lote Preñadas</label>
+            <md-select ng-model="loteSeleccionado">
+              <md-option value="[[null]]">No asignar</md-option>
+              <md-option ng-repeat="lote in lotes.results" value=[[lote.id]]>
+                [[lote.nombre]]
+              </md-option>
+            </md-select>
+          </md-input-container>
           <span flex></span>
           <md-datepicker ng-model="fecha" style="margin:13px 0;"
                          md-placeholder="Fecha"></md-datepicker>
@@ -73,8 +88,6 @@
 
 
   </section>
-
-
 
   <!-- ANIMALES -->
 
