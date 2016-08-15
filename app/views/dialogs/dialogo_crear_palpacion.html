@@ -1,0 +1,105 @@
+<md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="white-text">Palpación</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()">
+        <md-icon class="md-icon-button white-text"><i class="material-icons">close</i></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <section layout="row">
+    <!-- Card Encabezado -->
+    <section flex ng-hide="editar">
+      <md-card>
+        <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedAnimales.length">
+          <div class="md-toolbar-tools">
+            <span>Seleccione los animales preñados</span>
+          </div>
+        </md-toolbar>
+        <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedAnimales.length">
+          <div class="md-toolbar-tools">
+            <span>[[selectedAnimales.length]] [[selectedAnimales.length > 1 ? 'animales preñados' : 'animal preñado']]</span>
+          </div>
+        </md-toolbar>
+
+        <!-- exact table from live demo -->
+        <md-table-container>
+          <table md-table md-row-select  multiple ng-model="selectedAnimales" md-progress="promiseAnimales">
+            <thead md-head>
+            <tr md-row md-select-id="id">
+
+              <th md-column>Lote</th>
+              <th md-column><span>Categoría</span></th>
+              <th md-column>Carimbo</th>
+              <th md-column><span>Caravana</span></th>
+              <th md-column>Raza</th>
+              <th md-column ng-show="newPalpacion.metodo == 'E'">Gestación</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-auto-select md-select="animal" md-on-select="setDefaultGestacion" md-on-deselect="deseleccionar" ng-repeat="animal in animales">
+
+              <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
+              <td md-cell>[[animal.categoria_nombre]]</td>
+              <td md-cell>[[animal.carimbo]]</td>
+              <td md-cell>[[animal.caravana]]</td>
+              <td md-cell>[[animal.raza_nombre]]</td>
+              <td md-cell ng-show="newPalpacion.metodo == 'E'">
+                <md-radio-group ng-model="animal.gestacion" ng-change="seleccionar(animal)" layout="row">
+                  <md-radio-button value="Chico">Chico</md-radio-button>
+                  <md-radio-button value="Mediano">Mediano</md-radio-button>
+                  <md-radio-button value="Grande">Grande</md-radio-button>
+                </md-radio-group>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+        <md-table-pagination md-limit="queryAnimales.limit" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryAnimales.page" md-total="[[animales.count]]"  md-boundary-links="options.boundaryLinks"></md-table-pagination>
+      </md-card>
+    </section>
+    <section>
+    <md-card>
+      <md-content layout-padding>
+        <h4 class="green-text">Encabezado</h4>
+        <div layout="column">
+          <h4 class="green-text">Método de Palpación</h4>
+          <md-radio-group ng-model="newPalpacion.metodo">
+            <md-radio-button value="M">Manual</md-radio-button>
+            <md-radio-button value="E">Ecógrafo</md-radio-button>
+          </md-radio-group>
+          <md-input-container class="block" >
+            <label>Lote Preñadas</label>
+            <md-select ng-model="loteSeleccionado">
+              <md-option value="[[null]]">No asignar</md-option>
+              <md-option ng-repeat="lote in lotes.results" value=[[lote.id]]>
+                [[lote.nombre]]
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <span flex></span>
+          <md-datepicker ng-model="fecha" style="margin:13px 0;"
+                         md-placeholder="Fecha"></md-datepicker>
+        </div>
+      </md-content>
+    </md-card>
+    </section>
+
+
+  </section>
+
+  <!-- ANIMALES -->
+
+
+
+
+
+
+  <md-dialog-actions layout="row">
+    <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
+    <span flex></span>
+    <md-button flex-order="1" ng-click="guardarPalpacion()" class="md-primary">Guardar</md-button>
+    <md-button ng-click="cancel()">Cancelar</md-button>
+  </md-dialog-actions>
+</md-dialog>

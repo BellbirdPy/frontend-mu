@@ -17,6 +17,7 @@ angular.module('frontendmuApp')
     $scope.configuraciones = [
       {nombre:'Potreros',url:'/potrero'},
       {nombre:'Lotes',url:'/inventario'},
+      {nombre:'Stock de pajuelas',url:'/pajuela'},
       {nombre:'Categorias personalizadas',url:'/categoria'},
       {nombre:'Razas perzonalizadas',url:'/raza'}
 

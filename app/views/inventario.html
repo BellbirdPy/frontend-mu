@@ -24,7 +24,7 @@
           <md-button class="md-icon-button" ng-show="selectedLotes.length == 1" ng-click="editLote(selectedLotes[0])" aria-label="Editar Lote">
             <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
           </md-button>
-          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedLotes[0].animales.length == 0" ng-click="deleteLote(selectedLotes[0])"  aria-label="Delete Animal">
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedLotes.length" ng-click="deleteLote(selectedLotes[0])"  aria-label="Delete Animal">
             <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
           </md-button>
         </div>
@@ -36,11 +36,11 @@
         <table md-table md-row-select ng-model="selectedLotes" md-progress="promiseLotes">
           <thead md-head md-order="queryLotes.ordering" md-on-reorder="getLotes">
           <tr md-row md-select-id="id">
-              <th md-column md-numeric md-order-by="id"><span>Código</span></th>
+              <th md-column md-order-by="id"><span>Código de Lote</span></th>
             <th md-column md-order-by="nombre"><span>Nombre</span></th>
             <th md-column md-order-by="potrero__nombre"><span>Potrero</span></th>
-            <th md-column md-numeric md-order-by="peso_promedio">Peso promedio (Kg.)</th>
-            <th md-column md-numeric md-order-by="cantidad">Cantidad</th>
+            <th md-column md-order-by="peso_promedio">Peso promedio (Kg.)</th>
+            <th md-column md-order-by="cantidad">Cantidad</th>
             <th md-column>En servicio</th>
             <th md-column>Dietas Activas</th>
           </tr>
@@ -67,6 +67,7 @@
     <h2 class="md-headline green-text">Animales</h2>
     </div>
     <md-card layout-padding>
+      <h4>Filtrar por:</h4>
       <div layout="row">
       <md-input-container class="md-block" flex>
           <label>Lote</label>
@@ -89,6 +90,20 @@
               [[cat.nombre]]
             </md-option>
               </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Preñadas</label>
+          <md-select ng-model="queryAnimales.prenada" aria-label="Categoria" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option value="True">
+              Sí
+            </md-option>
+            <md-option value="False">
+              No
+            </md-option>
+          </md-select>
         </md-input-container>
         <md-input-container class="md-block" flex>
           <label>Raza</label>
@@ -200,7 +215,7 @@
           <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in animales.results">
 
             <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
-            <td md-cell>[[animal.categoria_nombre]]</td>
+            <td md-cell>[[animal.categoria_nombre]]  <md-icon ng-show="animal.prenada == true"><i class="material-icons green-text text-darken-4">child_friendly</i> </md-icon></td>
             <td md-cell>[[animal.carimbo]]</td>
             <td md-cell>[[animal.peso_especifico]]</td>
             <td md-cell>[[animal.estado_sanitario_display]]</td>

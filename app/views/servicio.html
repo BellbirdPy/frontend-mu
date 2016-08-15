@@ -1,12 +1,9 @@
 <section>
-  <div >
-    <h1 class="md-display-1 green-text">Manejo</h1>
+  <div layout-padding>
+    <div class="md-display-1 green-text">Manejo <div class="md-headline grey-text">Servicio</div> </div>
   </div>
 </section>
 <section>
-  <div layout-padding>
-    <h2 class="md-headline green-text">Servicios</h2>
-  </div>
   <md-card>
     <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedServicios.length">
       <div class="md-toolbar-tools">
@@ -26,6 +23,18 @@
         <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedServicios.length >= 1" ng-click="deleteServicio(selectedServicios)"  aria-label="Delete Servicio">
           <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
         </md-button>
+        <md-menu md-position-mode="target-right target" >
+          <md-button class="md-icon-button green-text text-darken-4" aria-label="More" ng-click="$mdOpenMenu($event)">
+            <md-icon><i class="material-icons green-text text-darken-4">more_vert</i> </md-icon>
+          </md-button>
+          <md-menu-content width="4" >
+            <md-menu-item ng-show="selectedServicios.length == 1">
+              <md-button ng-click="abrirFormPalpacion(selectedServicios[0])">
+                <p>Realizar palpación</p>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
       </div>
 
     </md-toolbar>
@@ -39,19 +48,86 @@
           <th md-column md-order-by="fecha_fin"><span>Fecha de finalización</span></th>
           <th md-column md-order-by="tipo"><span>Tipo de servicio</span></th>
           <th md-column><span>Lotes</span></th>
+          <th md-column md-numeric>Cant. de animales (Lote)</th>
+          <th md-column md-numeric>Cant. de Toros</th>
+
         </tr>
         </thead>
         <tbody md-body>
         <tr md-row md-select="servicio" md-select-id="id" ng-disabled="!servicio.establecimiento" md-auto-select ng-repeat="servicio in servicios.results">
-          <td md-cell>[[servicio.fecha_inicio]]</td>
-          <td md-cell>[[servicio.fecha_fin]]</td>
+          <td md-cell>[[servicio.fecha_inicio | date:'dd-MM-yyyy']]</td>
+          <td md-cell>[[servicio.fecha_fin | date:'dd-MM-yyyy']]</td>
           <td md-cell>[[servicio.tipo_display]]</td>
-          <td md-cell><div ng-repeat="l in servicio.lotes_completo">[[l.nombre]]</div></td>
+          <td md-cell>[[servicio.lote_completo.nombre]]</td>
+          <td md-cell>[[servicio.lote_completo.animales.length]]</td>
+          <td md-cell>[[servicio.toros.length]]</td>
         </tr>
         </tbody>
       </table>
     </md-table-container>
     <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryServicios.page" md-total="[[servicios.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getServicios" md-page-select></md-table-pagination>
+  </md-card>
+</section>
+
+<section>
+  <div layout-padding>
+    <div class="md-headline grey-text">Palpación</div>
+  </div>
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedPalpaciones.length">
+      <div class="md-toolbar-tools">
+        <span flex> Listado de Palpaciones</span>
+        <!--
+        <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCargaPalpacion(null)">
+          <md-icon><i class="material-icons">add</i> </md-icon>
+        </md-button>
+        -->
+      </div>
+    </md-toolbar>
+    <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedPalpaciones.length">
+      <div class="md-toolbar-tools">
+        <span>[[selectedPalpaciones.length]] [[selectedPalpaciones.length > 1 ? 'palpaciones seleccionadas' : 'palpacion seleccionada']]</span>
+        <span flex></span>
+        <!--
+        <md-button class="md-icon-button" ng-show="selectedPalpaciones.length == 1" ng-click="abrirFormCarga(selectedPalpaciones[0])" aria-label="Editar Palpacion">
+          <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+        </md-button>
+        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedPalpaciones.length >= 1" ng-click="deletePalpacion(selectedPalpaciones)"  aria-label="Delete Palpacion">
+          <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+        </md-button>
+        -->
+      </div>
+
+    </md-toolbar>
+
+    <!-- exact table from live demo -->
+    <md-table-container>
+      <table md-table ng-model="selectedPalpaciones" md-progress="promisePalpaciones">
+        <thead md-head md-order="queryPalpaciones.ordering" md-on-reorder="getPalpaciones">
+        <tr md-row>
+          <th md-column md-order-by="fecha"><span>Fecha</span></th>
+          <th md-column><span>Lotes</span></th>
+          <th md-column md-order-by="metodo_manual"><span>Método</span></th>
+          <th md-column md-order-by="servicio_completo.tipo"><span>Tipo de servicio</span></th>
+          <th md-column md-numeric md-order-by="cantidad_prenados"><span>Cant. Preñadas</span></th>
+          <th md-column md-numeric md-order-by="cantidad_total"><span>Cant. Total</span></th>
+          <th md-column md-numeric md-order-by="cantidad_prenados"><span>Porcent. de Preñez</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="palpacion" md-select-id="id" ng-disabled="!palpacion.establecimiento" md-auto-select ng-repeat="palpacion in palpaciones.results">
+          <td md-cell>[[palpacion.fecha | date:'dd-MM-yyyy']]</td>
+          <td md-cell>[[palpacion.servicio_completo.lote_completo.nombre]]</td>
+          <td md-cell>[[palpacion.metodo_display]]</td>
+          <td md-cell>[[palpacion.servicio_completo.tipo_display]]</td>
+          <td md-cell>[[palpacion.cantidad_prenados]]</td>
+          <td md-cell>[[palpacion.cantidad_total]]</td>
+          <td md-cell>[[palpacion.cantidad_prenados/palpacion.cantidad_total*100 | number:0]]%</td>
+        </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+    <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryPalpaciones.page" md-total="[[palpaciones.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getPalpaciones" md-page-select></md-table-pagination>
   </md-card>
 </section>
 

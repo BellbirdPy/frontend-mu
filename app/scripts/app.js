@@ -128,6 +128,11 @@ angular
         controller: 'ContabilidadCtrl',
         controllerAs: 'contabilidad'
       })
+      .when('/pajuela', {
+        templateUrl: 'views/pajuela.html',
+        controller: 'PajuelaCtrl',
+        controllerAs: 'pajuela'
+      })
       .otherwise({
         redirectTo: '/'
       });
