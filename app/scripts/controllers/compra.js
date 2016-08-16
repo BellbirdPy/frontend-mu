@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('CompraCtrl', function ($scope, $filter, $mdDialog, Animal, Compra) {
+  .controller('CompraCtrl', function ($scope, $filter, $mdDialog, Animal, Compra, ServerData) {
     $scope.compras = [];
     $scope.seleccionCompra = [];
     $scope.comprasCargadas = false;
@@ -16,7 +16,7 @@ angular.module('frontendmuApp')
 
     //Esto se encarga de cargar en el escope el listado de compras
     $scope.updateListadoCompras = function () {
-      $scope.promise = Compra.get({establecimiento: 1}, function (response) {
+      $scope.promise = Compra.get({establecimiento: ServerData.establecimiento.id}, function (response) {
         $scope.compras = response.results;
         if ($scope.compras !== []) {
           $scope.comprasCargadas = true;

@@ -7,38 +7,73 @@
         <i class="material-icons white-text text-darken-4">close</i></md-button>
     </div>
   </md-toolbar>
-  <form layout="column" layout-padding ng-show="potreros.length >= 1">
-
+  <form layout="column" layout-padding ng-show="lotes.results.length >= 1">
     <md-input-container>
-      <label>Nombre</label>
-      <input ng-model="newLote.nombre">
-    </md-input-container>
-    <md-input-container>
-      <label>Potrero</label>
-      <md-select ng-model="newLote.potrero">
-        <md-option ng-repeat="potrero in potreros" value="[[potrero.id]]">
-          [[potrero.nombre]]
+      <label>Lote</label>
+      <md-select ng-model="newLoteGenetica.lote" ng-change="loteSeleccionado()">
+        <md-option ng-repeat="lote in lotes.results" value="[[lote.id]]">
+          [[lote.nombre]]
         </md-option>
       </md-select>
     </md-input-container>
     <md-input-container>
-      <label>Peso Promedio</label>
-      <input ng-model="newLote.peso_promedio">
+      <label>Categoria</label>
+      <md-select ng-model="newLoteGenetica.categoria">
+        <md-option ng-repeat="categoria in categorias.results" value="[[categoria.id]]">
+          [[categoria.nombre]]
+        </md-option>
+      </md-select>
     </md-input-container>
     <md-input-container>
-      <label>Cantidad</label>
-      <input ng-model="newLote.animales.length" disabled>
+      <label>Raza</label>
+      <md-select ng-model="newLoteGenetica.raza">
+        <md-option ng-repeat="raza in razas.results" value="[[raza.id]]">
+          [[raza.nombre]]
+        </md-option>
+      </md-select>
     </md-input-container>
-
+    <md-input-container>
+      <label>Carimbo</label>
+      <md-select ng-model="newLoteGenetica.carimbo">
+        <md-option ng-repeat="carimbo in carimbos" value="[[carimbo]]">
+          [[carimbo]]
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container>
+      <label>Tipo de servicio</label>
+      <md-select ng-model="newLoteGenetica.tipo_servicio">
+        <md-option ng-repeat="tipo in tipos_servicios" value="[[tipo.id]]">
+          [[tipo.nombre]]
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container>
+      <label>Porcentaje de pureza</label>
+      <md-select ng-model="newLoteGenetica.porcentaje_pureza">
+        <md-option ng-repeat="porcentaje in porcentajes" value="[[porcentaje]]">
+          [[porcentaje]]%
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container>
+      <label>Descripcion</label>
+      <input ng-model="newLoteGenetica.descripcion">
+    </md-input-container>
+    <md-input-container>
+      <label>Pedigree del padre</label>
+      <input ng-model="newLoteGenetica.pedigree_padre">
+    </md-input-container>
+    [[newLoteGenetica]]
 
     <md-dialog-actions layout="row">
       <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
       <span flex></span>
-      <md-button flex-order="1" ng-click="answer('guardar')" class="md-primary">Guardar</md-button>
+      <md-button flex-order="1" ng-click="guardar()" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()">Cancelar</md-button>
     </md-dialog-actions>
   </form>
-  <div layout="row" layout-sm="column" layout-align="center center" ng-hide="potreros.length >= 1">
+  <div layout="row" layout-sm="column" layout-align="center center" ng-hide="lotes.results.length >= 1">
     <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
   </div>
 </md-dialog>

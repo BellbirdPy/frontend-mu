@@ -24,7 +24,7 @@ angular.module('frontendmuApp')
       $scope.selectedLotes = [];
     };
 
-    $scope.getLotes()
+    $scope.getLotes();
 
     $scope.agregarLoteGenetica = function () {
       $mdDialog.show({
