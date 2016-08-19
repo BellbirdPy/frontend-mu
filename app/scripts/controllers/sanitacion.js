@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('SanitacionCtrl', function ($scope,Evento,EventoEstablecimiento,$mdDialog,$filter,ServerData) {
+  .controller('SanitacionCtrl', function ($scope,Evento,EventoEstablecimiento, Vacunacion, $mdDialog,$filter,ServerData) {
     Evento.query(function(response){
       $scope.eventos = response;
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
@@ -148,6 +148,86 @@ angular.module('frontendmuApp')
           }
           }
 
+        }, function() {
+          $scope.alert = 'You cancelled the dialog.';
+        });
+    };
+
+
+
+    $scope.queryVacunaciones = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
+    $scope.selectedVacunaciones = [];
+
+    function successVacunaciones(vacunaciones) {
+      $scope.vacunaciones = vacunaciones;
+      console.log($scope.vacunaciones);
+    }
+
+    $scope.getVacunaciones = function () {
+      $scope.promiseVacunaciones = Vacunacion.get($scope.queryVacunaciones,successVacunaciones).$promise;
+      $scope.selectedVacunaciones = [];
+    };
+
+    $scope.getVacunaciones();
+
+    $scope.abrirFormCarga = function (vacunacion) {
+      ServerData.vacunacion_seleccionada = vacunacion;
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_crear_vacunacion.html',
+        targetEvent: null,
+        controller: 'DialogsDialogoCrearVacunacionCtrl'
+      }).then(function () {
+        $scope.getVacunaciones();
+      });
+    };
+
+    $scope.deleteVacunacion = function(lista) {
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_eliminar_vacunacion.html',
+        targetEvent: null,
+        controller: ['$scope','$mdDialog','Vacunacion','$filter' ,function ($scope, $mdDialog, Vacunacion) {
+          $scope.options = {
+            pageSelect: true
+          };
+          $scope.logPagination = function (page, limit) {
+            console.log('page: ', page);
+            console.log('limit: ', limit);
+          };
+
+          $scope.query = {
+            limit: 20,
+            page: 1
+          };
+          $scope.lista = lista;
+          $scope.hide = function () {
+            $mdDialog.hide();
+          };
+
+          $scope.cancel = function () {
+            $mdDialog.cancel();
+          };
+
+          $scope.answer = function (answer) {
+            if (answer === 'guardar'){
+              if (lista.length >= 1){
+                angular.forEach(lista, function(vacunacion){
+                  Vacunacion.delete({id:vacunacion.id},vacunacion,function(data){
+                    console.log("eliminado: " + data.fecha_vacunacion);
+                  });
+                });
+              }
+              $mdDialog.hide(lista);
+            }else{
+              $mdDialog.hide();
+            }
+          };
+
+        }]
+      })
+        .then(function(lista) {
+          if (lista !== true) {
+            $scope.getVacunaciones();
+          }
         }, function() {
           $scope.alert = 'You cancelled the dialog.';
         });
