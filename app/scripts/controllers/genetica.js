@@ -40,6 +40,25 @@ angular.module('frontendmuApp')
       });
     };
 
+    $scope.deleteLoteGenetica = function (lote) {
+      var confirm = $mdDialog.confirm()
+        .title('Esta seguro que desea eliminar?')
+        .content('Esta seguro que desea eliminar los registros de gentica del lote: ' + lote.lote_nombre + ',' +
+          'tambien se eliminaran los registros generados en cada animal del lote.')
+        .targetEvent(null)
+        .ok('Si, estoy seguro')
+        .cancel('No estoy seguro porque soy un idiota');
+      $mdDialog.show(confirm).then(function () {
+        LoteGenetica.delete({id: lote.id}, lote, function (response) {
+
+        });
+        $scope.lotes.results.splice($scope.lotes.results.indexOf(lote), 1);
+        $scope.selectedLotes = [];
+      }, function () {
+        $scope.status = 'Se elimino correctamente.';
+      });
+    };
+
     // ANIMALES
 
     $scope.queryAnimales = {
