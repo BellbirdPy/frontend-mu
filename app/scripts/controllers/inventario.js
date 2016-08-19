@@ -725,7 +725,7 @@ angular.module('frontendmuApp')
       }
       $scope.cargarArchivo(result);
       $scope.model = {};
-    }
+    };
 
     $scope.handleFile = function (e) {
       console.log(e);
