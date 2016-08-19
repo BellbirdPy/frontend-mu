@@ -36,6 +36,7 @@ angular.module('frontendmuApp')
         }
       }).then(function () {
         $scope.getLotes();
+        $scope.getAnimales();
       });
     };
 
