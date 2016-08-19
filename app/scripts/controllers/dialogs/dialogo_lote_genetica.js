@@ -8,10 +8,13 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoLoteGeneticaCtrl', function ($scope, $mdDialog, Lote, ServerData, Raza, Categoria, Animal) {
+  .controller('DialogsDialogoLoteGeneticaCtrl', function ($scope, $mdDialog, Lote, ServerData, Raza, Categoria, Animal, func, LoteGenetica) {
 
+
+    //Preparamos las variables iniciales del formulario
     $scope.newLoteGenetica = {};
     $scope.newLoteGenetica.establecimiento = ServerData.establecimiento.id;
+
     //Provisoriamente vamos a utilizar un query general
     $scope.query = {establecimiento: ServerData.establecimiento.id, ordering: 'id', page: 1};
 
@@ -48,6 +51,11 @@ angular.module('frontendmuApp')
     };
     $scope.getLotes();
 
+    if (func != null) {
+      console.log(func);
+      $scope.newLoteGenetica = func;
+    }
+
     $scope.loteSeleccionado = function () {
       var loteSelected;
       var animalSelected;
@@ -72,8 +80,16 @@ angular.module('frontendmuApp')
     };
 
     $scope.guardar = function () {
-      var nuevoLoteGenetica = new LoteGenetica(newLoteGenetica);
-      nuevoLoteGenetica.$save();
+      if (func != null) {
+        LoteGenetica.update({id: $scope.newLoteGenetica.id}, $scope.newLoteGenetica, function (response) {
+          $scope.newLoteGenetica = response;
+          $mdDialog.hide($scope.newLoteGenetica);
+        })
+      } else {
+        var nuevoLoteGenetica = new LoteGenetica($scope.newLoteGenetica);
+        nuevoLoteGenetica.$save();
+        $mdDialog.hide();
+      }
     }
 
   });
