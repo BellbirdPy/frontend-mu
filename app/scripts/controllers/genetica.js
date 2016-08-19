@@ -50,8 +50,10 @@ angular.module('frontendmuApp')
         .cancel('No estoy seguro porque soy un idiota');
       $mdDialog.show(confirm).then(function () {
         LoteGenetica.delete({id: lote.id}, lote, function (response) {
-
+          //Esto actualiza llamando al server
+          $scope.getAnimales();
         });
+        //Esto actualiza sin volver a llamar al server
         $scope.lotes.results.splice($scope.lotes.results.indexOf(lote), 1);
         $scope.selectedLotes = [];
       }, function () {
