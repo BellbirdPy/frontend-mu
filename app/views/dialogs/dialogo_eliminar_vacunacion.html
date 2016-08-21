@@ -31,7 +31,7 @@
               </thead>
               <tbody md-body>
               <tr md-row ng-repeat="vacunacion in lista | limitTo: query.limit : (query.page -1) * query.limit">
-                <td md-cell>[[vacunacion.fecha_vacunacion]]</td>
+                <td md-cell>[[vacunacion.fecha_vacunacion| date: 'dd-MM-yyyy']]</td>
                 <td md-cell>[[vacunacion.nombre]]</td>
                 <td md-cell>[[vacunacion.nombre_cientifico]]</td>
 

@@ -11,13 +11,13 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearIngresoVarioCtrl', function ($scope, $mdDialog, ServerData, IngresoVario) {
+  .controller('DialogsDialogoCrearIngresoVarioCtrl', function ($scope, $mdDialog, ServerData, IngresoVario, Utilidades) {
     var obj = ServerData;
 
     if (obj.ingresoVario_seleccionado){
       $scope.editar = true;
       $scope.newIngresoVario = obj.ingresoVario_seleccionado;
-      $scope.fecha = new Date($scope.newIngresoVario.fecha);
+      $scope.fecha = new Utilidades.toDate($scope.newIngresoVario.fecha);
     }else {
       $scope.editar = false;
       $scope.newIngresoVario = {};
@@ -42,7 +42,7 @@ angular.module('frontendmuApp')
       }
       if ($scope.editar){
         $scope.newIngresoVario.fecha = $scope.fecha.getFullYear() + '-'
-          + $scope.fecha.getMonth()+1 + '-' + $scope.fecha.getDate();
+          + ($scope.fecha.getMonth()+1) + '-' + $scope.fecha.getDate();
 
         IngresoVario.update({id:$scope.newIngresoVario.id},$scope.newIngresoVario,function(data){
           $scope.newIngresoVario = data;

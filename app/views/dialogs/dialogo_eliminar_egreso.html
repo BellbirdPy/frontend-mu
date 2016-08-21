@@ -31,7 +31,7 @@
               </thead>
               <tbody md-body>
               <tr md-row ng-repeat="egreso in lista | limitTo: query.limit : (query.page -1) * query.limit">
-                <td md-cell>[[egreso.fecha]]</td>
+                <td md-cell>[[egreso.fecha| date: 'dd-MM-yyyy']]</td>
                 <td md-cell>[[egreso.descripcion]]</td>
                 <td md-cell>[[egreso.rubro]]</td>
 

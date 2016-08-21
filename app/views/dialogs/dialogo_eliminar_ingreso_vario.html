@@ -34,12 +34,12 @@
               </thead>
               <tbody md-body>
               <tr md-row ng-repeat="ingresoVario in lista | limitTo: query.limit : (query.page -1) * query.limit">
-                <td md-cell>[[ingresoVario.fecha]]</td>
+                <td md-cell>[[ingresoVario.fecha| date: 'dd-MM-yyyy'</td>
                 <td md-cell>[[ingresoVario.motivo]]</td>
                 <td md-cell>[[ingresoVario.comprador]]</td>
-                <td md-cell>[[ingresoVario.cantidad]]</td>
-                <td md-cell>[[ingresoVario.precio_unitario]]</td>
-                <td md-cell>[[ingresoVario.precio_unitario*ingresoVario.cantidad]]</td>
+                <td md-cell>[[ingresoVario.cantidad|number]]</td>
+                <td md-cell>[[ingresoVario.precio_unitario|number]]</td>
+                <td md-cell>[[ingresoVario.precio_unitario*ingresoVario.cantidad|number]]</td>
 
               </tr>
               </tbody>

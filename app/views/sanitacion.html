@@ -57,7 +57,7 @@
         </thead>
         <tbody md-body>
         <tr md-row md-select="vacunacion" md-select-id="id" ng-disabled="!vacunacion.establecimiento" md-auto-select ng-repeat="vacunacion in vacunaciones.results">
-          <td md-cell>[[vacunacion.fecha_vacunacion]]</td>
+          <td md-cell>[[vacunacion.fecha_vacunacion| date: 'dd-MM-yyyy']]</td>
           <td md-cell>[[vacunacion.nombre]]</td>
           <td md-cell>[[vacunacion.nombre_cientifico]]</td>
           <td md-cell>[[vacunacion.veterinario]]</td>

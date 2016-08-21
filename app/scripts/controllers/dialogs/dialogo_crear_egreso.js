@@ -11,7 +11,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearEgresoCtrl', function ($scope, $mdDialog, ServerData, Egreso) {
+  .controller('DialogsDialogoCrearEgresoCtrl', function ($scope, $mdDialog, ServerData, Egreso, Utilidades) {
     var obj = ServerData;
     $scope.rubros = [
       {c:'GD',display:'Gastos Directos',
@@ -60,9 +60,9 @@ angular.module('frontendmuApp')
         ]},
       {c:'GF', display:'Gastos Financieros',
         descripciones:[
-          'Intereses sobre Prestamos',
+          'Intereses sobre Préstamos',
           'Otros Financieros',
-          'Pago de Capital de Prestamos',
+          'Pago de Capital de Préstamos',
           'Agregar otro'
         ]}];
 
@@ -70,7 +70,7 @@ angular.module('frontendmuApp')
     if (obj.egreso_seleccionada){
       $scope.editar = true;
       $scope.newEgreso = obj.egreso_seleccionada;
-      $scope.fecha = new Date($scope.newEgreso.fecha);
+      $scope.fecha = new Utilidades.toDate($scope.newEgreso.fecha);
     }else {
       $scope.editar = false;
       $scope.newEgreso = {};
@@ -95,7 +95,7 @@ angular.module('frontendmuApp')
       }
       if ($scope.editar){
         $scope.newEgreso.fecha = $scope.fecha.getFullYear() + '-'
-          + $scope.fecha.getMonth()+1 + '-' + $scope.fecha.getDate();
+          + ($scope.fecha.getMonth()+1) + '-' + $scope.fecha.getDate();
 
         Egreso.update({id:$scope.newEgreso.id},$scope.newEgreso,function(data){
           $scope.newEgreso = data;
