@@ -1,0 +1,122 @@
+<md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="white-text">Carga masiva de animales</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()">
+        <md-icon class="md-icon-button white-text"><i class="material-icons">close</i></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-card>
+    <!-- Este es el formulario de carga de detalles -->
+    <md-content layout-padding>
+      <h4 class="green-text">Detalles</h4>
+      <div layout="row">
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Categoria</label>
+          <md-select ng-model="newDetalle.categoria">
+            <md-option ng-repeat="categoria in categorias" ng-value="[[categoria]]">
+              [[categoria.nombre]]
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Carimbo</label>
+          <md-select ng-model="newDetalle.carimbo">
+            <md-option value=0>0</md-option>
+            <md-option value=1>1</md-option>
+            <md-option value=2>2</md-option>
+            <md-option value=3>3</md-option>
+            <md-option value=4>4</md-option>
+            <md-option value=5>5</md-option>
+            <md-option value=6>6</md-option>
+            <md-option value=7>7</md-option>
+            <md-option value=8>8</md-option>
+            <md-option value=9>9</md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Raza</label>
+          <md-select ng-model="newDetalle.raza">
+            <md-option ng-repeat="raza in razas" ng-value="[[raza]]">
+              [[raza.nombre]]
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Cantidad</label>
+          <input type="number" ng-model="newDetalle.cantidad">
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Nro de caravana inicial</label>
+          <input type="number" ng-model="newDetalle.nro_caravana_inicial">
+        </md-input-container>
+        <md-input-container class="md-accent-1 md-block" flex>
+          <label>Lote</label>
+          <md-select ng-model="newDetalle.lote">
+            <md-option value="">
+              No asignar
+            </md-option>
+            <md-option ng-repeat="lote in lotes" ng-value="[[lote]]">
+              [[lote.nombre]]
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+      <md-button class="pull-right" ng-click="cargarDetalleCompra(newDetalle)">
+        Agregar Detalle
+      </md-button>
+    </md-content>
+
+    <!-- Este seria el listado de detalles de compra -->
+    <md-content>
+      <md-table-container>
+        <table md-table md-row-select multiple ng-model="seleccionDetalleCompra" md-progress="promise">
+          <thead md-head md-order="" md-on-reorder="">
+          <tr md-row>
+            <th md-column>Categoria</th>
+            <th md-column>Carimbo</th>
+            <th md-column>Raza</th>
+            <th md-column>Cantidad</th>
+            <th md-column>Caravanas</th>
+            <th md-column>Lote</th>
+          </tr>
+          </thead>
+          <tbody md-body>
+          <tr md-row md-select="detalle_compra" md-select-id="id" md-auto-select
+              ng-repeat="detalle_compra in newCompra.detalle_compra">
+            <td md-cell>[[detalle_compra.categoria_nombre]]</td>
+            <td md-cell>[[detalle_compra.carimbo]]</td>
+            <td md-cell>[[detalle_compra.raza_nombre]]</td>
+            <td md-cell>[[detalle_compra.cantidad | number]]</td>
+            <td md-cell>[[detalle_compra.caravana_inicial]] a [[detalle_compra.caravana_inicial +
+              detalle_compra.cantidad]]
+            </td>
+            <td md-cell>[[detalle_compra.lote_nombre]]</td>
+          </tr>
+          <tr>
+            <td md-cell colspan="6" ng-show="newCompra.detalle_compra.length == 0"><p style="text-align: center;" flex>
+              No hay detalles
+              de compras
+              cargados</p></td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page"
+                           md-total="[[compras.count]]" md-on-paginate="updateListadoCompras"
+                           md-page-select></md-table-pagination>
+    </md-content>
+  </md-card>
+  <md-dialog-actions layout="row">
+    <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
+    <span flex></span>
+    <md-button flex-order="1" ng-click="guardarCompra(newCompra)" class="md-primary">Guardar</md-button>
+    <md-button ng-click="cancel()">Cancelar</md-button>
+  </md-dialog-actions>
+  [[newCompra]]
+  [[newDetalle]]
+</md-dialog>

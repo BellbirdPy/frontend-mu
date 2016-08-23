@@ -1,0 +1,130 @@
+<md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="white-text">Parición</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()">
+        <md-icon class="md-icon-button white-text"><i class="material-icons">close</i></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <section layout="row">
+    <!-- Card Encabezado -->
+    <section flex>
+      <md-card>
+        <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedAnimales.length">
+          <div class="md-toolbar-tools">
+            <span>Listado de animales preñados</span>
+          </div>
+        </md-toolbar>
+        <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedAnimales.length">
+          <div class="md-toolbar-tools">
+            <span>[[selectedAnimales.length]] [[selectedAnimales.length > 1 ? 'animales seleccionados' : 'animal seleccionado']] </span>
+          </div>
+        </md-toolbar>
+
+        <!-- exact table from live demo -->
+        <md-table-container>
+          <table md-table md-row-select  multiple ng-model="selectedAnimales" md-progress="promiseAnimales">
+            <thead md-head>
+            <tr md-row md-select-id="id">
+              <th md-column md-order-by="categoria__nombre"><span>Categoria</span></th>
+              <th md-column md-order-by="raza__nombre">Raza</th>
+              <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
+              <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
+              <th md-column>
+                <md-select ng-model="razaSelected" ng-change="cambiarRaza(razaSelected)" placeholder="Raza">
+                  <md-option ng-value="[[null]]">No parió</md-option>
+                  <md-option ng-value="raza.id" ng-repeat="raza in razas">[[raza.nombre]]</md-option>
+                </md-select>
+              </th>
+              <th md-column>
+                <md-select ng-model="categoriaSelected" ng-change="cambiarCategoria(categoriaSelected)" placeholder="Categoria">
+                  <md-option ng-value="[[null]]">No parió</md-option>
+                  <md-option ng-if="categoria.codigo == 'TERNERO' || categoria.codigo == 'TERNERA'" ng-value="categoria.id" ng-repeat="categoria in categorias">[[categoria.nombre]]</md-option>
+                </md-select>
+              </th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-auto-select md-select="animal" ng-repeat="animal in animales.results | orderBy: queryAnimales.ordering | limitTo: queryAnimales.limit2 : (queryAnimales.page -1) * queryAnimales.limit2">
+              <td md-cell>[[animal.categoria_nombre]]</td>
+              <td md-cell>[[animal.raza_nombre]]</td>
+              <td md-cell>[[animal.carimbo]]</td>
+              <td md-cell>[[animal.caravana]]</td>
+              <td md-cell>
+                <md-select ng-model="animal.raza_hijo" placeholder="Otro">
+                  <md-option ng-value="raza.id" ng-repeat="raza in razas">[[raza.nombre]]</md-option>
+                </md-select>
+              </td>
+              <td md-cell>
+                <md-select ng-model="animal.categoria_hijo" placeholder="Otro">
+                  <md-option ng-if="categoria.codigo == 'TERNERO' || categoria.codigo == 'TERNERA'" ng-value="categoria.id" ng-repeat="categoria in categorias">[[categoria.nombre]]</md-option>
+                </md-select>
+              </td>
+
+            </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+        <md-table-pagination md-limit="queryAnimales.limit2" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryAnimales.page" md-total="[[animales.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPaginate"></md-table-pagination>
+      </md-card>
+    </section>
+    <section>
+      <md-card>
+        <md-content layout-padding>
+          <h4 class="green-text">Encabezado</h4>
+          <div layout="column">
+            <h4 class="green-text">Seleccione un lote</h4>
+            <md-input-container class="block" >
+              <label>Lote Vacas con cría</label>
+              <md-select ng-model="loteSeleccionado">
+                <md-option value="[[null]]">No asignar</md-option>
+                <md-option ng-repeat="lote in lotes.results" value=[[lote.id]]>
+                  [[lote.nombre]]
+                </md-option>
+                <md-option value="otro">Crear Nuevo</md-option>
+              </md-select>
+            </md-input-container>
+
+            <div ng-show="loteSeleccionado == 'otro'" layout="column">
+              <h4 class="green-text">Datos del lote nuevo</h4>
+              <md-input-container>
+                <label>Nombre</label>
+                <input ng-model="newLote.nombre" >
+              </md-input-container>
+              <md-input-container >
+                <label>Potrero</label>
+                <md-select ng-model="newLote.potrero">
+                  <md-option ng-repeat="potrero in potreros" value="[[potrero.id]]">
+                    [[potrero.nombre]]
+                  </md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <span flex></span>
+            <md-datepicker ng-model="fecha" style="margin:13px 0;"
+                           md-placeholder="Fecha"></md-datepicker>
+          </div>
+
+        </md-content>
+      </md-card>
+    </section>
+
+
+  </section>
+
+  <!-- ANIMALES -->
+
+
+
+
+
+
+  <md-dialog-actions layout="row">
+    <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
+    <span flex></span>
+    <md-button flex-order="1" ng-click="guardarParicion()" class="md-primary">Guardar</md-button>
+    <md-button ng-click="cancel()">Cancelar</md-button>
+  </md-dialog-actions>
+</md-dialog>
