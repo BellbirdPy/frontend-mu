@@ -62,12 +62,12 @@ angular.module('frontendmuApp')
     $scope.guardarVacunacion = function () {
       if ($scope.editar){
         $scope.newVacunacion.fecha_vacunacion = $scope.fecha_vacunacion.getFullYear() + '-'
-          + $scope.fecha_vacunacion.getMonth() + '-' + $scope.fecha_vacunacion.getDate();
+          + $scope.fecha_vacunacion.getMonth()+1 + '-' + $scope.fecha_vacunacion.getDate();
         Vacunacion.update({id:$scope.newVacunacion.id},$scope.newVacunacion,function(data){
           $scope.newVacunacion = data;
           $mdDialog.hide($scope.newVacunacion);
         });
-      }
+      }else{
 
       $scope.cargarDetalleVacunacion();
       console.log($scope.newVacunacion);
@@ -75,7 +75,7 @@ angular.module('frontendmuApp')
       $scope.newVacunacion.establecimiento = obj.establecimiento.id; //Esto se tieen que poner el establecimiento despues
       //Formateamos la fecha
       $scope.newVacunacion.fecha_vacunacion = $scope.fecha_vacunacion.getFullYear() + '-'
-        + $scope.fecha_vacunacion.getMonth() + '-' + $scope.fecha_vacunacion.getDate();
+        + $scope.fecha_vacunacion.getMonth()+1 + '-' + $scope.fecha_vacunacion.getDate();
       var nuevaVacunacion = new Vacunacion($scope.newVacunacion);
       nuevaVacunacion.$save(function () {
           console.log('Vacunacion realizada');
@@ -83,6 +83,6 @@ angular.module('frontendmuApp')
         function (error) {
           console.log(error);
         });
-      $scope.hide();
+      $scope.hide();}
     }
   });

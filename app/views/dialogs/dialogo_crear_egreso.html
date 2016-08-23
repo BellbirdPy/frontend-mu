@@ -1,0 +1,67 @@
+<md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <form>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="white-text">Egreso</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()">
+        <md-icon class="md-icon-button white-text"><i class="material-icons">close</i></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <section>
+    <!-- Card Encabezado -->
+    <md-card>
+      <md-content layout-padding>
+        <h4 class="green-text">Encabezado</h4>
+        <div layout="row">
+          <md-input-container class="md-accent-1 md-block">
+            <md-select ng-model="newEgreso.rubro" placeholder="Rubro">
+              <md-option ng-repeat="rubro in rubros" value="[[rubro.c]]">
+                [[rubro.display]]
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="md-accent-1 md-block">
+            <md-select ng-model="newEgreso.descripcion" placeholder="Descripción">
+              <md-option ng-show="newEgreso.rubro=='GD'" ng-repeat="descripcion in rubros[0].descripciones" value="[[descripcion]]">
+                [[descripcion]]
+              </md-option>
+              <md-option ng-show="newEgreso.rubro=='GA'" ng-repeat="descripcion in rubros[1].descripciones" value="[[descripcion]]">
+                [[descripcion]]
+              </md-option>
+              <md-option ng-show="newEgreso.rubro=='IT'" ng-repeat="descripcion in rubros[2].descripciones" value="[[descripcion]]">
+                [[descripcion]]
+              </md-option>
+              <md-option ng-show="newEgreso.rubro=='GC'" ng-repeat="descripcion in rubros[3].descripciones" value="[[descripcion]]">
+                [[descripcion]]
+              </md-option>
+              <md-option ng-show="newEgreso.rubro=='GF'" ng-repeat="descripcion in rubros[4].descripciones" value="[[descripcion]]">
+                [[descripcion]]
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container ng-show="newEgreso.descripcion == 'Agregar otro'" >
+            <label>Descripción (Agregar otro)</label>
+            <input ng-model="form.descripcion" required >
+          </md-input-container>
+          <md-input-container class="md-accent-1 md-block">
+            <label>Monto</label>
+            <input ng-model="newEgreso.monto" type="number">
+          </md-input-container>
+
+          <md-datepicker ng-model="fecha" style="margin:13px 0;"
+                         md-placeholder="Fecha del Egreso"></md-datepicker>
+        </div>
+      </md-content>
+    </md-card>
+
+  </section>
+
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button flex-order="1" ng-click="guardarEgreso()" class="md-primary">Guardar</md-button>
+    <md-button ng-click="cancel()">Cancelar</md-button>
+  </md-dialog-actions>
+  </form>
+</md-dialog>

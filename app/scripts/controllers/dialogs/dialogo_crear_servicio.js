@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearServicioCtrl', function ($scope, $mdDialog, ServerData, Servicio, Lote, Animal,Pajuela) {
+  .controller('DialogsDialogoCrearServicioCtrl', function ($scope, $mdDialog, ServerData, Servicio, Lote, Animal,Pajuela,Utilidades) {
     var obj = ServerData;
     $scope.segundoPaso = false;
     $scope.tipos = [{simbolo:'N',nombre:'Monta Natural'},{simbolo:'I',nombre:'Inseminación Artificial'}];
@@ -29,9 +29,9 @@ angular.module('frontendmuApp')
     if (obj.servicio_seleccionada){
       $scope.editar = true;
       $scope.newServicio = obj.servicio_seleccionada;
-      $scope.selectedLotes = [obj.servicio_seleccionada.lote];
-      $scope.fecha_inicio = new Date($scope.newServicio.fecha_inicio);
-      $scope.fecha_fin = new Date($scope.newServicio.fecha_fin);
+      $scope.selectedLotes = [obj.servicio_seleccionada.lote_completo];
+      $scope.fecha_inicio = Utilidades.toDate($scope.newServicio.fecha_inicio);
+      $scope.fecha_fin = Utilidades.toDate($scope.newServicio.fecha_fin);
       $scope.selectedAnimales = obj.servicio_seleccionada.toros;
     }else {
       $scope.editar = false;

@@ -1,0 +1,217 @@
+<div layout="column">
+  <div >
+    <h1 class="md-display-1 green-text">Contabilidad</h1>
+  </div>
+  <!-- INGRESOS -->
+  <section>
+    <div layout-padding>
+      <h2 class="md-headline green-text">Ingresos</h2>
+    </div>
+    <md-card>
+      <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedIngresosVenta.length">
+        <div class="md-toolbar-tools">
+          <span>Ingresos por Venta</span>
+          <span flex></span>
+          <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCargaIngresoVenta(null)"">
+          <md-icon><i class="material-icons">add</i> </md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedIngresosVenta.length">
+        <div class="md-toolbar-tools">
+          <span>[[selectedIngresosVenta.length]] [[selectedIngresosVenta.length > 1 ? 'ingresos seleccionados' : 'ingreso seleccionado']]</span>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-show="selectedIngresosVenta.length == 1" ng-click="abrirFormCargaIngresoVenta(selectedIngresosVenta[0])" aria-label="Editar Vacunacion">
+            <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+          </md-button>
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedIngresosVenta.length == 1" ng-click="deleteIngresoVenta(selectedIngresosVenta)"  aria-label="Delete IngresoVenta">
+            <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+          </md-button>
+
+
+        </div>
+
+      </md-toolbar>
+
+      <!-- exact table from live demo -->
+      <md-table-container>
+        <table md-table md-row-select ng-model="selectedIngresosVenta" md-progress="promiseIngresosVenta">
+          <thead md-head md-order="queryIngresosVenta.ordering" md-on-reorder="getIngresosVenta">
+          <tr md-row md-select-id="id">
+
+            <th md-column md-order-by="fecha">Fecha</th>
+            <th md-column md-order-by="comprador"><span>Comprador</span></th>
+            <th md-column md-numeric md-order-by="cantidad">Cantidad</th>
+            <th md-column md-order-by="categoria">Categoría</th>
+            <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
+            <th md-column md-numeric md-order-by="peso_promedio">Peso Promedio (Kg)</th>
+            <th md-column md-numeric md-order-by="precio_kg">Precio por Kg</th>
+            <th md-column md-numeric md-order-by="precio_cabeza">Precio por cabeza</th>
+            <th md-column md-numeric md-order-by="total">Precio total</th>
+          </tr>
+          </thead>
+          <tbody md-body>
+          <tr md-row md-select="ingresoVenta" md-select-id="id" md-auto-select ng-repeat="ingresoVenta in ingresosVenta.results">
+
+            <td md-cell>[[ingresoVenta.fecha]]</td>
+            <td md-cell>[[ingresoVenta.comprador]]</td>
+            <td md-cell>[[ingresoVenta.cantidad]]</td>
+            <td md-cell>[[ingresoVenta.categoria]]</td>
+            <td md-cell>[[ingresoVenta.carimbo]]</td>
+            <td md-cell>[[ingresoVenta.peso_promedio]]</td>
+            <td md-cell>[[ingresoVenta.total/ingresoVenta.peso_promedio]]</td>
+            <td md-cell>[[ingresoVenta.total/ingresoVenta.cantidad]]</td>
+            <td md-cell>[[ingresoVenta.total]]</td>
+
+
+          </tr>
+          <tr md-row>
+            <td md-cell></td>
+            <td md-cell>Totales</td>
+            <td md-cell>[[totales.total_cantidad_venta]]</td>
+            <td md-cell></td>
+            <td md-cell></td>
+            <td md-cell></td>
+            <td md-cell></td>
+            <td md-cell></td>
+            <td md-cell>[[totales.total_ingresos_venta]]</td>
+
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-limit="queryIngresosVenta.limit" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryIngresosVenta.page" md-total="[[ingresosVenta.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getIngresosVenta"></md-table-pagination>
+    </md-card>
+  </section>
+  <section>
+    <md-card>
+      <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedIngresosVarios.length">
+        <div class="md-toolbar-tools">
+          <span>Ingresos Varios</span>
+          <span flex></span>
+          <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCargaIngreso(null)"">
+            <md-icon><i class="material-icons">add</i> </md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedIngresosVarios.length">
+        <div class="md-toolbar-tools">
+          <span>[[selectedIngresosVarios.length]] [[selectedIngresosVarios.length > 1 ? 'ingresos seleccionados' : 'ingreso seleccionado']]</span>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-show="selectedIngresosVarios.length == 1" ng-click="abrirFormCargaIngreso(selectedIngresosVarios[0])" aria-label="Editar Vacunacion">
+            <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+          </md-button>
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedIngresosVarios.length == 1" ng-click="deleteIngresoVario(selectedIngresosVarios)"  aria-label="Delete IngresoVario">
+            <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+          </md-button>
+
+
+        </div>
+
+      </md-toolbar>
+
+      <!-- exact table from live demo -->
+  <md-table-container>
+    <table md-table md-row-select ng-model="selectedIngresosVarios" md-progress="promiseIngresosVarios">
+      <thead md-head md-order="queryIngresosVarios.ordering" md-on-reorder="getIngresosVarios">
+      <tr md-row md-select-id="id">
+
+        <th md-column md-order-by="fecha">Fecha</th>
+        <th md-column md-order-by="motivo"><span>Motivo</span></th>
+        <th md-column md-order-by="comprador">Comprador</th>
+        <th md-column md-numeric md-order-by="cantidad">Cantidad</th>
+        <th md-column md-numeric md-order-by="precio_unitario">Precio unitario</th>
+        <th md-column md-numeric md-order-by="precio_total">Precio total</th>
+      </tr>
+      </thead>
+      <tbody md-body>
+      <tr md-row md-select="ingresoVario" md-select-id="id" md-auto-select ng-repeat="ingresoVario in ingresosVarios.results">
+
+        <td md-cell>[[ingresoVario.fecha]]</td>
+        <td md-cell>[[ingresoVario.motivo]]</td>
+        <td md-cell>[[ingresoVario.comprador]]</td>
+        <td md-cell>[[ingresoVario.cantidad]]</td>
+        <td md-cell>[[ingresoVario.precio_unitario]]</td>
+        <td md-cell>[[ingresoVario.precio_unitario*ingresoVario.cantidad]]</td>
+      </tr>
+      <tr md-row>
+        <td md-cell></td>
+        <td md-cell></td>
+        <td md-cell></td>
+        <td md-cell></td>
+        <td md-cell>Total</td>
+        <td md-cell>[[totales.total_ingresos_varios]]</td>
+      </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+  <md-table-pagination md-limit="queryIngresosVarios.limit" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryIngresosVarios.page" md-total="[[ingresosVarios.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getIngresosVarios"></md-table-pagination>
+  </md-card>
+  </section>
+
+  <!-- EGRESOS -->
+  <section>
+    <div layout-padding>
+      <h2 class="md-headline green-text">Egresos</h2>
+    </div>
+    <md-card>
+      <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedEgresos.length">
+        <div class="md-toolbar-tools">
+          <span>Listado de Egresos</span>
+          <span flex></span>
+          <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCarga(null)"">
+            <md-icon><i class="material-icons">add</i> </md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedEgresos.length">
+        <div class="md-toolbar-tools">
+          <span>[[selectedEgresos.length]] [[selectedEgresos.length > 1 ? 'egresos seleccionados' : 'egreso seleccionado']]</span>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-show="selectedEgresos.length == 1" ng-click="abrirFormCarga(selectedEgresos[0])" aria-label="Editar Vacunacion">
+            <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+          </md-button>
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedEgresos.length == 1" ng-click="deleteEgreso(selectedEgresos)"  aria-label="Delete Egreso">
+            <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+          </md-button>
+
+
+        </div>
+
+      </md-toolbar>
+
+      <!-- exact table from live demo -->
+      <md-table-container>
+        <table md-table md-row-select ng-model="selectedEgresos" md-progress="promiseEgresos">
+          <thead md-head md-order="queryEgresos.ordering" md-on-reorder="getEgresos">
+          <tr md-row md-select-id="id">
+
+            <th md-column md-order-by="fecha">Fecha</th>
+            <th md-column md-order-by="descripcion"><span>Descripción</span></th>
+            <th md-column md-order-by="rubro_display">Rubro</th>
+            <th md-column md-numeric md-order-by="monto">Monto</th>
+          </tr>
+          </thead>
+          <tbody md-body>
+          <tr md-row md-select="egreso" md-select-id="id" md-auto-select ng-repeat="egreso in egresos.results">
+
+            <td md-cell>[[egreso.fecha]]</td>
+            <td md-cell>[[egreso.descripcion]]</td>
+            <td md-cell>[[egreso.rubro_display]]</td>
+            <td md-cell>[[egreso.monto]]</td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-limit="queryEgresos.limit" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryEgresos.page" md-total="[[egresos.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getEgresos"></md-table-pagination>
+    </md-card>
+  </section>
+  <section>
+    <input id="exampleInput" type="month" name="input" ng-model="fecha_reporte"
+           placeholder="yyyy-MM"  required />
+    <md-button ng-click="generarReporte()">Generar Reporte</md-button>
+
+  </section>
+
+</div>
+

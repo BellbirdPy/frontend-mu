@@ -123,6 +123,11 @@ angular
         controller: 'ServicioCtrl',
         controllerAs: 'servicio'
       })
+      .when('/contabilidad', {
+        templateUrl: 'views/contabilidad.html',
+        controller: 'ContabilidadCtrl',
+        controllerAs: 'contabilidad'
+      })
       .when('/pajuela', {
         templateUrl: 'views/pajuela.html',
         controller: 'PajuelaCtrl',
