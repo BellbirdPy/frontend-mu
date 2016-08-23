@@ -118,6 +118,17 @@ angular.module('frontendmuApp')
     };
 
 
+    //-------------------------PARICION-----------------//
+    $scope.abrirFormParicion = function (palpacion){
+      ServerData.palpacion_seleccionada = palpacion;
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_crear_paricion.html',
+        targetEvent: null,
+        controller: 'DialogsDialogoCrearParicionCtrl'
+      }).then(function () {
+        $scope.getPariciones();
+      });
+    };
 
 
 

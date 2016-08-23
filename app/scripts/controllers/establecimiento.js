@@ -23,6 +23,14 @@ angular.module('frontendmuApp')
 
     ];
 
+    $scope.cargaAnimales2 = function () {
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_carga_masiva.html',
+        targetEvent: null,
+        controller: 'DialogsDialogoCargaMasivaCtrl'
+      })
+    };
+
 
     $scope.cargaAnimales = function() {
 

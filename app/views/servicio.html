@@ -96,13 +96,25 @@
           <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
         </md-button>
         -->
+        <md-menu md-position-mode="target-right target" >
+          <md-button class="md-icon-button green-text text-darken-4" aria-label="More" ng-click="$mdOpenMenu($event)">
+            <md-icon><i class="material-icons green-text text-darken-4">more_vert</i> </md-icon>
+          </md-button>
+          <md-menu-content width="4" >
+            <md-menu-item ng-show="selectedPalpaciones.length == 1">
+              <md-button ng-click="abrirFormParicion(selectedPalpaciones[0])">
+                <p>Realizar parición</p>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
       </div>
 
     </md-toolbar>
 
     <!-- exact table from live demo -->
     <md-table-container>
-      <table md-table ng-model="selectedPalpaciones" md-progress="promisePalpaciones">
+      <table md-table ng-model="selectedPalpaciones" md-row-select multiple md-progress="promisePalpaciones">
         <thead md-head md-order="queryPalpaciones.ordering" md-on-reorder="getPalpaciones">
         <tr md-row>
           <th md-column md-order-by="fecha"><span>Fecha</span></th>
@@ -115,7 +127,7 @@
         </tr>
         </thead>
         <tbody md-body>
-        <tr md-row md-select="palpacion" md-select-id="id" ng-disabled="!palpacion.establecimiento" md-auto-select ng-repeat="palpacion in palpaciones.results">
+        <tr md-row md-select="palpacion" md-auto-select  md-select-id="id" ng-disabled="!palpacion.establecimiento" md-auto-select ng-repeat="palpacion in palpaciones.results">
           <td md-cell>[[palpacion.fecha | date:'dd-MM-yyyy']]</td>
           <td md-cell>[[palpacion.servicio_completo.lote_completo.nombre]]</td>
           <td md-cell>[[palpacion.metodo_display]]</td>

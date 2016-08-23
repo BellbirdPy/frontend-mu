@@ -39,8 +39,8 @@
               <th md-column md-order-by="id"><span>Código de Lote</span></th>
             <th md-column md-order-by="nombre"><span>Nombre</span></th>
             <th md-column md-order-by="potrero__nombre"><span>Potrero</span></th>
-            <th md-column md-order-by="peso_promedio">Peso promedio (Kg.)</th>
-            <th md-column md-order-by="cantidad">Cantidad</th>
+            <th md-column md-numeric md-order-by="peso_promedio">Peso promedio (Kg.)</th>
+            <th md-column md-numeric md-order-by="cantidad">Cantidad</th>
             <th md-column>En servicio</th>
             <th md-column>Dietas Activas</th>
           </tr>
@@ -50,8 +50,8 @@
               <td md-cell>[[lote.id]]</td>
               <td md-cell>[[lote.nombre]]</td>
             <td md-cell>[[lote.potrero_nombre]]</td>
-            <td md-cell>[[lote.peso_promedio]]</td>
-            <td md-cell>[[lote.animales.length]]</td>
+            <td md-cell>[[lote.peso_promedio | number]]</td>
+            <td md-cell>[[lote.cantidad | number]]</td>
             <td md-cell>No</td>
             <td md-cell>Ninguna</td>
           </tr>

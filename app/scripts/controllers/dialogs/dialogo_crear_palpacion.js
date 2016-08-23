@@ -8,14 +8,36 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearPalpacionCtrl', function ($scope, $mdDialog, ServerData, Palpacion, Animal,Lote) {
+  .controller('DialogsDialogoCrearPalpacionCtrl', function ($scope, $mdDialog, ServerData, Palpacion,Potrero, Animal,Lote) {
     var obj = ServerData;
 
+    $scope.newLote = {};
+    $scope.newLote.potrero = "";
+    $scope.newLote.cantidad = 0;
+    $scope.newLote.peso_promedio = 0;
+    $scope.newLote.establecimiento = obj.establecimiento.id;
+    $scope.newLote.animales = [];
 
+    //-----------------------------LOTES----------------//
+    $scope.potreros = {};
+    $scope.queryPotreros = {establecimiento: ServerData.establecimiento.id,limit:100,ordering: 'id',page: 1};
+
+
+    function successPotreros(potreros) {
+      $scope.potreros = potreros.results;
+    }
+
+    $scope.getPotreros = function () {
+      $scope.promisePotreros = Potrero.get($scope.queryPotreros,successPotreros).$promise;
+    };
+
+    $scope.getPotreros();
     //-----------------------------LOTES----------------//
     $scope.lotes = {};
     $scope.loteSeleccionado = null;
     $scope.queryLotes = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
+
+    var cantidad_prenada = 0;
 
 
     function successLotes(lotes) {
@@ -29,23 +51,22 @@ angular.module('frontendmuApp')
     $scope.getLotes();
     //---------------------------FIN-LOTES--------------//
 
-    $scope.tipos = [{simbolo:'N',nombre:'Monta Natural'},{simbolo:'I',nombre:'Inseminación Artificial'}]
+    $scope.tipos = [{simbolo:'N',nombre:'Monta Natural'},{simbolo:'I',nombre:'Inseminación Artificial'}];
     $scope.selectedAnimales = [];
     if (obj.servicio_seleccionada){
       $scope.servicio = obj.servicio_seleccionada;
       var cant = $scope.servicio.lote_completo.animales.length;
+      var lote = $scope.servicio.lote;
     }
 
-    if (obj.palpacion_seleccionada){
-      $scope.editar = true;
-      $scope.newPalpacion = obj.palpacion_seleccionada;
-      $scope.fecha = new Date($scope.newPalpacion.fecha);
-    }else {
+
       $scope.editar = false;
       $scope.newPalpacion = {metodo:'M'};
       $scope.fecha= new Date();
-    }
-    $scope.queryAnimales = {establecimiento: ServerData.establecimiento.id,limit:cant,lote:$scope.servicio.lote,categoria__is_hembra:true,ordering: 'id',page: 1};
+
+    $scope.animales = {};
+    $scope.queryAnimales = {limit2:20,establecimiento: ServerData.establecimiento.id,limit:cant,estado:'V',categoria__is_hembra:true,lote:lote,ordering: 'id',page: 1};
+
 
     $scope.deseleccionar = function (animal) {
       if ($scope.selectedAnimales.indexOf(animal) == -1) {
@@ -60,13 +81,22 @@ angular.module('frontendmuApp')
     };
 
     $scope.setDefaultGestacion = function (animal) {
-      if (animal.gestacion == null) {
-        animal.gestacion = 'chico';
+      console.log(animal);
+      if (animal.hasOwnProperty('gestacion')) {
+        if (animal.gestacion == null) {
+          animal.gestacion = 'Chico';
+        }
+      }else{
+        animal.gestacion = 'Chico';
       }
     };
 
     function successAnimales(animales) {
-      $scope.animales = animales.results;
+
+      angular.forEach(animales.results,function(animal){
+        animal.gestacion = 'Vacia';
+      });
+      $scope.animales = animales;
     }
 
     $scope.getAnimales = function () {
@@ -86,18 +116,16 @@ angular.module('frontendmuApp')
 
     $scope.cargarDetallePalpacion = function () {
       $scope.newPalpacion.detalles = [];
-      angular.forEach($scope.selectedAnimales,function (animal) {
-        animal.prenada= true;
-        animal.lote = $scope.loteSeleccionado;
-      });
-      angular.forEach($scope.animales,function (animal) {
-        console.log(animal);
-        if (animal.prenada== true){
-          if ($scope.newPalpacion.metodo= 'M'){
+      angular.forEach($scope.animales.results,function (animal) {
+        if (animal.gestacion != 'Vacia'){
+          if ($scope.newPalpacion.metodo == 'M'){
             animal.gestacion = null;
           }
+          cantidad_prenada +=1;
+          animal.prenada = true;
           $scope.newPalpacion.detalles.push({animal:animal.id,resultado:true,gestacion:animal.gestacion});
         }else{
+          animal.prenada = false;
           $scope.newPalpacion.detalles.push({animal:animal.id,resultado:false,gestacion:animal.gestacion});
         }
       });
@@ -106,34 +134,64 @@ angular.module('frontendmuApp')
 
     };
 
+    $scope.cambiarGestacion = function (gestacion) {
+      angular.forEach($scope.selectedAnimales,function (animal) {
+        animal.gestacion = gestacion;
+      });
+      $scope.selectedAnimales = [];
+      $scope.gestacionSelected = {};
+
+    };
+
 
     $scope.guardarPalpacion = function () {
-
+      var nuevoLote = {};
       $scope.cargarDetallePalpacion();
-      console.log($scope.newPalpacion);
-      $scope.newPalpacion.cantidad_total = $scope.animales.length;
-      $scope.newPalpacion.cantidad_prenados = $scope.selectedAnimales.length;
+      $scope.newPalpacion.cantidad_total = $scope.animales.count;
+      $scope.newPalpacion.cantidad_prenados = cantidad_prenada;
       $scope.newPalpacion.servicio = $scope.servicio.id;
       $scope.newPalpacion.establecimiento = obj.establecimiento.id; //Esto se tieen que poner el establecimiento despues
       //Formateamos la fecha
-      console.log($scope.fecha);
-      console.log($scope.fecha.getMonth());
       var currentMonth = $scope.fecha.getMonth() + 1;
       $scope.newPalpacion.fecha = $scope.fecha.getFullYear() + '-'
         + currentMonth + '-' + $scope.fecha.getDate();
-      var nuevaPalpacion = new Palpacion($scope.newPalpacion);
-      nuevaPalpacion.$save(function () {
-          console.log('Palpacion realizada');
-        angular.forEach($scope.selectedAnimales,function (animal) {
-          Animal.update({id:animal.id},animal,function(data){
-            console.log(data);
-          });
+
+      if ($scope.loteSeleccionado == 'otro') {
+        nuevoLote = new Lote($scope.newLote);
+        nuevoLote.animales = [];
+        nuevoLote.establecimiento = obj.establecimiento.id;
+        angular.forEach($scope.animales.results, function (animal) {
+          if (animal.prenada == true){
+            nuevoLote.animales.push(animal.id);
+          }
         });
 
-        },
-        function (error) {
-          console.log(error);
+        nuevoLote.$save(function (lote) {
+          if (lote.hasOwnProperty('id')) {
+            var nuevaPalpacion = new Palpacion($scope.newPalpacion);
+            nuevaPalpacion.lote = lote.id;
+            nuevaPalpacion.$save(function () {
+                console.log('Palpacion realizada');
+              },
+              function (error) {
+                console.log(error);
+              });
+            $scope.hide();
+
+          }
+
         });
-      $scope.hide();
+      } else {
+
+        var nuevaPalpacion = new Palpacion($scope.newPalpacion);
+        nuevaPalpacion.lote = $scope.loteSeleccionado;
+        nuevaPalpacion.$save(function (palpacion) {
+            console.log('Palpacion realizada');
+          },
+          function (error) {
+            console.log(error);
+          });
+        $scope.hide();
+      }
     }
   });

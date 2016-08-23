@@ -19,7 +19,7 @@
         </md-toolbar>
         <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedAnimales.length">
           <div class="md-toolbar-tools">
-            <span>[[selectedAnimales.length]] [[selectedAnimales.length > 1 ? 'animales preñados' : 'animal preñado']]</span>
+            <span>[[selectedAnimales.length]] [[selectedAnimales.length > 1 ? 'animales seleccionados' : 'animal seleccionado']] </span>
           </div>
         </md-toolbar>
 
@@ -28,25 +28,36 @@
           <table md-table md-row-select  multiple ng-model="selectedAnimales" md-progress="promiseAnimales">
             <thead md-head>
             <tr md-row md-select-id="id">
-
-              <th md-column>Lote</th>
-              <th md-column><span>Categoría</span></th>
-              <th md-column>Carimbo</th>
-              <th md-column><span>Caravana</span></th>
-              <th md-column>Raza</th>
-              <th md-column ng-show="newPalpacion.metodo == 'E'">Gestación</th>
+              <th md-column md-order-by="categoria__nombre"><span>Categoria</span></th>
+              <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
+              <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
+              <th md-column md-order-by="raza__nombre">Raza</th>
+              <th md-column>
+                <md-select ng-model="gestacionSelected" ng-change="cambiarGestacion(gestacionSelected)" placeholder="Gestacion">
+                  <md-option value="Vacia">Vacía</md-option>
+                  <md-option ng-show="newPalpacion.metodo == 'M'" value="Prenada">Preñada</md-option>
+                  <md-option ng-show="newPalpacion.metodo == 'E'" value="Chico">Chico</md-option>
+                  <md-option ng-show="newPalpacion.metodo == 'E'" value="Mediano">Mediano</md-option>
+                  <md-option ng-show="newPalpacion.metodo == 'E'" value="Grande">Grande</md-option>
+                </md-select>
+              </th>
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row md-auto-select md-select="animal" md-on-select="setDefaultGestacion" md-on-deselect="deseleccionar" ng-repeat="animal in animales">
-
-              <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
+            <tr md-row md-auto-select md-select="animal" ng-repeat="animal in animales.results | orderBy: queryAnimales.ordering | limitTo: queryAnimales.limit2 : (queryAnimales.page -1) * queryAnimales.limit2">
               <td md-cell>[[animal.categoria_nombre]]</td>
               <td md-cell>[[animal.carimbo]]</td>
               <td md-cell>[[animal.caravana]]</td>
               <td md-cell>[[animal.raza_nombre]]</td>
+              <td md-cell ng-show="newPalpacion.metodo == 'M'">
+                <md-radio-group ng-model="animal.gestacion" layout="row">
+                  <md-radio-button value="Vacia">Vacía</md-radio-button>
+                  <md-radio-button value="Prenada">Preñada</md-radio-button>
+                </md-radio-group>
+              </td>
               <td md-cell ng-show="newPalpacion.metodo == 'E'">
-                <md-radio-group ng-model="animal.gestacion" ng-change="seleccionar(animal)" layout="row">
+                <md-radio-group ng-model="animal.gestacion" layout="row">
+                  <md-radio-button value="Vacia">Vacía</md-radio-button>
                   <md-radio-button value="Chico">Chico</md-radio-button>
                   <md-radio-button value="Mediano">Mediano</md-radio-button>
                   <md-radio-button value="Grande">Grande</md-radio-button>
@@ -56,7 +67,7 @@
             </tbody>
           </table>
         </md-table-container>
-        <md-table-pagination md-limit="queryAnimales.limit" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryAnimales.page" md-total="[[animales.count]]"  md-boundary-links="options.boundaryLinks"></md-table-pagination>
+        <md-table-pagination md-limit="queryAnimales.limit2" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryAnimales.page" md-total="[[animales.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="logPaginate"></md-table-pagination>
       </md-card>
     </section>
     <section>
@@ -69,6 +80,7 @@
             <md-radio-button value="M">Manual</md-radio-button>
             <md-radio-button value="E">Ecógrafo</md-radio-button>
           </md-radio-group>
+          <h4 class="green-text">Seleccione un lote</h4>
           <md-input-container class="block" >
             <label>Lote Preñadas</label>
             <md-select ng-model="loteSeleccionado">
@@ -76,12 +88,30 @@
               <md-option ng-repeat="lote in lotes.results" value=[[lote.id]]>
                 [[lote.nombre]]
               </md-option>
+              <md-option value="otro">Crear Nuevo</md-option>
             </md-select>
           </md-input-container>
+
+          <div ng-show="loteSeleccionado == 'otro'" layout="column">
+            <h4 class="green-text">Datos del lote nuevo</h4>
+            <md-input-container>
+              <label>Nombre</label>
+              <input ng-model="newLote.nombre" >
+            </md-input-container>
+            <md-input-container >
+              <label>Potrero</label>
+              <md-select ng-model="newLote.potrero">
+                <md-option ng-repeat="potrero in potreros" value="[[potrero.id]]">
+                  [[potrero.nombre]]
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
           <span flex></span>
           <md-datepicker ng-model="fecha" style="margin:13px 0;"
                          md-placeholder="Fecha"></md-datepicker>
         </div>
+
       </md-content>
     </md-card>
     </section>

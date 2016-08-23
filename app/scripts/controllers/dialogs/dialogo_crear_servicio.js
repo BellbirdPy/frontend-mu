@@ -17,6 +17,7 @@ angular.module('frontendmuApp')
     $scope.status = '';
     $scope.pajuelaSelected = {};
     $scope.inseminaciones = [];
+
     $scope.cambiarPajuela = function (pajuela) {
       angular.forEach($scope.selectedAnimales,function (animal) {
         animal.pajuela = pajuela;

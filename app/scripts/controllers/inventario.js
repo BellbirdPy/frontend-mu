@@ -467,7 +467,7 @@ angular.module('frontendmuApp')
         controller: ['$scope','$mdDialog','Potrero','ServerData','Establecimiento' ,function ($scope, $mdDialog, Potrero,ServerData,Establecimiento) {
           $scope.potreros =[];
 
-          $scope.potreros = Potrero.get({establecimiento:ServerData.establecimiento.id,lote:""},function(response){
+          $scope.potreros = Potrero.get({establecimiento:ServerData.establecimiento.id },function(response){
             $scope.potreros = response.results;
           });
 

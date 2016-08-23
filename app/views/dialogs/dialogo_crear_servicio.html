@@ -30,9 +30,11 @@
             <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
             <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
             <th md-column md-order-by="raza__nombre">Raza</th>
-            <th md-column><md-select ng-model="pajuelaSelected" ng-change="cambiarPajuela(pajuelaSelected)" placeholder="Pajuela">
-              <md-option ng-value="pajuela.id" ng-repeat="pajuela in pajuelas.results">[[pajuela.nombre]]</md-option>
-            </md-select></th>
+            <th md-column>
+              <md-select ng-model="pajuelaSelected" ng-change="cambiarPajuela(pajuelaSelected)" placeholder="Pajuela">
+                <md-option ng-value="pajuela.id" ng-repeat="pajuela in pajuelas.results">[[pajuela.nombre]]</md-option>
+              </md-select>
+            </th>
           </tr>
           </thead>
           <tbody md-body>
