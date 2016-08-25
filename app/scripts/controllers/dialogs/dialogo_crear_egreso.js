@@ -66,7 +66,6 @@ angular.module('frontendmuApp')
           'Agregar otro'
         ]}];
 
-    $scope.selectedLotes = [];
     if (obj.egreso_seleccionada){
       $scope.editar = true;
       $scope.newEgreso = obj.egreso_seleccionada;
