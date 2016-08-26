@@ -1,4 +1,95 @@
 <h1 class="md-display-1 green-text">Dashboard</h1>
+<section ng-show="servicios.results.length && tareas.results.length">
+  <div >
+
+    Tiene notificaciones nuevas! Click para ver: <md-button class="md-icon-button green-text text-darken-4"
+     ng-click="notificar()"  aria-label="Notificaciones">
+    <md-icon><i class="material-icons green-text text-darken-4">announcement</i> </md-icon>
+  </md-button>
+
+    <div class="check-element animate-show" ng-show="checked">
+
+
+      <md-card ng-show="servicios.results.length">
+        <md-toolbar class="md-table-toolbar md-default" >
+          <div class="md-toolbar-tools">
+            <span>Hay servicios a punto de terminar!</span>
+            <span flex></span>
+          </div>
+        </md-toolbar>
+
+        <!-- exact table from live demo -->
+        <md-table-container>
+          <table md-table md-row-select multiple ng-model="selectedServicios" md-progress="promiseServicios">
+            <thead md-head md-order="queryServicios.ordering" md-on-reorder="getServicios">
+            <tr md-row>
+              <th md-column md-order-by="fecha_inicio"><span>Fecha de inicio</span></th>
+              <th md-column md-order-by="fecha_fin"><span>Fecha de finalización</span></th>
+              <th md-column md-order-by="tipo"><span>Tipo de servicio</span></th>
+              <th md-column><span>Lotes</span></th>
+              <th md-column md-numeric>Cant. de animales (Lote)</th>
+              <th md-column md-numeric>Cant. de Toros</th>
+
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="servicio" md-select-id="id" ng-disabled="!servicio.establecimiento" md-auto-select ng-repeat="servicio in servicios.results">
+              <td md-cell>[[servicio.fecha_inicio | date:'dd-MM-yyyy']]</td>
+              <td md-cell>[[servicio.fecha_fin | date:'dd-MM-yyyy']]</td>
+              <td md-cell>[[servicio.tipo_display]]</td>
+              <td md-cell>[[servicio.lote_completo.nombre]]</td>
+              <td md-cell>[[servicio.lote_completo.animales.length]]</td>
+              <td md-cell>[[servicio.toros.length]]</td>
+            </tr>
+            </tbody>
+          </table>
+        </md-table-container>
+        <md-table-pagination md-limit="queryServicios.limit" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryServicios.page" md-total="[[servicios.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getServicios"></md-table-pagination>
+      </md-card>
+
+      <md-card ng-show="tareas.results.length">
+        <md-toolbar class="md-table-toolbar md-default" >
+          <div class="md-toolbar-tools">
+            <span>Hay tareas no leídas!</span>
+            <span flex></span>
+          </div>
+        </md-toolbar>
+
+        <!-- exact table from live demo -->
+        <md-table-container >
+          <table md-table  md-progress="promiseTareas">
+            <thead md-head md-order="queryTareas.ordering" md-on-reorder="getTareas">
+            <tr md-row md-select-id="id">
+
+              <th md-column md-order-by="fecha">Fecha</th>
+              <th md-column md-order-by="descripcion"><span>Descripción</span></th>
+              <th md-column md-order-by="usuario_asignado_display">Usuario asignado</th>
+              <th md-column md-order-by="usuario_creador">Creado por</th>
+              <th md-column md-order-by="leido">Leído</th>
+
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row md-select="tarea" md-select-id="id" md-auto-select ng-repeat="tarea in tareas.results">
+
+              <td md-cell>[[tarea.fecha| date: 'dd-MM-yyyy']]</td>
+              <td md-cell>[[tarea.descripcion]]</td>
+              <td md-cell>[[tarea.usuario_asignado_display]]</td>
+              <td md-cell>[[tarea.usuario_creador]]</td>
+              <td md-cell ng-if="tarea.leido">Si</td>
+              <td md-cell ng-if="!tarea.leido">No</td>
+
+
+            </tr>
+
+            </tbody>
+          </table>
+        </md-table-container>
+        <md-table-pagination md-limit="queryTareas.limit" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryTareas.page" md-total="[[tareas.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getTareas"></md-table-pagination>
+      </md-card>
+    </div>
+  </div>
+</section>
 <section>
   <md-card>
     <md-toolbar class="">
