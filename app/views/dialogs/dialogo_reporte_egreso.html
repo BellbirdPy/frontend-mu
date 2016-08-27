@@ -14,18 +14,24 @@
       </tr>
       <tr md-row ng-repeat="descripcion in rubro.descripciones">
           <td md-cell>[[descripcion.nombre]]</td>
-          <td md-cell>[[descripcion.monto]]</td>
+          <td md-cell>[[descripcion.monto|number]]</td>
           <td md-cell>[[descripcion.porcentaje]]%</td>
       </tr>
       <tr md-row >
 
         <th md-cell>Sub Total:</th>
-        <th md-cell>[[rubro.monto_rubro]]</th>
+        <th md-cell>[[rubro.monto_rubro|number]]</th>
         <th md-cell>100%</th>
       </tr>
       <tr md-row  >
       </tr>
       </tbody>
+      <tr md-row>
+        <th md-cell>TOTAL:</th>
+        <th md-cell>[[reporteEgresos.total_reporte]]</th>
+        <th md-cell></th>
+
+      </tr>
     </table>
   </md-table-container>
   <md-button ng-click="hide()">Cerrar</md-button>

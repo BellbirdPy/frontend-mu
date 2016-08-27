@@ -11,13 +11,14 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearIngresoVentaCtrl', function ($scope, $mdDialog, ServerData, IngresoVenta) {
+  .controller('DialogsDialogoCrearIngresoVentaCtrl', function ($scope, $mdDialog, ServerData, Utilidades, IngresoVenta) {
     var obj = ServerData;
-
+    $scope.categorias = ['Toros','Vacas','Desmamantes','Terneros'];
+    $scope.carimbos = [0,1,2,3,4,5,6,7,8,9];
     if (obj.ingresoVenta_seleccionado){
       $scope.editar = true;
       $scope.newIngresoVenta = obj.ingresoVenta_seleccionado;
-      $scope.fecha = new Date($scope.newIngresoVenta.fecha);
+      $scope.fecha = new Utilidades.toDate($scope.newIngresoVenta.fecha);
     }else {
       $scope.editar = false;
       $scope.newIngresoVenta = {};
@@ -42,8 +43,8 @@ angular.module('frontendmuApp')
       }
       if ($scope.editar){
         $scope.newIngresoVenta.fecha = $scope.fecha.getFullYear() + '-'
-          + $scope.fecha.getMonth()+1 + '-' + $scope.fecha.getDate();
-
+          + ($scope.fecha.getMonth()+1) + '-' + $scope.fecha.getDate();
+        console.log($scope.newIngresoVenta.fecha);
         IngresoVenta.update({id:$scope.newIngresoVenta.id},$scope.newIngresoVenta,function(data){
           $scope.newIngresoVenta = data;
           $mdDialog.hide($scope.newIngresoVenta);

@@ -20,13 +20,19 @@
               <label>Comprador</label>
               <input ng-model="newIngresoVenta.comprador">
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block" >
-              <label>Categoría</label>
-              <input ng-model="newIngresoVenta.categoria">
+            <md-input-container class="md-accent-1 md-block">
+              <md-select ng-model="newIngresoVenta.categoria" placeholder="Categorías">
+                <md-option ng-repeat="categoria in categorias" ng-value="categoria">
+                  [[categoria]]
+                </md-option>
+              </md-select>
             </md-input-container>
             <md-input-container class="md-accent-1 md-block">
-              <label>Carimbo</label>
-              <input ng-model="newIngresoVenta.carimbo" type="number">
+              <md-select ng-model="newIngresoVenta.carimbo" placeholder="Carimbo">
+                <md-option ng-repeat="carimbo in carimbos" ng-value="carimbo">
+                  [[carimbo]]
+                </md-option>
+              </md-select>
             </md-input-container>
             <md-input-container class="md-accent-1 md-block">
               <label>Cantidad</label>

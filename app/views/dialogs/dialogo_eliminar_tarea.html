@@ -1,8 +1,8 @@
-<md-dialog aria-label="Egreso"  style="min-width: 800px; width: 800px;">
+<md-dialog aria-label="Tarea"  style="min-width: 800px; width: 800px;">
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Eliminar Egreso</h2>
+        <h2>Eliminar Tarea</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon><i class="material-icons">close</i> </md-icon>
@@ -15,7 +15,7 @@
         <md-card>
           <md-toolbar class="md-table-toolbar md-default">
             <div class="md-toolbar-tools">
-              <span>Egreso</span>
+              <span>Tarea</span>
             </div>
           </md-toolbar>
           <!-- exact table from live demo -->
@@ -23,17 +23,17 @@
             <table md-table>
               <thead md-head>
               <tr md-row>
-                <th md-column md-order-by="fecha_egreso"><span>Fecha del Egreso</span></th>
+                <th md-column md-order-by="fecha_tarea"><span>Fecha </span></th>
                 <th md-column md-order-by="descripcion"><span>Descripción</span></th>
-                <th md-column md-order-by="rubro"><span>Rubro</span></th>
+                <th md-column md-order-by="usuario_asignado_display"><span>Usuario asignado</span></th>
 
               </tr>
               </thead>
               <tbody md-body>
-              <tr md-row ng-repeat="egreso in lista | limitTo: query.limit : (query.page -1) * query.limit">
-                <td md-cell>[[egreso.fecha| date: 'dd-MM-yyyy']]</td>
-                <td md-cell>[[egreso.descripcion]]</td>
-                <td md-cell>[[egreso.rubro]]</td>
+              <tr md-row ng-repeat="tarea in lista | limitTo: query.limit : (query.page -1) * query.limit">
+                <td md-cell>[[tarea.fecha| date: 'dd-MM-yyyy']]</td>
+                <td md-cell>[[tarea.descripcion]]</td>
+                <td md-cell>[[tarea.usuario_asignado_display]]</td>
 
               </tr>
               </tbody>
