@@ -1,6 +1,6 @@
 <md-dialog aria-label="Animales"  ng-cloak>
   <form>
-    <md-toolbar>
+    <md-toolbar ng-hide="cargando">
       <div class="md-toolbar-tools">
         <h2>Eliminar Animales</h2>
         <span flex></span>
@@ -9,7 +9,15 @@
         </md-button>
       </div>
     </md-toolbar>
-    <md-dialog-content>
+    <md-toolbar ng-show="cargando">
+      <div class="md-toolbar-tools">
+        <h2 class="white-text">Eliminando Animales</h2>
+      </div>
+    </md-toolbar>
+    <div layout="row" layout-sm="column" layout-align="space-around" ng-show="cargando">
+      <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+    </div>
+    <md-dialog-content ng-hide="cargando">
       <div class="md-dialog-content">
         <h2>Estas seguro que quieres eliminar?</h2>
         <md-card>
@@ -47,7 +55,7 @@
         </md-card>
       </div>
     </md-dialog-content>
-    <md-dialog-actions layout="row">
+    <md-dialog-actions ng-hide="cargando" layout="row">
       <span flex></span>
       <md-button ng-click="answer('cancelar')">
        No estoy seguro.

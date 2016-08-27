@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoEliminarAnimalCtrl', function ($scope, $mdDialog, Animal, $filter) {
+  .controller('DialogsDialogoEliminarAnimalCtrl', function ($scope, $mdDialog, Animal, AnimalList,Utilidades) {
     $scope.lista = lista;
     $scope.hide = function () {
       $mdDialog.hide();
@@ -21,11 +21,19 @@ angular.module('frontendmuApp')
     $scope.answer = function (answer) {
       if (answer === 'guardar') {
         if (lista.length >= 1) {
+          AnimalList.delete({animales:lista}, function(){
+            Utilidades.showSimpleToast('Se eliminaron correctamente!');
+          },function(error){
+            console.log(error);
+            Utilidades.showSimpleToast('Ocurrió un error!');
+          });
+          /*
           angular.forEach(lista, function (animalSeleccionado) {
             Animal.delete({id: animalSeleccionado.id}, animalSeleccionado, function (data) {
               console.log("eliminado: " + data.caravana);
             });
           });
+          */
         }
         $mdDialog.hide(lista);
       } else {

@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCargaMasivaCtrl', function ($scope, $mdDialog, Animal, Categoria, Raza, ServerData, Compra, Lote, $mdToast) {
+  .controller('DialogsDialogoCargaMasivaCtrl', function ($scope, $mdDialog, Animal, Categoria, Raza, ServerData, Compra, Lote, $mdToast, Utilidades) {
     var obj = ServerData;
     $scope.newCompra = {
       establecimiento:obj.establecimiento.id,
@@ -58,38 +58,7 @@ angular.module('frontendmuApp')
       $scope.newCompra.detalle_compra.push(detalle_compra);
       $scope.DetalleCompra = {};
     };
-    var last = {
-      bottom: false,
-      top: true,
-      left: false,
-      right: true
-    };
-    $scope.toastPosition = angular.extend({},last);
-    $scope.getToastPosition = function() {
-      sanitizePosition();
-      return Object.keys($scope.toastPosition)
-        .filter(function(pos) { return $scope.toastPosition[pos]; })
-        .join(' ');
-    };
-    function sanitizePosition() {
-      var current = $scope.toastPosition;
-      if ( current.bottom && last.top ) current.top = false;
-      if ( current.top && last.bottom ) current.bottom = false;
-      if ( current.right && last.left ) current.left = false;
-      if ( current.left && last.right ) current.right = false;
-      last = angular.extend({},current);
-    }
 
-
-    var showSimpleToast = function() {
-      var pinTo = $scope.getToastPosition();
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('Carga masiva realizada!')
-          .position(pinTo )
-          .hideDelay(3000)
-      );
-    };
 
 
     $scope.guardarCompra = function (newCompra) {
@@ -98,12 +67,14 @@ angular.module('frontendmuApp')
       $scope.newCompra.fecha_compra = $scope.fecha_compra.getFullYear() + '-'
         + $scope.fecha_compra.getMonth() + '-' + $scope.fecha_compra.getDate();
       var nuevaCompra = new Compra($scope.newCompra);
+      Utilidades.showSimpleToast('Este proceso puede tardar unos minutos');
       nuevaCompra.$save(function () {
           console.log('Compra realizada');
-          showSimpleToast();
+          Utilidades.showSimpleToast('Carga masiva realizada!');
         },
         function (error) {
           console.log(error);
+          Utilidades.showSimpleToast('Ocurrió un error!');
         });
       $scope.hide();
     }

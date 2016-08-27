@@ -71,7 +71,7 @@ angular.module('frontendmuApp')
     }
     $scope.pariciones = [];
     $scope.animales = {};
-    $scope.queryAnimales = {limit2:20,establecimiento: ServerData.establecimiento.id,limit:$scope.palpacion.cantidad_prenados,estado:'V',categoria__is_hembra:true,palpaciones:$scope.palpacion.id,ordering: 'id',page: 1};
+    $scope.queryAnimales = {establecimiento: ServerData.establecimiento.id,limit:20,estado:'V',prenada:true,categoria__is_hembra:true,palpaciones:$scope.palpacion.id,ordering: 'id',page: 1};
 
 
     $scope.deseleccionar = function (animal) {
