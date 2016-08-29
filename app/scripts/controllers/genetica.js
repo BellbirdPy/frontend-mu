@@ -81,8 +81,20 @@ angular.module('frontendmuApp')
       $scope.promiseAnimales = AnimalGenetica.get($scope.queryAnimales, successAnimales).$promise;
       $scope.selectedAnimales = [];
     };
-
     $scope.getAnimales();
 
+    $scope.editAnimalGenetica = function (func) {
+      $mdDialog.show({
+        templateUrl:'views/dialogs/dialogo_animal_genetica.html',
+        targetEvent:null,
+        controller:'DialogsDialogoAnimalGeneticaCtrl',
+        locals:{
+          func:func
+        }
+      }).then(function () {
+        $scope.getLotes();
+        $scope.getAnimales();
+      })
+    }
 
   });
