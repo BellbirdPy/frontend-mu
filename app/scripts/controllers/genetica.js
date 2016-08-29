@@ -97,4 +97,14 @@ angular.module('frontendmuApp')
       })
     }
 
+    $scope.abrirDialogoNuevo = function () {
+      $mdDialog.show({
+        templateUrl:'views/dialogs/dialogo_nuevo_genetica.html',
+        targetEvent:null,
+        controller:'DialogsDialogoNuevoGeneticaCtrl',
+      }).then(function () {
+
+      })
+    }
+
   });

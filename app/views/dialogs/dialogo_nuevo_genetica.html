@@ -1,0 +1,191 @@
+<div layout="column">
+  <div >
+    <h1 class="md-display-1 green-text">Genetica</h1>
+  </div>
+  <!-- ANIMALES -->
+  <section>
+    <div layout-padding>
+      <h2 class="md-headline green-text">Animales</h2>
+    </div>
+    <md-card layout-padding>
+      <div layout="row">
+        <md-input-container class="md-block" flex>
+          <label>Lote</label>
+          <md-select ng-model="queryAnimales.lote" aria-label="Lote" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="lote in lotes.results" value=[[lote.id]]>
+              [[lote.nombre]]
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Categoria</label>
+          <md-select ng-model="queryAnimales.categoria" aria-label="Categoria" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="cat in categorias.results" value=[[cat.id]]>
+              [[cat.nombre]]
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Raza</label>
+          <md-select ng-model="queryAnimales.raza" aria-label="Raza" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="raza in razas.results" value=[[raza.id]]>
+              [[raza.nombre]]
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Carimbo</label>
+          <md-select ng-model="queryAnimales.carimbo" aria-label="Carimbo" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="carimbo in [0,1,2,3,4,5,6,7,8,9]" value=[[carimbo]]>
+              [[carimbo]]
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex>
+          <label>Estado Sanitario</label>
+          <md-select ng-model="queryAnimales.estado_sanitario" aria-label="Estado Sanitario" ng-change="getAnimales()">
+            <md-option value="">
+              Todos
+            </md-option>
+            <md-option ng-repeat="estado in estados_sanitarios" value=[[estado.c]]>
+              [[estado.display]]
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+    </md-card>
+    <md-card>
+      <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedAnimales.length">
+        <div class="md-toolbar-tools">
+          <span>Animales</span>
+          <span flex></span>
+          <md-button class="md-icon-button" aria-label="More" ng-click="editAnimal()">
+            <md-icon><i class="material-icons">add</i> </md-icon>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedAnimales.length">
+        <div class="md-toolbar-tools">
+          <span>[[selectedAnimales.length]] [[selectedAnimales.length > 1 ? 'animales seleccionados' : 'animal seleccionado']]</span>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-show="selectedAnimales.length == 1" ng-click="editAnimal(selectedAnimales[0])" aria-label="Editar Animal">
+            <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+          </md-button>
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedAnimales.length == 1" ng-click="deleteAnimal(selectedAnimales[0])"  aria-label="Delete Animal">
+            <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+          </md-button>
+          <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedAnimales.length > 1" ng-click="deleteListaAnimal(selectedAnimales)"  aria-label="Delete Animal">
+            <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+          </md-button>
+          <md-menu md-position-mode="target-right target" >
+            <md-button class="md-icon-button green-text text-darken-4" aria-label="More" ng-click="$mdOpenMenu($event)">
+              <md-icon><i class="material-icons green-text text-darken-4">more_vert</i> </md-icon>
+            </md-button>
+            <md-menu-content width="4" >
+              <md-menu-item ng-show="selectedAnimales.length">
+                <md-button ng-click="agruparEnLote(selectedAnimales)">
+                  <p>Agrupar en Lote nuevo</p>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item ng-show="selectedAnimales.length">
+                <md-button ng-click="mudarAnimales(selectedAnimales)">
+                  <p>Mudar a Lote existente</p>
+                </md-button>
+              </md-menu-item>
+              <md-divider ng-show="selectedAnimales.length"></md-divider>
+              <md-menu-item ng-show="selectedAnimales.length">
+                <md-button ng-click="recategorizar(selectedAnimales)">
+                  <p>Recategorizar</p>
+                </md-button>
+              </md-menu-item>
+              <md-divider ng-show="selectedAnimales.length"></md-divider>
+              <md-menu-item ng-show="selectedAnimales.length">
+                <md-button ng-click="mortandad(selectedAnimales)">
+                  <p>Declarar Mortandad/Abigeo</p>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </div>
+
+      </md-toolbar>
+
+      <!-- exact table from live demo -->
+      <md-table-container>
+        <table md-table md-row-select multiple ng-model="selectedAnimales" md-progress="promiseAnimales">
+          <thead md-head md-order="queryAnimales.ordering" md-on-reorder="getAnimales">
+          <tr md-row md-select-id="id">
+
+            <th md-column md-order-by="lote__nombre">Lote</th>
+            <th md-column md-order-by="categoria__nombre"><span>Categoria</span></th>
+            <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
+            <th md-column md-numeric md-order-by="peso_especifico">Peso específico (Kg.)</th>
+            <th md-column md-order-by="estado_sanitario">Estado Sanitario</th>
+            <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
+            <th md-column md-order-by="raza__nombre">Raza</th>
+          </tr>
+          </thead>
+          <tbody md-body>
+          <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in animales.results">
+
+            <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
+            <td md-cell>[[animal.categoria_nombre]]</td>
+            <td md-cell>[[animal.carimbo]]</td>
+            <td md-cell>[[animal.peso_especifico]]</td>
+            <td md-cell>[[animal.estado_sanitario_display]]</td>
+            <td md-cell>[[animal.caravana]]</td>
+            <td md-cell>[[animal.raza_nombre]]</td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+      <md-table-pagination md-limit="queryAnimales.limit" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryAnimales.page" md-total="[[animales.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getAnimales"></md-table-pagination>
+    </md-card>
+  </section>
+  <section>
+    <md-card ng-show="selectedAnimales.length">
+      <md-table-container>
+        <table md-table ng-model="selectedAnimales" md-progress="promiseAnimales">
+          <thead md-head md-order="queryAnimales.ordering" md-on-reorder="getAnimales">
+          <tr md-row md-select-id="id">
+
+            <th md-column md-order-by="lote__nombre">Lote</th>
+            <th md-column md-order-by="categoria__nombre"><span>Categoria</span></th>
+            <th md-column md-numeric md-order-by="carimbo">Carimbo</th>
+            <th md-column md-numeric md-order-by="peso_especifico">Peso específico (Kg.)</th>
+            <th md-column md-order-by="estado_sanitario">Estado Sanitario</th>
+            <th md-column md-numeric md-order-by="caravana"><span>Caravana</span></th>
+            <th md-column md-order-by="raza__nombre">Raza</th>
+          </tr>
+          </thead>
+          <tbody md-body>
+          <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in animales.results">
+
+            <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
+            <td md-cell>[[animal.categoria_nombre]]</td>
+            <td md-cell>[[animal.carimbo]]</td>
+            <td md-cell>[[animal.peso_especifico]]</td>
+            <td md-cell>[[animal.estado_sanitario_display]]</td>
+            <td md-cell>[[animal.caravana]]</td>
+            <td md-cell>[[animal.raza_nombre]]</td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+    </md-card>
+  </section>
+  <md-button ng-click="cancel()">Sos cagón y queres cancelar</md-button>
+</div>
+
