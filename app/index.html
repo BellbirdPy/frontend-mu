@@ -186,6 +186,10 @@
           <span class="md-breadcrumb-page white-text md-headline">[[obj.establecimiento.nombre || 'Seleccione un establecimiento para continuar']]</span>
         </h2>
       </div>
+      <md-button aria-label="More" ng-click="$mdOpenMenu($event)">
+        <md-icon><i class="material-icons white-text">message</i></md-icon>
+        <small color="red-text">10 new</small>
+      </md-button>
       <md-menu md-position-mode="target-right target">
 
         <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">

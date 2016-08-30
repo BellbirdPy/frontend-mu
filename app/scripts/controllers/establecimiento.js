@@ -349,9 +349,11 @@ angular.module('frontendmuApp')
                 }
               }
               if ( isNaN(animal.peso_especifico)){
+                if (animal.peso_especifico !== '' && animal.peso_especifico !== 0){
                 animal.peso_especifico = 'Error';
                 animal.error = true;
                 $scope.error.push('El peso debe ser numerico. Caravana Nº: ' + animal.caravana.toString());
+                }
               }else {
                 if (animal.peso_especifico > 0) {
                 } else {
@@ -400,18 +402,6 @@ angular.module('frontendmuApp')
                 $scope.error.push('El codigo de lote no es valido. Caravana Nº: ' + animal.caravana.toString());
               }
             });
-            if ($scope.caravanas.length >0){
-            angular.forEach($scope.archivo, function (animal) {
-              if ($filter('filter')($scope.archivo, function (d) {return d.caravana.toString() === animal.caravana.toString();}).length > 1 ||$filter('filter')($scope.caravanas, function (d) {return d.toString() === animal.caravana.toString();}).length > 0) {
-                animal.error = true;
-                var mensaje = 'Existen caravanas iguales. Caravana Nº: ' + animal.caravana.toString();
-                if ($filter('filter')($scope.error, function (d) {return d === mensaje;}).length == 0 ){
-                  $scope.error.push(mensaje);
-                }
-
-              }
-            });
-            }
             console.log($scope.error);
           };
 

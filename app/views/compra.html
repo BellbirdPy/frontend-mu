@@ -46,9 +46,11 @@
           <table md-table md-row-select multiple ng-model="seleccionCompra" md-progress="promise">
             <thead md-head md-order="query.order" md-on-reorder="updateListadoCompras">
             <tr md-row>
-              <th md-column>Codigo de establecimiento vendedor</th>
-              <th md-column>Nombre de establecimiento vendedor</th>
-              <th md-column>Fecha</th>
+              <th md-column md-order-by="cod_establecimiento_vendedor">Codigo de establecimiento vendedor</th>
+              <th md-column md-order-by="nombre_vendedor">Nombre de establecimiento vendedor</th>
+              <th md-column md-order-by="fecha_compra">Fecha</th>
+              <th md-column md-order-by="numero_guia">Guía Nº</th>
+              <th md-column md-order-by="precio_total" md-numeric>Monto</th>
             </tr>
             </thead>
             <tbody md-body>
@@ -57,7 +59,10 @@
                 ng-right-click="prueba($event)">
               <td md-cell>[[compra.cod_establecimiento_vendedor]]</td>
               <td md-cell>[[compra.nombre_vendedor]]</td>
-              <td md-cell>[[compra.fecha_compra]]</td>
+              <td md-cell>[[compra.fecha_compra | date:"dd-MM-yyyy"]]</td>
+              <td md-cell>[[compra.numero_guia]]</td>
+              <td md-cell md-numeric>[[compra.precio_total | number]]</td>
+
             </tr>
 
             <tr>

@@ -1,9 +1,39 @@
 <h1 class="md-display-1 green-text">Dashboard</h1>
-<section ng-show="servicios.results.length && tareas.results.length">
+<section>
+  <div flex-gt-sm="50" flex>
+    <md-toolbar layout="row">
+      <div class="md-toolbar-tools">
+        <span class="text-white">Notificaciones</span>
+      </div>
+    </md-toolbar>
+    <md-content>
+      <md-list flex>
+        <md-subheader class="md-no-sticky">Servicios</md-subheader>
+        <md-list-item class="md-3-line" ng-repeat="servicio in servicios.results" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h3>El periodo del servicio esta llegando a su fin.</h3>
+            <h4>Fecha de finalización: [[servicio.fecha_fin | date: "dd-MM-yyyy"]]</h4>
+            <p>Tipo de servicio: [[servicio.tipo_display]]. Lote: [[servicio.lote_completo.nombre]]. Potrero: [[servicio.lote_completo.potrero_nombre]]</p>
+          </div>
+        </md-list-item>
+        <md-divider></md-divider>
+        <md-subheader class="md-no-sticky">Tareas</md-subheader>
+        <md-list-item class="md-3-line" ng-repeat="tarea in tareas.results" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h3>Tarea asignada a [[tarea.usuario_asignado_display]].</h3>
+            <h4>Fecha: [[tarea.fecha | date: "dd-MM-yyyy"]]</h4>
+            <p>[[tarea.descripcion]]</p>
+          </div>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </div>
+</section>
+<section ng-show="servicios.results.length || tareas.results.length">
   <div >
 
     Tiene notificaciones nuevas! Click para ver: <md-button class="md-icon-button green-text text-darken-4"
-     ng-click="notificar()"  aria-label="Notificaciones">
+                                                            ng-click="notificar()"  aria-label="Notificaciones">
     <md-icon><i class="material-icons green-text text-darken-4">announcement</i> </md-icon>
   </md-button>
 
@@ -20,7 +50,7 @@
 
         <!-- exact table from live demo -->
         <md-table-container>
-          <table md-table md-row-select multiple ng-model="selectedServicios" md-progress="promiseServicios">
+          <table md-table  md-progress="promiseServicios">
             <thead md-head md-order="queryServicios.ordering" md-on-reorder="getServicios">
             <tr md-row>
               <th md-column md-order-by="fecha_inicio"><span>Fecha de inicio</span></th>

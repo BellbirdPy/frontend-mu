@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DashboardCtrl', function ($scope,Evento,EventoEstablecimiento,$mdDialog,$filter,ServerData, Tarea, Servicio) {
+  .controller('DashboardCtrl', function ($scope,Evento,EventoEstablecimiento,$mdDialog,$filter,ServerData, Tarea, Servicio,$http,$q,$timeout) {
 
     $scope.checked=false;
 
@@ -34,7 +34,8 @@ angular.module('frontendmuApp')
     $scope.getTareas();
 
 
-    var fecha = new Date(Date.now());
+    $scope.fecha = new Date(Date.now());
+    var fecha =$scope.fecha;
     var fecha_hoy = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate();
     fecha.setDate(fecha.getDate() + 15);
     var fecha_15 = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate();
@@ -52,12 +53,12 @@ angular.module('frontendmuApp')
     $scope.getServicios();
 
 
-    Evento.query(function(response){
+    Evento.get(function(response){
       $scope.eventos = response;
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
     });
 
-    EventoEstablecimiento.query({'establecimiento':ServerData.establecimiento.id},function(response){
+    EventoEstablecimiento.get({'establecimiento':ServerData.establecimiento.id},function(response){
       $scope.eventos_establecimiento = response;
       console.log($scope.eventos_establecimiento);
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
@@ -65,5 +66,50 @@ angular.module('frontendmuApp')
 
     angular.element(('#calendar')).fullCalendar({});
 
+
+    $scope.dayFormat = "d";
+
+    // To select a single date, make sure the ngModel is not an array.
+    $scope.selectedDate = null;
+
+    // If you want multi-date select, initialize it as an array.
+    $scope.selectedDate = [];
+
+    $scope.firstDayOfWeek = 0; // First day of the week, 0 for Sunday, 1 for Monday, etc.
+    $scope.setDirection = function(direction) {
+      $scope.direction = direction;
+      $scope.dayFormat = direction === "vertical" ? "EEEE, MMMM d" : "d";
+    };
+
+    $scope.dayClick = function(date) {
+      $scope.msg = "You clicked " + $filter("date")(date, "MMM d, y h:mm:ss a Z");
+    };
+
+    $scope.prevMonth = function(data) {
+      $scope.msg = "You clicked (prev) month " + data.month + ", " + data.year;
+    };
+
+    $scope.nextMonth = function(data) {
+      $scope.msg = "You clicked (next) month " + data.month + ", " + data.year;
+    };
+
+    $scope.tooltips = true;
+    $scope.setDayContent = function(date) {
+
+      // You would inject any HTML you wanted for
+      // that particular date here.
+      return "<p></p>";
+
+      // You could also use an $http function directly.
+      return $http.get("/some/external/api");
+
+      // You could also use a promise.
+      var deferred = $q.defer();
+      $timeout(function() {
+        deferred.resolve("<p></p>");
+      }, 1000);
+      return deferred.promise;
+
+    };
 
   });

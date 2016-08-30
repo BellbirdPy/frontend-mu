@@ -9,13 +9,13 @@
  */
 angular.module('frontendmuApp')
   .controller('SanitacionCtrl', function ($scope,Evento,EventoEstablecimiento, Vacunacion, $mdDialog,$filter,ServerData) {
-    Evento.query(function(response){
-      $scope.eventos = response;
+    Evento.get(function(response){
+      $scope.eventos = response.results;
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
     });
 
-    EventoEstablecimiento.query({'establecimiento':ServerData.establecimiento.id},function(response){
-      $scope.eventos_establecimiento = response;
+    EventoEstablecimiento.get({'establecimiento':ServerData.establecimiento.id},function(response){
+      $scope.eventos_establecimiento = response.results;
       console.log($scope.eventos_establecimiento);
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
     });
