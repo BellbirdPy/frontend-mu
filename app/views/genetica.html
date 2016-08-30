@@ -149,11 +149,11 @@
             <md-icon><i class="material-icons green-text text-darken-4">description</i></md-icon>
           </md-button>
           <md-button class="md-icon-button" ng-show="selectedAnimales.length == 1"
-                     ng-click="editAnimal(selectedAnimales[0])" aria-label="Editar Animal">
+                     ng-click="editAnimalGenetica(selectedAnimales[0])" aria-label="Editar Animal">
             <md-icon><i class="material-icons green-text text-darken-4">edit</i></md-icon>
           </md-button>
           <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedAnimales.length == 1"
-                     ng-click="deleteAnimal(selectedAnimales[0])" aria-label="Delete Animal">
+                     ng-click="deleteAnimalGenetica(selectedAnimales[0])" aria-label="Delete Animal">
             <md-icon><i class="material-icons green-text text-darken-4">delete</i></md-icon>
           </md-button>
           <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedAnimales.length > 1"
@@ -181,11 +181,11 @@
           </thead>
           <tbody md-body>
           <tr md-row md-select="animalGenetica" md-select-id="id" md-auto-select ng-repeat="animalGenetica in animalesGenetica.results">
-            <td md-cell>[[animalGenetica.animal.lote_nombre || 'No asignado']]</td>
-            <td md-cell>[[animalGenetica.animal.categoria_nombre]]</td>
-            <td md-cell>[[animalGenetica.animal.raza_nombre]]</td>
-            <td md-cell>[[animalGenetica.animal.carimbo]]</td>
-            <td md-cell>[[animalGenetica.animal.caravana]]</td>
+            <td md-cell>[[animalGenetica.animal_detalle.lote_nombre || 'No asignado']]</td>
+            <td md-cell>[[animalGenetica.animal_detalle.categoria_nombre]]</td>
+            <td md-cell>[[animalGenetica.animal_detalle.raza_nombre]]</td>
+            <td md-cell>[[animalGenetica.animal_detalle.carimbo]]</td>
+            <td md-cell>[[animalGenetica.animal_detalle.caravana]]</td>
             <td md-cell>[[animalGenetica.porcentaje_pureza]]%</td>
             <td md-cell>[[animalGenetica.nombre]]</td>
             <td md-cell>[[animalGenetica.rp]]</td>

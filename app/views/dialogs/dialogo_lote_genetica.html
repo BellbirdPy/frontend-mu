@@ -11,7 +11,7 @@
     <md-input-container>
       <label>Lote</label>
       <md-select ng-model="newLoteGenetica.lote" ng-change="loteSeleccionado()">
-        <md-option ng-repeat="lote in lotes.results" value="[[lote.id]]">
+        <md-option ng-if="lote.cantidad>0" ng-repeat="lote in lotes.results" value="[[lote.id]]">
           [[lote.nombre]]
         </md-option>
       </md-select>

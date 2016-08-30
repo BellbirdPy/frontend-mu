@@ -55,6 +55,10 @@ angular.module('frontendmuApp')
     if (func != null) {
       console.log(func);
       $scope.newAnimalGenetica = func;
+      $scope.newAnimalGeneticaCaravana = func.animal_detalle.caravana;
+      $scope.categoria = func.animal_detalle.categoria_nombre;
+      $scope.raza = func.animal_detalle.raza_nombre;
+      $scope.carimbo = func.animal_detalle.carimbo;
     }
 
     $scope.loteSeleccionado = function () {
@@ -94,7 +98,7 @@ angular.module('frontendmuApp')
         nuevoAnimalGenetica.$save();
         //$mdDialog.hide();
       }
-    }
+    };
 
     $scope.cargarAnimal = function () {
       Animal.get({caravana: $scope.newAnimalGeneticaCaravana}, function (response) {

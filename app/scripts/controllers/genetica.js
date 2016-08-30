@@ -47,7 +47,7 @@ angular.module('frontendmuApp')
           'tambien se eliminaran los registros generados en cada animal del lote.')
         .targetEvent(null)
         .ok('Si, estoy seguro')
-        .cancel('No estoy seguro porque soy un idiota');
+        .cancel('Cancelar');
       $mdDialog.show(confirm).then(function () {
         LoteGenetica.delete({id: lote.id}, lote, function (response) {
           //Esto actualiza llamando al server
@@ -85,23 +85,44 @@ angular.module('frontendmuApp')
 
     $scope.editAnimalGenetica = function (func) {
       $mdDialog.show({
-        templateUrl:'views/dialogs/dialogo_animal_genetica.html',
-        targetEvent:null,
-        controller:'DialogsDialogoAnimalGeneticaCtrl',
-        locals:{
-          func:func
+        templateUrl: 'views/dialogs/dialogo_animal_genetica.html',
+        targetEvent: null,
+        controller: 'DialogsDialogoAnimalGeneticaCtrl',
+        locals: {
+          func: func
         }
       }).then(function () {
         $scope.getLotes();
         $scope.getAnimales();
       })
-    }
+    };
+
+    $scope.deleteAnimalGenetica = function (animal) {
+      var confirm = $mdDialog.confirm()
+        .title('Esta seguro que desea eliminar?')
+        .content('Esta seguro que desea eliminar los registros de gentica del lote: ' + animal.lote_nombre + ',' +
+          'tambien se eliminaran los registros generados en cada animal del lote.')
+        .targetEvent(null)
+        .ok('Si, estoy seguro')
+        .cancel('Cancelar');
+      $mdDialog.show(confirm).then(function () {
+        LoteGenetica.delete({id: lote.id}, lote, function (response) {
+          //Esto actualiza llamando al server
+          $scope.getAnimales();
+        });
+        //Esto actualiza sin volver a llamar al server
+        $scope.lotes.results.splice($scope.lotes.results.indexOf(lote), 1);
+        $scope.selectedLotes = [];
+      }, function () {
+        $scope.status = 'Se elimino correctamente.';
+      });
+    };
 
     $scope.abrirDialogoNuevo = function () {
       $mdDialog.show({
-        templateUrl:'views/dialogs/dialogo_nuevo_genetica.html',
-        targetEvent:null,
-        controller:'DialogsDialogoNuevoGeneticaCtrl',
+        templateUrl: 'views/dialogs/dialogo_nuevo_genetica.html',
+        targetEvent: null,
+        controller: 'DialogsDialogoNuevoGeneticaCtrl'
       }).then(function () {
 
       })
