@@ -94,6 +94,9 @@
       <p>
         Por favor espere!
       </p>
+      <div layout="row" layout-sm="column" layout-align="space-around" ng-show="cargando">
+        <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+      </div>
 
     </div>
 
@@ -124,30 +127,30 @@
         <md-sidemenu-content md-icon="assignment" md-heading="Manejo" md-arrow="true">
           <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#inventario">Inventario
           </md-sidemenu-button>
-          <md-sidemenu-button ng-show="obj.establecimiento.lotes.length" href="#servicio">Servicio</md-sidemenu-button>
+          <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#servicio">Servicio</md-sidemenu-button>
           <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#compra">Compra de animales
           </md-sidemenu-button>
-          <md-sidemenu-button ng-show="obj.establecimiento.lotes.length" href="#venta">Venta de animales
+          <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#venta">Venta de animales
           </md-sidemenu-button>
-          <md-sidemenu-button ng-show="obj.establecimiento.lotes.length" href="#mortandad">Mortandad y Abigeo
+          <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#mortandad">Mortandad y Abigeo
           </md-sidemenu-button>
         </md-sidemenu-content>
       </md-sidemenu-group>
-      <md-sidemenu-group ng-show="obj.establecimiento.lotes.length">
+      <md-sidemenu-group ng-show="obj.establecimiento.potreros.length">
         <md-divider style="margin:0;"></md-divider>
         <md-sidemenu-button href="#sanitacion">
           <md-icon><i class="material-icons">local_hospital</i></md-icon>
           Sanitación
         </md-sidemenu-button>
       </md-sidemenu-group>
-      <md-sidemenu-group ng-show="obj.establecimiento.lotes.length">
+      <md-sidemenu-group ng-show="obj.establecimiento.potreros.length">
         <md-divider style="margin:0;"></md-divider>
         <md-sidemenu-button href="#nutricion">
           <md-icon><i class="material-icons">restaurant</i></md-icon>
           Nutrición
         </md-sidemenu-button>
       </md-sidemenu-group>
-      <md-sidemenu-group ng-show="obj.establecimiento.lotes.length">
+      <md-sidemenu-group ng-show="obj.establecimiento.potreros.length">
         <md-divider style="margin:0;"></md-divider>
         <md-sidemenu-button href="#genetica">
           <md-icon><i class="material-icons">people</i></md-icon>
@@ -186,10 +189,6 @@
           <span class="md-breadcrumb-page white-text md-headline">[[obj.establecimiento.nombre || 'Seleccione un establecimiento para continuar']]</span>
         </h2>
       </div>
-      <md-button aria-label="More" ng-click="$mdOpenMenu($event)">
-        <md-icon><i class="material-icons white-text">message</i></md-icon>
-        <small color="red-text">10 new</small>
-      </md-button>
       <md-menu md-position-mode="target-right target">
 
         <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
