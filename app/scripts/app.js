@@ -138,6 +138,11 @@ angular
         controller: 'PajuelaCtrl',
         controllerAs: 'pajuela'
       })
+      .when('/genetica', {
+        templateUrl: 'views/genetica.html',
+        controller: 'GeneticaCtrl',
+        controllerAs: 'genetica'
+      })
       .otherwise({
         redirectTo: '/'
       });
