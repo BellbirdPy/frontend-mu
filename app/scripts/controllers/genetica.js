@@ -69,6 +69,7 @@ angular.module('frontendmuApp')
       ordering: 'id',
       page: 1
     };
+
     $scope.selectedAnimales = [];
 
     function successAnimales(animales) {
@@ -77,7 +78,6 @@ angular.module('frontendmuApp')
     }
 
     $scope.getAnimales = function () {
-      console.log($scope.queryAnimales);
       $scope.promiseAnimales = AnimalGenetica.get($scope.queryAnimales, successAnimales).$promise;
       $scope.selectedAnimales = [];
     };
