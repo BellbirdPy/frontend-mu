@@ -138,6 +138,11 @@ angular
         controller: 'PajuelaCtrl',
         controllerAs: 'pajuela'
       })
+      .when('/mensaje_inicial', {
+        templateUrl: 'views/mensaje_inicial.html',
+        controller: 'MensajeInicialCtrl',
+        controllerAs: 'mensaje_inicial'
+      })
       .otherwise({
         redirectTo: '/'
       });
