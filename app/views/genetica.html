@@ -2,7 +2,6 @@
   <div>
     <h1 class="md-display-1 green-text">Genetica</h1>
   </div>
-  <!-- LOTES -->
   <section>
     <div layout-padding>
       <h2 class="md-headline green-text">Lotes</h2>
@@ -21,8 +20,8 @@
         <div class="md-toolbar-tools">
           <span>[[selectedLotes.length]] [[selectedLotes.length > 1 ? 'lotes seleccionados' : 'lote seleccionado']]</span>
           <span flex></span>
-          <md-button
-          <md-button class="md-icon-button" ng-show="selectedLotes.length == 1" ng-click="editLoteGenetica(selectedLotes[0])"
+          <md-button class="md-icon-button" ng-show="selectedLotes.length == 1"
+                     ng-click="editLoteGenetica(selectedLotes[0])"
                      aria-label="Editar Lote">
             <md-icon><i class="material-icons green-text text-darken-4">edit</i></md-icon>
           </md-button>
@@ -34,7 +33,6 @@
 
       </md-toolbar>
 
-      <!-- exact table from live demo -->
       <md-table-container>
         <table md-table md-row-select ng-model="selectedLotes" md-progress="promiseLotes">
           <thead md-head md-order="queryLotes.ordering" md-on-reorder="getLotes">
@@ -66,70 +64,11 @@
                            md-page-select></md-table-pagination>
     </md-card>
   </section>
-  <!-- ANIMALES -->
+
   <section>
     <div layout-padding>
       <h2 class="md-headline green-text">Animales</h2>
     </div>
-    <md-card layout-padding ng-show="false">
-      <div layout="row">
-        <md-input-container class="md-block" flex>
-          <label>Lote</label>
-          <md-select ng-model="queryAnimales.lote" aria-label="Lote" ng-change="getAnimales()">
-            <md-option value="">
-              Todos
-            </md-option>
-            <md-option ng-repeat="lote in lotes.results" value=[[lote.id]]>
-              [[lote.nombre]]
-            </md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container class="md-block" flex>
-          <label>Categoria</label>
-          <md-select ng-model="queryAnimales.categoria" aria-label="Categoria" ng-change="getAnimales()">
-            <md-option value="">
-              Todos
-            </md-option>
-            <md-option ng-repeat="cat in categorias.results" value=[[cat.id]]>
-              [[cat.nombre]]
-            </md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container class="md-block" flex>
-          <label>Raza</label>
-          <md-select ng-model="queryAnimales.raza" aria-label="Raza" ng-change="getAnimales()">
-            <md-option value="">
-              Todos
-            </md-option>
-            <md-option ng-repeat="raza in razas.results" value=[[raza.id]]>
-              [[raza.nombre]]
-            </md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container class="md-block" flex>
-          <label>Carimbo</label>
-          <md-select ng-model="queryAnimales.carimbo" aria-label="Carimbo" ng-change="getAnimales()">
-            <md-option value="">
-              Todos
-            </md-option>
-            <md-option ng-repeat="carimbo in [0,1,2,3,4,5,6,7,8,9]" value=[[carimbo]]>
-              [[carimbo]]
-            </md-option>
-          </md-select>
-        </md-input-container>
-        <md-input-container class="md-block" flex>
-          <label>Estado Sanitario</label>
-          <md-select ng-model="queryAnimales.estado_sanitario" aria-label="Estado Sanitario" ng-change="getAnimales()">
-            <md-option value="">
-              Todos
-            </md-option>
-            <md-option ng-repeat="estado in estados_sanitarios" value=[[estado.c]]>
-              [[estado.display]]
-            </md-option>
-          </md-select>
-        </md-input-container>
-      </div>
-    </md-card>
     <md-card>
       <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedAnimales.length">
         <div class="md-toolbar-tools">
@@ -180,7 +119,8 @@
           </tr>
           </thead>
           <tbody md-body>
-          <tr md-row md-select="animalGenetica" md-select-id="id" md-auto-select ng-repeat="animalGenetica in animalesGenetica.results">
+          <tr md-row md-select="animalGenetica" md-select-id="id" md-auto-select
+              ng-repeat="animalGenetica in animalesGenetica.results">
             <td md-cell>[[animalGenetica.animal_detalle.lote_nombre || 'No asignado']]</td>
             <td md-cell>[[animalGenetica.animal_detalle.categoria_nombre]]</td>
             <td md-cell>[[animalGenetica.animal_detalle.raza_nombre]]</td>
@@ -200,8 +140,5 @@
                            md-on-paginate="getAnimales"></md-table-pagination>
     </md-card>
   </section>
-  <md-button ng-click="abrirDialogoNuevo()" >
-    Abrir dialogo nuevo
-  </md-button>
 </div>
 
