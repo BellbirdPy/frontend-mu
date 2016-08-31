@@ -21,7 +21,7 @@ angular.module('frontendmuApp')
     $scope.seleccionar = function(e){
       $scope.obj.establecimiento = e;
       $rootScope.establecimiento = e;
-      $location.path('/inventario/');
+      $location.path('/establecimiento/');
     };
 
     Noticia.get({},function(data){
