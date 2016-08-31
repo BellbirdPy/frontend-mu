@@ -1,0 +1,81 @@
+<md-dialog layout="column" aria-label="Lote" style="min-width: 800px; ">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2 class="white-text">Gentica animal</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()">
+        <i class="material-icons white-text text-darken-4">close</i></md-button>
+    </div>
+  </md-toolbar>
+  <form layout="column" layout-padding ng-show="animales.results.length >= 1">
+    <md-input-container>
+      <label>Caravan animal</label>
+      <input ng-model="newAnimalGeneticaCaravana" ng-blur="cargarAnimal()">
+    </md-input-container>
+    <md-input-container>
+      <label>Categoria</label>
+      <input ng-model="categoria" disabled>
+    </md-input-container>
+    <md-input-container>
+      <label>Raza</label>
+      <input ng-model="raza" disabled>
+    </md-input-container>
+    <md-input-container>
+      <label>Carimbo</label>
+      <input ng-model="carimbo" disabled>
+    </md-input-container>
+    <md-input-container>
+      <label>Nombre</label>
+      <input ng-model="newAnimalGenetica.nombre">
+    </md-input-container>
+    <md-input-container>
+      <label>Nombre corto</label>
+      <input ng-model="newAnimalGenetica.nombre_corto">
+    </md-input-container>
+    <md-input-container>
+      <label>Tipo de servicio</label>
+      <md-select ng-model="newAnimalGenetica.tipo_servicio">
+        <md-option ng-repeat="tipo in tipos_servicios" value="[[tipo.id]]">
+          [[tipo.nombre]]
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container>
+      <label>Porcentaje de pureza</label>
+      <md-select ng-model="newAnimalGenetica.porcentaje_pureza">
+        <md-option ng-repeat="porcentaje in porcentajes" value="[[porcentaje]]">
+          [[porcentaje]]%
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container>
+      <label>RP</label>
+      <input ng-model="newAnimalGenetica.rp">
+    </md-input-container>
+    <md-input-container>
+      <label>Descripcion</label>
+      <input ng-model="newAnimalGenetica.descripcion">
+    </md-input-container>
+    <md-input-container>
+      <label>Pedigree del padre</label>
+      <input ng-model="newAnimalGenetica.pedigree_padre">
+    </md-input-container>
+    <md-input-container>
+      <label>Pedigree de la madre</label>
+      <input ng-model="newAnimalGenetica.pedigree_madre">
+    </md-input-container>
+    <md-input-container>
+      <label>Pedigree del abuelo</label>
+      <input ng-model="newAnimalGenetica.pedigree_abuelo">
+    </md-input-container>
+    <md-dialog-actions layout="row">
+      <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
+      <span flex></span>
+      <md-button flex-order="1" ng-click="guardar()" class="md-primary">Guardar</md-button>
+      <md-button ng-click="cancel()">Cancelar</md-button>
+    </md-dialog-actions>
+  </form>
+  <div layout="row" layout-sm="column" layout-align="center center" ng-hide="animales.results.length >= 1">
+    <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
+  </div>
+</md-dialog>
