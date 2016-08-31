@@ -21,7 +21,12 @@ angular.module('frontendmuApp')
     $scope.seleccionar = function(e){
       $scope.obj.establecimiento = e;
       $rootScope.establecimiento = e;
-      $location.path('/establecimiento/');
+      if ($scope.obj.establecimiento.potreros.length)
+      {
+        $location.path('/dashboard/');
+      }else{
+      $location.path('/mensaje_inicial/');
+      }
     };
 
     Noticia.get({},function(data){

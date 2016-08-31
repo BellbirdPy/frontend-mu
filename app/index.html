@@ -107,7 +107,7 @@
 <!-- END: App-Loading Screen. -->
 
 
-<md-sidenav ng-if="obj.establecimiento.id" class="site-sidenav md-sidenav-left md-whiteframe-z2" style="width: 250px;"
+<md-sidenav ng-if="obj.establecimiento.potreros.length" class="site-sidenav md-sidenav-left md-whiteframe-z2" style="width: 250px;"
             md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
 
   <header class="nav-header">
@@ -351,6 +351,7 @@
 <script src="scripts/services/tarea.js"></script>
 <script src="scripts/controllers/tarea.js"></script>
 <script src="scripts/services/establecimientousuarios.js"></script>
+<script src="scripts/controllers/mensaje_inicial.js"></script>
 <!-- endbuild -->
 </body>
 </html>
