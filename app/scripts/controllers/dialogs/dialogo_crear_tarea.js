@@ -74,10 +74,10 @@ angular.module('frontendmuApp')
         console.log($scope.newTarea.fecha)
         var nuevoTarea = new Tarea($scope.newTarea);
         nuevoTarea.$save(function () {
-            console.log('Tarea realizada');
+            Utilidades.showSimpleToast('Se creó correctamente!');
           },
           function (error) {
-            console.log(error);
+            Utilidades.showSimpleToast('Ocurrió algún error!');
           });
         $scope.hide();}
     }

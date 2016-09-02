@@ -1,5 +1,5 @@
 <md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
-  <form>
+  <form name="form">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2 class="white-text">Tarea</h2>
@@ -15,16 +15,22 @@
         <md-content layout-padding>
           <h4 class="green-text">Encabezado</h4>
           <div layout="row">
-            <md-input-container class="md-accent-1 md-block" >
+            <md-input-container flex class="md-accent-1 md-block">
               <label>Descripción</label>
-              <input ng-model="newTarea.descripcion">
+              <input name="descripcion" ng-model="newTarea.descripcion" required>
+              <div ng-messages="form.descripcion.$error" ng-show="form.descripcion.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block" >
-              <md-select ng-model="newTarea.usuario_asignado" placeholder="Usuario asignado">
+            <md-input-container flex class="md-accent-1 md-block" >
+              <md-select name="usuario" ng-model="newTarea.usuario_asignado" placeholder="Usuario asignado" required>
                 <md-option ng-repeat="usuario in usuarios.lista" value="[[usuario.id]]">
                   [[usuario.username]]
                 </md-option>
               </md-select>
+              <div ng-messages="form.usuario.$error" ng-show="form.usuario.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
             <md-datepicker ng-model="fecha" style="margin:13px 0;"
                            md-placeholder="Fecha"></md-datepicker>
@@ -36,7 +42,7 @@
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button flex-order="1" ng-click="guardarTarea()" class="md-primary">Guardar</md-button>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && guardarTarea()" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()">Cancelar</md-button>
     </md-dialog-actions>
   </form>

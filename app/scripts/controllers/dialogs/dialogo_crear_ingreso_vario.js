@@ -60,10 +60,10 @@ angular.module('frontendmuApp')
       console.log($scope.newIngresoVario.fecha)
       var nuevoIngresoVario = new IngresoVario($scope.newIngresoVario);
       nuevoIngresoVario.$save(function () {
-          console.log('IngresoVario realizado');
+          Utilidades.showSimpleToast('Se creó correctamente!');
         },
         function (error) {
-          console.log(error);
+          Utilidades.showSimpleToast('Ocurrió algún error!');
         });
       $scope.hide();
     }}

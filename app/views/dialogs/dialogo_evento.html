@@ -7,25 +7,37 @@
       <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()"></md-button>
     </div>
   </md-toolbar>
-  <form>
+  <form name="form">
     <md-dialog-content layout-padding>
       <div layout="column">
         <md-input-container>
           <label>Descripción</label>
-          <input type="text" ng-model="newEvento.nombre" required>
+          <input type="text" ng-model="newEvento.nombre" required name="nombre">
+          <div ng-messages="form.nombre.$error" ng-show="form.nombre.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container>
           <label>Veterinario</label>
-          <input type="text" ng-model="newEvento.veterinario" required>
+          <input type="text" ng-model="newEvento.veterinario" required name="veterinario">
+          <div ng-messages="form.veterinario.$error" ng-show="form.veterinario.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
 
         <md-input-container ng-hide="newEvento.start && !newEvento.id">
           <label>Fecha de Inicio</label>
-          <input type="date" ng-model="newEvento.start" required>
+          <input type="date" ng-model="newEvento.start" required name="start">
+          <div ng-messages="form.start.$error" ng-show="form.start.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container ng-hide="newEvento.end && !newEvento.id">
           <label>Fecha de Fin</label>
-          <input type="date" ng-model="newEvento.end" required>
+          <input type="date" ng-model="newEvento.end" required name="end">
+          <div ng-messages="form.end.$error" ng-show="form.end.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
 
       </div>
@@ -37,7 +49,7 @@
 
       <md-button ng-show="newEvento.id" ng-click="deleteEvento(newEvento)" class="red-text">Eliminar</md-button>
       <md-button ng-click="cancel()" >Cancelar</md-button>
-      <md-button ng-click="answer('guardar')" class="md-primary">Guardar</md-button>
+      <md-button type="submit" ng-click="form.$valid && answer('guardar')" class="md-primary">Guardar</md-button>
 
     </md-dialog-actions>
   </form>

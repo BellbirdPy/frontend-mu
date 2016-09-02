@@ -7,7 +7,7 @@
       <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()"></md-button>
     </div>
   </md-toolbar>
-  <form>
+  <form name="form">
     <md-dialog-content layout-padding >
       <div layout="column">
         <md-input-container >
@@ -31,7 +31,10 @@
         </md-input-container>
         <md-input-container ng-show="newNutricion.tipo_comida == 'Otros'" >
           <label>Tipo de Alimento (Otro)</label>
-          <input ng-model="form.tipo_comida" required >
+          <input ng-model="form.tipo_comida" required name="tipo">
+          <div ng-messages="form.tipo.$error" ng-show="form.tipo.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container>
           <label>Descripcion de Alimento</label>
@@ -39,20 +42,32 @@
         </md-input-container>
         <md-input-container>
           <label>Fecha de Inicio</label>
-          <input type="date" ng-model="newNutricion.fecha_inicio" required>
+          <input type="date" ng-model="newNutricion.fecha_inicio" required name="inicio">
+          <div ng-messages="form.inicio.$error" ng-show="form.inicio.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container>
           <label>Fecha de Fin</label>
-          <input type="date" ng-model="newNutricion.fecha_fin" required>
+          <input type="date" ng-model="newNutricion.fecha_fin" required name="fin">
+          <div ng-messages="form.fin.$error" ng-show="form.fin.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <div layout="row" ng-show="newNutricion.fecha_inicio && newNutricion.fecha_fin">
           <md-input-container flex >
             <label>Gramos por Día (p/cabeza)</label>
-            <input ng-model="form.gramos" required ng-change="calculo_kilos(form.gramos)">
+            <input ng-model="form.gramos" required ng-change="calculo_kilos(form.gramos)" name="gramos">
+            <div ng-messages="form.gramos.$error" ng-show="form.gramos.$touched || form.$submitted">
+              <div ng-messages-include="views/error_messages.html"></div>
+            </div>
           </md-input-container>
           <md-input-container flex>
             <label>Total kilos (p/cabeza)</label>
-            <input ng-model="form.kilos" required ng-change="calculo_kilos(form.kilos)" >
+            <input ng-model="form.kilos" required ng-change="calculo_kilos(form.kilos)" name="kilos">
+            <div ng-messages="form.kilos.$error" ng-show="form.kilos.$touched || form.$submitted">
+              <div ng-messages-include="views/error_messages.html"></div>
+            </div>
           </md-input-container>
         </div>
         <md-input-container >
@@ -69,7 +84,7 @@
     <md-dialog-actions layout="row" >
       <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
       <span flex></span>
-      <md-button flex-order="1" ng-click="answer('guardar')" class="md-primary">Guardar</md-button>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && answer('guardar')" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()" >Cancelar</md-button>
     </md-dialog-actions>
   </form>

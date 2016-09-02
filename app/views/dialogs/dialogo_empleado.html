@@ -7,27 +7,39 @@
       <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()"></md-button>
     </div>
   </md-toolbar>
-  <form enctype="multipart/form-data">
+  <form enctype="multipart/form-data" name="form">
     <md-dialog-content layout-padding>
       <div layout="column">
           <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Nombre</label>
-                  <input ng-model="newEmpleado.nombre" required>
+                  <input ng-model="newEmpleado.nombre" required name="nombre">
+                <div ng-messages="form.nombre.$error" ng-show="form.nombre.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Apellido</label>
-                  <input ng-model="newEmpleado.apellido" required>
+                  <input ng-model="newEmpleado.apellido" required name="apellido">
+                <div ng-messages="form.apellido.$error" ng-show="form.apellido.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Cedula de Identidad Nº.</label>
-                  <input ng-model="newEmpleado.numero_cedula" required>
+                  <input ng-model="newEmpleado.numero_cedula" required name="cedula">
+                <div ng-messages="form.cedula.$error" ng-show="form.cedula.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
           </div>
           <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Fecha de Nacimiento</label>
-                  <input type="date" ng-model="newEmpleado.fecha_nacimiento" required>
+                  <input type="date" ng-model="newEmpleado.fecha_nacimiento" required name="fecha_nac">
+                <div ng-messages="form.fecha_nac.$error" ng-show="form.fecha_nac.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Ciudad de Nacimiento</label>
@@ -37,11 +49,17 @@
           <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Teléfono</label>
-                  <input ng-model="newEmpleado.telefono" required>
+                  <input ng-model="newEmpleado.telefono" required name="telefono">
+                <div ng-messages="form.telefono.$error" ng-show="form.telefono.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Mail</label>
-                  <input ng-model="newEmpleado.mail" type="email">
+                  <input ng-model="newEmpleado.mail" type="email" name="mail">
+                <div ng-messages="form.mail.$error" ng-show="form.mail.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Contacto de emergencia</label>
@@ -51,21 +69,33 @@
           <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Dirección</label>
-                  <input ng-model="newEmpleado.direccion" required>
+                  <input ng-model="newEmpleado.direccion" required name="direccion">
+                <div ng-messages="form.direccion.$error" ng-show="form.direccion.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
           </div>
           <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Ingreso a la empresa</label>
-                  <input type="date" ng-model="newEmpleado.ingreso_empresa" required>
+                  <input type="date" ng-model="newEmpleado.ingreso_empresa" required name="fecha_ingreso">
+                <div ng-messages="form.fecha_ingreso.$error" ng-show="form.fecha_ingreso.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Cargo</label>
-                  <input ng-model="newEmpleado.cargo" required>
+                  <input ng-model="newEmpleado.cargo" required name="cargo">
+                <div ng-messages="form.cargo.$error" ng-show="form.cargo.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Salario</label>
-                  <input ng-model="newEmpleado.salario" required>
+                  <input ng-model="newEmpleado.salario" required type="number" name="salario">
+                <div ng-messages="form.salario.$error" ng-show="form.salario.$touched || form.$submitted">
+                  <div ng-messages-include="views/error_messages.html"></div>
+                </div>
               </md-input-container>
           </div>
 
@@ -76,7 +106,7 @@
     <md-dialog-actions layout="row" >
       <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
       <span flex></span>
-      <md-button flex-order="1" ng-click="answer('guardar')" class="md-primary">Guardar</md-button>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && answer('guardar')" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()" >Cancelar</md-button>
     </md-dialog-actions>
   </form>

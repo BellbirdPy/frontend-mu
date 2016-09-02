@@ -1,5 +1,5 @@
 <md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
-  <form>
+  <form name="form">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2 class="white-text">Ingreso</h2>
@@ -17,21 +17,33 @@
           <div layout="row">
 
 
-            <md-input-container class="md-accent-1 md-block" >
+            <md-input-container flex class="md-accent-1 md-block" >
               <label>Motivo</label>
-              <input ng-model="newIngresoVario.motivo">
+              <input name="motivo" ng-model="newIngresoVario.motivo" required>
+              <div ng-messages="form.motivo.$error" ng-show="form.motivo.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block" >
+            <md-input-container flex class="md-accent-1 md-block" >
               <label>Comprador</label>
-              <input ng-model="newIngresoVario.comprador">
+              <input name="comprador" ng-model="newIngresoVario.comprador" required>
+              <div ng-messages="form.comprador.$error" ng-show="form.comprador.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block">
+            <md-input-container flex class="md-accent-1 md-block">
               <label>Cantidad</label>
-              <input ng-model="newIngresoVario.cantidad" type="number">
+              <input name="cantidad" ng-model="newIngresoVario.cantidad" type="number" required>
+              <div ng-messages="form.cantidad.$error" ng-show="form.cantidad.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block">
+            <md-input-container flex class="md-accent-1 md-block">
               <label>Precio unitario</label>
-              <input ng-model="newIngresoVario.precio_unitario" type="number">
+              <input name="precio" ng-model="newIngresoVario.precio_unitario" type="number" required>
+              <div ng-messages="form.precio.$error" ng-show="form.precio.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
 
             <md-datepicker ng-model="fecha" style="margin:13px 0;"
@@ -44,7 +56,7 @@
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button flex-order="1" ng-click="guardarIngresoVario()" class="md-primary">Guardar</md-button>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && guardarIngresoVario()" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()">Cancelar</md-button>
     </md-dialog-actions>
   </form>

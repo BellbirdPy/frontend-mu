@@ -55,7 +55,7 @@ angular.module('frontendmuApp')
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_eliminar_ingreso_venta.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','IngresoVenta','$filter' ,function ($scope, $mdDialog, IngresoVenta) {
+        controller: ['$scope','$mdDialog','IngresoVenta','$filter', 'Utilidades' ,function ($scope, $mdDialog, IngresoVenta, Utilidades) {
           $scope.options = {
             pageSelect: true
           };
@@ -83,6 +83,7 @@ angular.module('frontendmuApp')
                 angular.forEach(lista, function(ingresoVenta){
                   IngresoVenta.delete({id:ingresoVenta.id},ingresoVenta,function(data){
                     console.log("eliminado: " + data.fecha_ingresoVenta);
+                    Utilidades.showSimpleToast('Se eliminó correctamente!');
                   });
                 });
               }
@@ -135,7 +136,7 @@ angular.module('frontendmuApp')
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_eliminar_ingreso_vario.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','IngresoVario','$filter' ,function ($scope, $mdDialog, IngresoVario) {
+        controller: ['$scope','$mdDialog','IngresoVario','$filter', 'Utilidades' ,function ($scope, $mdDialog, IngresoVario, Utilidades) {
           $scope.options = {
             pageSelect: true
           };
@@ -163,6 +164,8 @@ angular.module('frontendmuApp')
                 angular.forEach(lista, function(ingresoVario){
                   IngresoVario.delete({id:ingresoVario.id},ingresoVario,function(data){
                     console.log("eliminado: " + data.fecha_ingresoVario);
+                    Utilidades.showSimpleToast('Se eliminó correctamente!');
+
                   });
                 });
               }
@@ -231,7 +234,7 @@ angular.module('frontendmuApp')
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_eliminar_egreso.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','Egreso','$filter' ,function ($scope, $mdDialog, Egreso) {
+        controller: ['$scope','$mdDialog','Egreso','$filter', 'Utilidades' ,function ($scope, $mdDialog, Egreso, Utilidades) {
           $scope.options = {
             pageSelect: true
           };
@@ -259,10 +262,13 @@ angular.module('frontendmuApp')
                 angular.forEach(lista, function(egreso){
                   Egreso.delete({id:egreso.id},egreso,function(data){
                     console.log("eliminado: " + data.fecha_egreso);
+
                   });
                 });
+
               }
               $mdDialog.hide(lista);
+              Utilidades.showSimpleToast('Se eliminó correctamente!');
             }else{
               $mdDialog.hide();
             }

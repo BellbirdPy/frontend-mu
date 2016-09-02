@@ -1,5 +1,5 @@
 <md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
-  <form>
+  <form name="form">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2 class="white-text">Ingreso</h2>
@@ -16,35 +16,53 @@
           <h4 class="green-text">Encabezado</h4>
           <div layout="row">
 
-            <md-input-container class="md-accent-1 md-block" >
+            <md-input-container flex class="md-accent-1 md-block" >
               <label>Comprador</label>
-              <input ng-model="newIngresoVenta.comprador">
+              <input name="comprador" ng-model="newIngresoVenta.comprador" required>
+              <div ng-messages="form.comprador.$error" ng-show="form.comprador.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block">
-              <md-select ng-model="newIngresoVenta.categoria" placeholder="Categorías">
+            <md-input-container flex class="md-accent-1 md-block">
+              <md-select name="categoria" ng-model="newIngresoVenta.categoria" placeholder="Categorías" required>
                 <md-option ng-repeat="categoria in categorias" ng-value="categoria">
                   [[categoria]]
                 </md-option>
               </md-select>
+              <div ng-messages="form.categoria.$error" ng-show="form.categoria.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block">
-              <md-select ng-model="newIngresoVenta.carimbo" placeholder="Carimbo">
+            <md-input-container flex class="md-accent-1 md-block">
+              <md-select name="carimbo" ng-model="newIngresoVenta.carimbo" placeholder="Carimbo" required>
                 <md-option ng-repeat="carimbo in carimbos" ng-value="carimbo">
                   [[carimbo]]
                 </md-option>
               </md-select>
+              <div ng-messages="form.carimbo.$error" ng-show="form.carimbo.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block">
+            <md-input-container flex class="md-accent-1 md-block">
               <label>Cantidad</label>
-              <input ng-model="newIngresoVenta.cantidad" type="number">
+              <input name="cantidad" ng-model="newIngresoVenta.cantidad" type="number" required>
+              <div ng-messages="form.cantidad.$error" ng-show="form.cantidad.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block">
+            <md-input-container flex class="md-accent-1 md-block">
               <label>Peso promedio</label>
-              <input ng-model="newIngresoVenta.peso_promedio" type="number">
+              <input ng-model="newIngresoVenta.peso_promedio" type="number" name="peso" required>
+              <div ng-messages="form.peso.$error" ng-show="form.peso.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
-            <md-input-container class="md-accent-1 md-block">
+            <md-input-container flex class="md-accent-1 md-block">
               <label>Precio total</label>
-              <input ng-model="newIngresoVenta.total" type="number">
+              <input ng-model="newIngresoVenta.total" type="number" name="precio" required>
+              <div ng-messages="form.precio.$error" ng-show="form.precio.$touched || form.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-input-container>
 
             <md-datepicker ng-model="fecha" style="margin:13px 0;"
@@ -57,7 +75,7 @@
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button flex-order="1" ng-click="guardarIngresoVenta()" class="md-primary">Guardar</md-button>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && guardarIngresoVenta()" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()">Cancelar</md-button>
     </md-dialog-actions>
   </form>

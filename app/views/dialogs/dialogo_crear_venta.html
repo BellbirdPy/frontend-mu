@@ -1,4 +1,5 @@
 <md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <form name="form">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2 class="white-text">Venta Animal</h2>
@@ -16,15 +17,24 @@
       <div layout="row">
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Codigo de establecimiento del comprador</label>
-          <input ng-model="newVenta.cod_establecimiento_comprador">
+          <input ng-model="newVenta.cod_establecimiento_comprador" name="establecimiento_comprador" required>
+          <div ng-messages="form.establecimiento_comprador.$error" ng-show="form.establecimiento_comprador.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Nombre del comprador</label>
-          <input ng-model="newVenta.nombre_comprador">
+          <input ng-model="newVenta.nombre_comprador" name="comprador" required>
+          <div ng-messages="form.comprador.$error" ng-show="form.comprador.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container>
           <label>Guía Nº</label>
-          <input ng-model="newVenta.numero_guia" type="number">
+          <input ng-model="newVenta.numero_guia" type="number" name="numero_guia" required>
+          <div ng-messages="form.numero_guia.$error" ng-show="form.numero_guia.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
 
         <md-input-container class="md-accent-1 md-block" flex>
@@ -205,7 +215,8 @@
   <md-dialog-actions layout="row">
     <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
     <span flex></span>
-    <md-button flex-order="1" ng-click="guardarVenta()" class="md-primary">Guardar</md-button>
+    <md-button type="submit" flex-order="1" ng-click="form.$valid && guardarVenta()" class="md-primary">Guardar</md-button>
     <md-button ng-click="cancel()">Cancelar</md-button>
   </md-dialog-actions>
+  </form>
 </md-dialog>

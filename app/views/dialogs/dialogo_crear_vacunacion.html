@@ -1,4 +1,5 @@
 <md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
+  <form name="form">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2 class="white-text">Vacunacion Animal</h2>
@@ -14,26 +15,37 @@
       <md-content layout-padding>
         <h4 class="green-text">Encabezado</h4>
         <div layout="row">
-          <md-input-container class="md-accent-1 md-block">
+          <md-input-container flex class="md-accent-1 md-block">
             <label>Nombre de la vacuna</label>
-            <input ng-model="newVacunacion.nombre">
+            <input name="nombre" ng-model="newVacunacion.nombre" required>
+            <div ng-messages="form.nombre.$error" ng-show="form.nombre.$touched || form.$submitted">
+              <div ng-messages-include="views/error_messages.html"></div>
+            </div>
           </md-input-container>
-          <md-input-container class="md-accent-1 md-block">
+          <md-input-container flex class="md-accent-1 md-block">
             <label>Nombre científico</label>
-            <input ng-model="newVacunacion.nombre_cientifico">
+            <input name="nombre_cientifico" ng-model="newVacunacion.nombre_cientifico">
+
           </md-input-container>
-          <md-input-container class="md-accent-1 md-block">
+          <md-input-container flex class="md-accent-1 md-block">
             <label>Veterinario</label>
-            <input ng-model="newVacunacion.veterinario">
+            <input name="veterinario" ng-model="newVacunacion.veterinario" required>
+            <div ng-messages="form.veterinario.$error" ng-show="form.veterinario.$touched || form.$submitted">
+              <div ng-messages-include="views/error_messages.html"></div>
+            </div>
           </md-input-container>
 
-          <md-input-container class="md-accent-1 md-block">
+          <md-input-container flex class="md-accent-1 md-block">
             <label>Enfermedad</label>
-            <input ng-model="newVacunacion.enfermedad">
+            <input name="enfermedad" ng-model="newVacunacion.enfermedad" required>
+            <div ng-messages="form.enfermedad.$error" ng-show="form.enfermedad.$touched || form.$submitted">
+              <div ng-messages-include="views/error_messages.html"></div>
+            </div>
           </md-input-container>
-          <md-input-container class="md-accent-1 md-block">
+          <md-input-container flex class="md-accent-1 md-block">
             <label>Código</label>
-            <input ng-model="newVacunacion.codigo">
+            <input name="codigo" ng-model="newVacunacion.codigo">
+
           </md-input-container>
           <md-datepicker ng-model="fecha_vacunacion" style="margin:13px 0;"
                          md-placeholder="Fecha de vacunación"></md-datepicker>
@@ -73,13 +85,16 @@
           </tr>
           </thead>
           <tbody md-body>
-          <tr md-row md-select="lote.id" md-select-id="id" md-auto-select ng-repeat="lote in lotes.results">
+          <tr md-row md-select="lote.id" md-select-id="id" md-auto-select ng-repeat="lote in lotes.results" required>
             <td md-cell>[[lote.id]]</td>
             <td md-cell>[[lote.nombre]]</td>
             <td md-cell>[[lote.potrero_nombre]]</td>
             <td md-cell>[[lote.peso_promedio]]</td>
             <td md-cell>[[lote.animales.length]]</td>
           </tr>
+          <div ng-messages="form.lote.$error" ng-show="form.lote.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
           </tbody>
         </table>
       </md-table-container>
@@ -92,7 +107,8 @@
   <md-dialog-actions layout="row">
     <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
     <span flex></span>
-    <md-button flex-order="1" ng-click="guardarVacunacion()" class="md-primary">Guardar</md-button>
+    <md-button type="submit" flex-order="1" ng-click="form.$valid && guardarVacunacion()" class="md-primary">Guardar</md-button>
     <md-button ng-click="cancel()">Cancelar</md-button>
   </md-dialog-actions>
+  </form>
 </md-dialog>

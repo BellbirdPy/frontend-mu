@@ -78,10 +78,10 @@ angular.module('frontendmuApp')
         + ($scope.fecha_vacunacion.getMonth()+1) + '-' + $scope.fecha_vacunacion.getDate();
       var nuevaVacunacion = new Vacunacion($scope.newVacunacion);
       nuevaVacunacion.$save(function () {
-          console.log('Vacunacion realizada');
+          Utilidades.showSimpleToast('Se creó correctamente!');
         },
         function (error) {
-          console.log(error);
+          Utilidades.showSimpleToast('Ocurrió algún error!');
         });
       $scope.hide();}
     }

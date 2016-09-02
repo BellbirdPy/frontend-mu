@@ -1,5 +1,5 @@
 <md-dialog layout="column" aria-label="Compra" style="min-width: 100%; min-height: 100%">
-  <form>
+  <form name="formEgreso">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2 class="white-text">Egreso</h2>
@@ -15,15 +15,18 @@
       <md-content layout-padding>
         <h4 class="green-text">Encabezado</h4>
         <div layout="row">
-          <md-input-container class="md-accent-1 md-block">
-            <md-select ng-model="newEgreso.rubro" placeholder="Rubro">
+          <md-input-container flex class="md-accent-1 md-block">
+            <md-select name="rubro" ng-model="newEgreso.rubro" placeholder="Rubro" required>
               <md-option ng-repeat="rubro in rubros" value="[[rubro.c]]">
                 [[rubro.display]]
               </md-option>
+              <div ng-messages="formEgreso.rubro.$error" ng-show="formEgreso.rubro.$touched || formEgreso.$submitted">
+                <div ng-messages-include="views/error_messages.html"></div>
+              </div>
             </md-select>
           </md-input-container>
-          <md-input-container class="md-accent-1 md-block">
-            <md-select ng-model="newEgreso.descripcion" placeholder="Descripción">
+          <md-input-container class="md-accent-1 md-block" flex ng-show="newEgreso.rubro">
+            <md-select name="descripcion" ng-model="newEgreso.descripcion" placeholder="Descripción" required>
               <md-option ng-show="newEgreso.rubro=='GD'" ng-repeat="descripcion in rubros[0].descripciones" value="[[descripcion]]">
                 [[descripcion]]
               </md-option>
@@ -40,27 +43,39 @@
                 [[descripcion]]
               </md-option>
             </md-select>
+            <div ng-messages="formEgreso.descripcion.$error" ng-show="formEgreso.descripcion.$touched || formEgreso.$submitted">
+              <div ng-messages-include="views/error_messages.html"></div>
+            </div>
           </md-input-container>
-          <md-input-container ng-show="newEgreso.descripcion == 'Agregar otro'" >
+          <md-input-container flex ng-show="newEgreso.descripcion == 'Agregar otro'" >
             <label>Descripción (Agregar otro)</label>
-            <input ng-model="form.descripcion" required >
+            <input ng-model="form.descripcion" name="AgregarOtro" >
+
           </md-input-container>
-          <md-input-container class="md-accent-1 md-block">
+
+          <md-input-container class="md-accent-1 md-block" flex >
             <label>Monto</label>
-            <input ng-model="newEgreso.monto" type="number">
+            <input name="montoEgreso" ng-model="newEgreso.monto" type="number"  required>
+            <div ng-messages="formEgreso.montoEgreso.$error" ng-show="formEgreso.montoEgreso.$touched || formEgreso.$submitted">
+              <div ng-messages-include="views/error_messages.html"></div>
+            </div>
           </md-input-container>
 
           <md-datepicker ng-model="fecha" style="margin:13px 0;"
                          md-placeholder="Fecha del Egreso"></md-datepicker>
+
         </div>
+
+
       </md-content>
+
     </md-card>
 
   </section>
 
   <md-dialog-actions layout="row">
     <span flex></span>
-    <md-button flex-order="1" ng-click="guardarEgreso()" class="md-primary">Guardar</md-button>
+    <md-button type="submit" flex-order="1" ng-click="formEgreso.$valid && guardarEgreso()" class="md-primary">Guardar</md-button>
     <md-button ng-click="cancel()">Cancelar</md-button>
   </md-dialog-actions>
   </form>

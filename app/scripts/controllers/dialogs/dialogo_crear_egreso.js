@@ -11,7 +11,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearEgresoCtrl', function ($scope, $mdDialog, ServerData, Egreso, Utilidades) {
+  .controller('DialogsDialogoCrearEgresoCtrl' , function ($scope, $mdDialog, ServerData, Egreso, Utilidades) {
     var obj = ServerData;
     $scope.rubros = [
       {c:'GD',display:'Gastos Directos',
@@ -112,10 +112,10 @@ angular.module('frontendmuApp')
       console.log($scope.newEgreso.fecha)
       var nuevoEgreso = new Egreso($scope.newEgreso);
       nuevoEgreso.$save(function () {
-          console.log('Egreso realizada');
+          Utilidades.showSimpleToast('Se creó correctamente!');
         },
         function (error) {
-          console.log(error);
+          Utilidades.showSimpleToast('Ocurrió algún error!');
         });
       $scope.hide();}
     }

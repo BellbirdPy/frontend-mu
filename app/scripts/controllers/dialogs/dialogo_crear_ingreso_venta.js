@@ -61,10 +61,10 @@ angular.module('frontendmuApp')
       console.log($scope.newIngresoVenta.fecha)
       var nuevoIngresoVenta = new IngresoVenta($scope.newIngresoVenta);
       nuevoIngresoVenta.$save(function () {
-          console.log('IngresoVenta realizado');
+          Utilidades.showSimpleToast('Se creó correctamente!');
         },
         function (error) {
-          console.log(error);
+          Utilidades.showSimpleToast('Ocurrió algún error!');
         });
       $scope.hide();}
     }

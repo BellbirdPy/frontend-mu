@@ -7,12 +7,15 @@
       <md-button class="md-icon-button" aria-label="cancel" ng-click="cancel()"></md-button>
     </div>
   </md-toolbar>
-  <form>
+  <form name="form">
     <md-dialog-content layout-padding>
       <div layout="column">
         <md-input-container>
           <label>Nombre</label>
-          <input ng-model="newPotrero.nombre" required>
+          <input ng-model="newPotrero.nombre" required name="nombre">
+          <div ng-messages="form.nombre.$error" ng-show="form.nombre.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container >
           <label>Superficie (Ha.)</label>
@@ -20,7 +23,10 @@
         </md-input-container>
         <md-input-container>
           <label>Uso</label>
-          <input ng-model="newPotrero.uso" >
+          <input ng-model="newPotrero.uso" required name="uso">
+          <div ng-messages="form.uso.$error" ng-show="form.uso.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
       </div>
     </md-dialog-content>
@@ -28,7 +34,7 @@
     <md-dialog-actions layout="row" >
       <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
       <span flex></span>
-      <md-button flex-order="1" ng-click="answer('guardar')" class="md-primary">Guardar</md-button>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && answer('guardar')" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()" >Cancelar</md-button>
     </md-dialog-actions>
   </form>
