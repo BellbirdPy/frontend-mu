@@ -14,27 +14,32 @@
       <md-content layout-padding>
         <h4 class="green-text">Encabezado</h4>
         <div layout="row">
-          <md-input-container class="md-accent-1 md-block">
+          <md-input-container class="md-accent-1 md-block" flex>
             <label>Nombre de la vacuna</label>
             <input ng-model="newVacunacion.nombre">
           </md-input-container>
-          <md-input-container class="md-accent-1 md-block">
+          <!--
+          <md-input-container class="md-accent-1 md-block" flex>
             <label>Nombre científico</label>
-            <input ng-model="newVacunacion.nombre_cientifico">
-          </md-input-container>
-          <md-input-container class="md-accent-1 md-block">
+            <input ng-model="newVacunacion.nombre_cientifico">-->
+
+          <md-input-container class="md-accent-1 md-block" flex>
             <label>Veterinario</label>
             <input ng-model="newVacunacion.veterinario">
           </md-input-container>
-
-          <md-input-container class="md-accent-1 md-block">
-            <label>Enfermedad</label>
-            <input ng-model="newVacunacion.enfermedad">
+          <md-input-container class="md-accent-1 md-block" flex>
+            <label>Sanidad</label>
+            <md-select ng-model="newVacunacion.enfermedad">
+              <md-option ng-repeat="enfermedad in enfermedades" value="[[enfermedad]]">
+                [[enfermedad]]
+              </md-option>
+            </md-select>
           </md-input-container>
+          <!--
           <md-input-container class="md-accent-1 md-block">
             <label>Código</label>
             <input ng-model="newVacunacion.codigo">
-          </md-input-container>
+          </md-input-container>-->
           <md-datepicker ng-model="fecha_vacunacion" style="margin:13px 0;"
                          md-placeholder="Fecha de vacunación"></md-datepicker>
         </div>
@@ -78,7 +83,7 @@
             <td md-cell>[[lote.nombre]]</td>
             <td md-cell>[[lote.potrero_nombre]]</td>
             <td md-cell>[[lote.peso_promedio]]</td>
-            <td md-cell>[[lote.animales.length]]</td>
+            <td md-cell>[[lote.cantidad]]</td>
           </tr>
           </tbody>
         </table>

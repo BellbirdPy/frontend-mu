@@ -9,7 +9,7 @@
  */
 angular.module('frontendmuApp')
   .controller('DashboardCtrl', function ($scope,Evento,EventoEstablecimiento,$mdDialog,$filter,ServerData, Tarea, Servicio,$http,$q,$timeout) {
-
+    $scope.events = [];
     $scope.checked=false;
 
     $scope.notificar = function (){
@@ -31,18 +31,18 @@ angular.module('frontendmuApp')
       $scope.promiseTareas = Tarea.get($scope.queryTareas,successTareas).$promise;
     };
 
-    $scope.getTareas();
-
 
     $scope.fecha = new Date(Date.now());
-    var fecha =$scope.fecha;
-    var fecha_hoy = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate();
-    fecha.setDate(fecha.getDate() + 15);
-    var fecha_15 = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate();
-    $scope.queryServicios = {establecimiento: ServerData.establecimiento.id,limit:20, ordering: 'fecha',page: 1,
-    fecha_hoy: fecha_hoy, fecha_15: fecha_15 };
+    $scope.queryServicios = {establecimiento: ServerData.establecimiento.id,limit:20, ordering: 'fecha',page: 1};
 
     function successServicios(servicios) {
+      angular.forEach(servicios.results,function(servicio){
+        $scope.events.push({title: 'Servicio ' + servicio.tipo_display + '. Lote: '+ servicio.lote_completo.nombre,
+          start: new Date(servicio.fecha_inicio),end: new Date(servicio.fecha_fin),allDay: true});
+
+        angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.events );
+      });
+      console.log($scope.eventSources);
       $scope.servicios = servicios;
     }
 
@@ -64,7 +64,14 @@ angular.module('frontendmuApp')
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
     });
 
-    angular.element(('#calendar')).fullCalendar({});
+
+    angular.element(('#calendar')).fullCalendar({
+      header:{
+        left:   'prev',
+        center: 'title',
+        right:  'next'
+      }
+    });
 
 
     $scope.dayFormat = "d";

@@ -26,12 +26,16 @@
           <label>Numero de Guia</label>
           <input ng-model="newCompra.numero_guia" type="number">
         </md-input-container>
-        <md-datepicker ng-model="fecha_compra" style="margin:13px 0;"
-                       md-placeholder="Fecha de compra"></md-datepicker>
+
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Precio</label>
           <input type="number" ng-model="newCompra.precio_total">
+          <div ng-message class="black-text">
+            [[newCompra.precio_total | number]]
+          </div>
         </md-input-container>
+        <md-datepicker ng-model="fecha_compra" style="margin:13px 0;"
+                       md-placeholder="Fecha de compra"></md-datepicker>
       </div>
     </md-content>
   </md-card>
@@ -44,7 +48,7 @@
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Categoria</label>
           <md-select ng-model="newDetalle.categoria">
-            <md-option ng-repeat="categoria in categorias" value="[[categoria.id]]">
+            <md-option ng-repeat="categoria in categorias" ng-value="[[categoria]]">
               [[categoria.nombre]]
             </md-option>
           </md-select>
@@ -67,7 +71,7 @@
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Raza</label>
           <md-select ng-model="newDetalle.raza">
-            <md-option ng-repeat="raza in razas" value="[[raza.id]]">
+            <md-option ng-repeat="raza in razas" ng-value="[[raza]]">
               [[raza.nombre]]
             </md-option>
           </md-select>
@@ -88,15 +92,15 @@
             <md-option value="">
               No asignar
             </md-option>
-            <md-option ng-repeat="lote in lotes" value="[[lote.id]]">
+            <md-option ng-repeat="lote in lotes" ng-value="[[lote]]">
               [[lote.nombre]]
             </md-option>
           </md-select>
         </md-input-container>
-        <md-button class="md-icon-button" ng-click="cargarDetalleCompra(newDetalle)">
-          <md-icon><i class="material-icons">add</i></md-icon>
-        </md-button>
       </div>
+      <md-button class="pull-right" ng-click="cargarDetalleCompra(newDetalle)">
+        Agregar
+      </md-button>
     </md-content>
 
     <!-- Este seria el listado de detalles de compra -->
@@ -115,9 +119,9 @@
           <tbody md-body>
           <tr md-row md-select="detalle_compra" md-select-id="id" md-auto-select
               ng-repeat="detalle_compra in newCompra.detalle_compra">
-            <td md-cell>[[detalle_compra.categoria]]</td>
+            <td md-cell>[[detalle_compra.categoria_nombre]]</td>
             <td md-cell>[[detalle_compra.carimbo]]</td>
-            <td md-cell>[[detalle_compra.raza]]</td>
+            <td md-cell>[[detalle_compra.raza_nombre]]</td>
             <td md-cell>[[detalle_compra.cantidad]]</td>
             <td md-cell>[[detalle_compra.caravana_inicial]] a [[detalle_compra.caravana_inicial +
               detalle_compra.cantidad]]
@@ -133,7 +137,7 @@
         </table>
       </md-table-container>
       <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page"
-                           md-total="[[compras.count]]" md-on-paginate="updateListadoCompras"
+                           md-total="[[newCompra.detalle_compra.length]]" md-on-paginate="updateListadoCompras"
                            md-page-select></md-table-pagination>
     </md-content>
   </md-card>
@@ -143,5 +147,4 @@
     <md-button flex-order="1" ng-click="guardarCompra(newCompra)" class="md-primary">Guardar</md-button>
     <md-button ng-click="cancel()">Cancelar</md-button>
   </md-dialog-actions>
-  [[newCompra]]
 </md-dialog>

@@ -8,14 +8,19 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('SanitacionCtrl', function ($scope,Evento,EventoEstablecimiento, Vacunacion, $mdDialog,$filter,ServerData) {
+  .controller('SanitacionCtrl', function ($scope,Evento,EventoEstablecimiento, Vacunacion, $mdDialog,$filter,ServerData,Utilidades) {
+    var vacunacion = 0;
+
     Evento.get(function(response){
       $scope.eventos = response.results;
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
     });
-
+    $scope.events = [];
     EventoEstablecimiento.get({'establecimiento':ServerData.establecimiento.id},function(response){
       $scope.eventos_establecimiento = response.results;
+      angular.forEach($scope.eventos_establecimiento,function(evento){
+        evento.color = '#8bc34a';
+      });
       console.log($scope.eventos_establecimiento);
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
     });
@@ -51,12 +56,15 @@ angular.module('frontendmuApp')
 
           $scope.agregarEvento(eventoNuevo);
 
-        }
+        },header:{
+          left:   'prev',
+          center: 'title',
+          right:  'next'
+        },
+        dayNamesShort:["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"]
+
       }
     );
-
-
-
 
 
     $scope.agregarEvento = function(evento) {
@@ -160,6 +168,16 @@ angular.module('frontendmuApp')
 
     function successVacunaciones(vacunaciones) {
       $scope.vacunaciones = vacunaciones;
+      vacunacion =+1;
+      angular.forEach(vacunaciones.results,function(vacunacion){
+        $scope.events.push({title: 'Vacunación '+ vacunacion.enfermedad  + '. Lote: '+ vacunacion.lotes_completo[0].nombre,
+          start: new Utilidades.toDate(vacunacion.fecha_vacunacion),allDay: true,color:'#2196f3'});
+      });
+      if (vacunacion<=1){
+
+      angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.events );
+      }
+
       console.log($scope.vacunaciones);
     }
 
@@ -226,7 +244,7 @@ angular.module('frontendmuApp')
       })
         .then(function(lista) {
           if (lista !== true) {
-            $scope.getVacunaciones();
+            //$scope.getVacunaciones();
           }
         }, function() {
           $scope.alert = 'You cancelled the dialog.';

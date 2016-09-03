@@ -103,20 +103,9 @@ angular.module('frontendmuApp')
 
         }]
       })
-        .then(function(nuevo) {
-          if (nuevo !== true) {
-            var prueba = $filter('filter')($scope.potreros.results, function (d) {return d.id.toString() === nuevo.id.toString();})[0];
-            if (prueba){
-              if (prueba.id === nuevo.id) {
-                angular.extend(prueba, nuevo);
-              }else{
-                $scope.potreros.results.unshift(nuevo);
-              }
-            }else{
-              $scope.potreros.results.unshift(nuevo);
-            }
+        .then(function() {
+              $scope.getPotreros();
 
-          }
         }, function() {
           $scope.alert = 'You cancelled the dialog.';
         });

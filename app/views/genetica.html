@@ -21,7 +21,6 @@
         <div class="md-toolbar-tools">
           <span>[[selectedLotes.length]] [[selectedLotes.length > 1 ? 'lotes seleccionados' : 'lote seleccionado']]</span>
           <span flex></span>
-          <md-button
           <md-button class="md-icon-button" ng-show="selectedLotes.length == 1" ng-click="editLoteGenetica(selectedLotes[0])"
                      aria-label="Editar Lote">
             <md-icon><i class="material-icons green-text text-darken-4">edit</i></md-icon>
@@ -200,8 +199,10 @@
                            md-on-paginate="getAnimales"></md-table-pagination>
     </md-card>
   </section>
+  <!--
   <md-button ng-click="abrirDialogoNuevo()" >
     Abrir dialogo nuevo
   </md-button>
+  -->
 </div>
 

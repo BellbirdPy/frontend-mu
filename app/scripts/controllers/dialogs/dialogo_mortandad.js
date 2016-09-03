@@ -11,6 +11,8 @@ angular.module('frontendmuApp')
   .controller('DialogsDialogoMortandadCtrl', function ($scope, $mdDialog, Animal, Mortandad, ServerData, lista) {
 
     $scope.form = {};
+    $scope.fecha = new Date(2016,8,2);
+    var currentMonth = 0;
 
     $scope.hide = function () {
       $mdDialog.hide();
@@ -31,6 +33,10 @@ angular.module('frontendmuApp')
             Animal.update({id: animalSeleccionado.id}, animalSeleccionado, function (data) {
             });
           });
+          currentMonth = $scope.fecha.getMonth() + 1;
+          $scope.form.fecha = $scope.fecha.getFullYear() + '-'
+            + currentMonth + '-' + $scope.fecha.getDate();
+
           var nuevo = new Mortandad($scope.form);
           nuevo.establecimiento = ServerData.establecimiento.id;
           nuevo.animales = [];

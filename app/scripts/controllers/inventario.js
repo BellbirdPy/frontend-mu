@@ -369,6 +369,8 @@ angular.module('frontendmuApp')
         controller: ['$scope','$mdDialog','Animal','Mortandad','ServerData' ,function ($scope, $mdDialog, Animal, Mortandad,ServerData) {
 
           $scope.newMortandad = {};
+          $scope.fecha = new Date(2016,8,2);
+          var currentMonth = 0;
 
           $scope.hide = function () {
             $mdDialog.hide();
@@ -385,6 +387,8 @@ angular.module('frontendmuApp')
                 angular.forEach(lista, function(animalSeleccionado){
                   listaId.push(animalSeleccionado.id);
                 });
+                currentMonth = $scope.fecha.getMonth() + 1;
+                $scope.form.fecha = $scope.fecha.getFullYear() + '-' + currentMonth + '-' + $scope.fecha.getDate();
                 var nuevo = new Mortandad($scope.form);
                 nuevo.establecimiento = ServerData.establecimiento.id;
                 nuevo.animales = listaId;
@@ -433,7 +437,7 @@ angular.module('frontendmuApp')
         .title('Estas seguro de que quieres eliminar?')
         .content('Lote: '+lote.nombre + ' - ' +
         'Potrero: ' + lote.potrero_nombre + ' - ' +
-        'Cantidad de animales: ' + lote.animales.length )
+        'Cantidad de animales: ' + lote.cantidad )
         .ariaLabel('Lucky day')
         .targetEvent(null)
         .ok('Sí, estoy seguro')
@@ -508,16 +512,7 @@ angular.module('frontendmuApp')
       })
         .then(function(nuevo) {
           if (nuevo !== true) {
-            var prueba = $filter('filter')($scope.lotes.results,function (d) {return d.id.toString() === nuevo.id.toString();})[0];
-            if (prueba){
-              if (prueba.id === nuevo.id) {
-                angular.extend(prueba, nuevo);
-              }else{
-                $scope.lotes.results.unshift(nuevo);
-              }
-            }else{
-              $scope.lotes.results.unshift(nuevo);
-            }
+            $scope.getLotes();
 
           }
         }, function() {

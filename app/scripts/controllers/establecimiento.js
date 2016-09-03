@@ -348,14 +348,14 @@ angular.module('frontendmuApp')
                   $scope.error.push('El carimbo debe estar en el rango de (0-9). Caravana Nº: ' + animal.caravana.toString());
                 }
               }
-              if ( isNaN(animal.peso_especifico)){
-                if (animal.peso_especifico !== '' && animal.peso_especifico !== 0){
+              if ( isNaN(animal.peso_especifico) && angular.isUndefined(animal.peso_especifico) == false){
+                if (animal.peso_especifico !== '' && animal.peso_especifico !== 0 && animal.peso_especifico !== null){
                 animal.peso_especifico = 'Error';
                 animal.error = true;
                 $scope.error.push('El peso debe ser numerico. Caravana Nº: ' + animal.caravana.toString());
                 }
               }else {
-                if (animal.peso_especifico > 0) {
+                if (animal.peso_especifico > 0 || angular.isUndefined(animal.peso_especifico) == true) {
                 } else {
                   animal.peso_especifico = 'Error';
                   animal.error = true;

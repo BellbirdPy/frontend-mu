@@ -14,6 +14,7 @@ angular.module('frontendmuApp')
   .controller('DialogsDialogoCrearVacunacionCtrl', function ($scope, $mdDialog, Utilidades, Categoria, Raza, ServerData, Vacunacion, Lote) {
     var obj = ServerData;
     console.log(obj);
+    $scope.enfermedades = ['Aftosa', 'Brucelosis', 'Clostridiales', 'Rabia', 'Reproductivas', 'Parasitaria Interna', 'Parasitaria Externa', 'Aplicación de Cobre', 'Aplicación de Selenio', 'Aplicación de Vitamínicos', 'Aplicación de Minerales', 'Aplicación de Reconstituyente', 'Test Andrológico', 'Tristeza Bovina', 'Enfermedades Respiratorias', 'Tratamiento de Moscas y Garrapatas', 'Tratamiento Antiparasitario', 'Otros']
     $scope.selectedLotes = [];
     if (obj.vacunacion_seleccionada){
       $scope.editar = true;

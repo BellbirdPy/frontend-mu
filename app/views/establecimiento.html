@@ -10,6 +10,9 @@
     </md-toolbar>
     <md-list>
       <md-divider></md-divider>
+      <md-list-item ng-click="go('miembro')">
+        <p>Miembros</p>
+      </md-list-item>
       <md-list-item ng-click="go(config.url)" ng-repeat="config in configuraciones">
         <p> [[config.nombre]] </p>
       </md-list-item>
