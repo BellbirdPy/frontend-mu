@@ -143,6 +143,11 @@ angular
         controller: 'GeneticaCtrl',
         controllerAs: 'genetica'
       })
+      .when('/mensaje_inicial', {
+        templateUrl: 'views/mensaje_inicial.html',
+        controller: 'MensajeInicialCtrl',
+        controllerAs: 'mensaje_inicial'
+      })
       .otherwise({
         redirectTo: '/'
       });
