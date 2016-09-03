@@ -9,9 +9,5 @@
  */
 angular.module('frontendmuApp')
   .controller('DialogsDialogoAgregarEstablecimientoCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+
   });
