@@ -14,6 +14,10 @@ angular.module('frontendmuApp')
     $scope.noticias = [];
     Establecimiento.get(function(response){
       $scope.establecimientos = response.results;
+      console.log($scope.establecimientos.length);
+      if ($scope.establecimientos.length == 0){
+        console.log('Debo abrir dialogo');
+      }
     });
 
 
