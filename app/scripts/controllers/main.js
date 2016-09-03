@@ -17,7 +17,7 @@ angular.module('frontendmuApp')
       console.log($scope.establecimientos.length);
       if ($scope.establecimientos.length == 0){
         $mdDialog.show({
-          templateUrl: 'views/dialogs/dialogo_agregar_establecimeinto.html',
+          templateUrl: 'views/dialogs/dialogo_agregar_establecimiento.html',
           controller: 'DialogsDialogoAgregarEstablecimientoCtrl'
         });
       }
