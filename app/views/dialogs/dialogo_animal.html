@@ -1,5 +1,6 @@
 
 <md-dialog layout="column" aria-label="Cliente" style="min-width: 800px; min-height: 600px">
+  <form name="form">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2 class="white-text">Detalle Animal</h2>
@@ -12,30 +13,43 @@
 
     <md-input-container class="md-accent-1 md-block">
           <label>Caravana</label>
-          <input ng-model="newAnimal.caravana" >
+          <input ng-model="newAnimal.caravana" required name="caravana">
+          <div ng-messages="form.caravana.$error" ng-show="form.caravana.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container class="md-block">
           <label>Categoria</label>
-          <md-select ng-model="newAnimal.categoria">
+          <md-select ng-model="newAnimal.categoria" required name="categoria">
             <md-option ng-repeat="cat in categorias" value="[[cat.id]]">
               [[cat.nombre]]
             </md-option>
           </md-select>
+          <div ng-messages="form.categoria.$error" ng-show="form.categoria.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container class="md-block">
           <label>Carimbo</label>
-          <input ng-model="newAnimal.carimbo" type="number">
+          <input ng-model="newAnimal.carimbo" type="number" required name="carimbo">
+          <div ng-messages="form.carimbo.$error" ng-show="form.carimbo.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container class="md-block">
           <label>Raza</label>
-          <md-select ng-model="newAnimal.raza">
+          <md-select ng-model="newAnimal.raza" required name="raza">
             <md-option ng-repeat="raza in razas" value=[[raza.id]]>
               [[raza.nombre]]
             </md-option>
+          </md-select>
+            <div ng-messages="form.raza.$error" ng-show="form.raza.$touched || form.$submitted">
+              <div ng-messages-include="views/error_messages.html"></div>
+            </div>
         </md-input-container>
         <md-input-container class="md-block">
           <label>Estado Sanitario</label>
-          <md-select ng-model="newAnimal.estado_sanitario">
+          <md-select ng-model="newAnimal.estado_sanitario" required name="estado">
             <md-option value="E">
               En fecha
             </md-option>
@@ -46,10 +60,13 @@
               Desconocido
             </md-option>
           </md-select>
+          <div ng-messages="form.estado.$error" ng-show="form.estado.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container class="md-block">
           <label>Lote</label>
-          <md-select ng-model="newAnimal.lote" aria-label="Lote">
+          <md-select ng-model="newAnimal.lote" aria-label="Lote" required name="lote">
             <md-option value="">
               No asignar
             </md-option>
@@ -57,16 +74,22 @@
               [[lote.nombre]]
             </md-option>
               </md-select>
+          <div ng-messages="form.lote.$error" ng-show="form.lote.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
         <md-input-container class="md-block">
           <label>Peso</label>
-          <input ng-model="newAnimal.peso_especifico" type="number">
+          <input ng-model="newAnimal.peso_especifico" type="number" required name="peso">
+          <div ng-messages="form.peso.$error" ng-show="form.peso.$touched || form.$submitted">
+            <div ng-messages-include="views/error_messages.html"></div>
+          </div>
         </md-input-container>
 
     <md-dialog-actions layout="row" >
       <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
       <span flex></span>
-      <md-button flex-order="1" ng-click="answer('guardar')" class="md-primary">Guardar</md-button>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && answer('guardar')" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()" >Cancelar</md-button>
     </md-dialog-actions>
   </form>
@@ -75,4 +98,5 @@
     <md-progress-circular class="md-accent" md-mode="indeterminate"></md-progress-circular>
   </div>
   </md-content>
+  </form>
 </md-dialog>
