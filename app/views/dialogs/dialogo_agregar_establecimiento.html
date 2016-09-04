@@ -10,32 +10,44 @@
   <md-content>
     <h4 style="text-align: center">Antes que nada debe crear un establecimiento</h4>
   </md-content>
-  <form layout="column" layout-padding ng-show="departamentos.results.length >= 1">
+  <form layout="column" layout-padding ng-show="departamentos.results.length >= 1" name="form">
     <md-input-container>
       <label>Codigo del establecimiento</label>
-      <input ng-model="newEstablecimiento.codigo">
+      <input ng-model="newEstablecimiento.codigo" required name="codigo">
+      <div ng-messages="form.codigo.$error" ng-show="form.codigo.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Nombre del establecimiento</label>
-      <input ng-model="newEstablecimiento.nombre">
+      <input ng-model="newEstablecimiento.nombre" required name="nombre">
+      <div ng-messages="form.nombre.$error" ng-show="form.nombre.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Departamento</label>
-      <md-select ng-model="newEstablecimiento.departamento">
+      <md-select ng-model="newEstablecimiento.departamento" required name="departamento">
         <md-option ng-repeat="departamento in departamentos.results" value="[[departamento.id]]">
           [[departamento.nombre]]
         </md-option>
       </md-select>
+      <div ng-messages="form.departamento.$error" ng-show="form.departamento.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Ciudad</label>
-      <input ng-model="newEstablecimiento.ciudad">
+      <input ng-model="newEstablecimiento.ciudad" required name="ciudad">
+      <div ng-messages="form.ciudad.$error" ng-show="form.ciudad.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
 
     <md-dialog-actions layout="row">
       <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
       <span flex></span>
-      <md-button flex-order="1" ng-click="guardar()" class="md-primary">Guardar</md-button>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && guardar()" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()">Cancelar</md-button>
     </md-dialog-actions>
   </form>
