@@ -52,8 +52,8 @@
             <td md-cell>[[lote.potrero_nombre]]</td>
             <td md-cell>[[lote.peso_promedio | number]]</td>
             <td md-cell>[[lote.cantidad | number]]</td>
-            <td md-cell>No</td>
-            <td md-cell>Ninguna</td>
+            <td md-cell>[[lote.servicio || 'No']]</td>
+            <td md-cell>[[lote.nutricion || 'No']]</td>
           </tr>
           </tbody>
         </table>
@@ -212,7 +212,7 @@
           <tr md-row md-select="animal" md-select-id="id" md-auto-select ng-repeat="animal in animales.results">
 
             <td md-cell>[[animal.lote_nombre || 'No asignado']]</td>
-            <td md-cell>[[animal.categoria_nombre]]  <md-icon ng-show="animal.prenada == true"><i class="material-icons green-text text-darken-4">child_friendly</i> </md-icon></td>
+            <td md-cell>[[animal.categoria_nombre]]  <span ng-show="animal.prenada == true">(Preñada)</span></td>
             <td md-cell>[[animal.raza_nombre]]</td>
             <td md-cell>[[animal.carimbo]]</td>
             <td md-cell>[[animal.caravana]]<span ng-if="animal.caravana ==''">Madre: [[animal.caravana_madre]]</span></td>
