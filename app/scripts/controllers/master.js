@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('MasterCtrl', function ($scope, $location, ServerData, Establecimiento, Menu, $rootScope, $timeout, $mdSidenav, Utilidades, $mdDialog) {
+  .controller('MasterCtrl', function ($scope, $location, $route, ServerData, Establecimiento, Menu, $rootScope, $timeout, $mdSidenav, Utilidades, $mdDialog) {
     var menu = Menu;
     var vm = this;
     $scope.toggleLeft = buildDelayedToggler('left');
@@ -83,7 +83,8 @@ angular.module('frontendmuApp')
         }
       }).then(function (value) {
         if (value) {
-          go('/');
+          $location.path('/');
+          $route.reload();
         } else {
           Utilidades.showSimpleToast('No se ha podido crear el establecimiento');
         }
