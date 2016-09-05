@@ -23,6 +23,8 @@ angular.module('frontendmuApp')
           locals: {
             Inicial: true
           }
+        }).then(function () {
+
         });
       }
     });
