@@ -8,11 +8,11 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('GeneticaCtrl', function ($scope, LoteGenetica, AnimalGenetica, ServerData, $mdDialog) {
+  .controller('GeneticaCtrl', function ($scope, LoteGenetica, AnimalGenetica, ServerData, $mdDialog, Utilidades) {
 
     // LOTES
 
-    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id, ordering: 'id', page: 1}
+    $scope.queryLotes = {establecimiento: ServerData.establecimiento.id, ordering: 'id', page: 1};
     $scope.selectedLotes = [];
 
     function successLotes(lotes) {
@@ -94,29 +94,53 @@ angular.module('frontendmuApp')
       }).then(function () {
         $scope.getLotes();
         $scope.getAnimales();
-      })
+      });
     };
 
     $scope.deleteAnimalGenetica = function (animal) {
       var confirm = $mdDialog.confirm()
         .title('Esta seguro que desea eliminar?')
-        .content('Esta seguro que desea eliminar los registros de gentica del lote: ' + animal.lote_nombre + ',' +
-          'tambien se eliminaran los registros generados en cada animal del lote.')
+        .content('Esta seguro que desea eliminar los registros de gentica del animal: ' + animal.nombre + '.')
         .targetEvent(null)
         .ok('Si, estoy seguro')
         .cancel('Cancelar');
       $mdDialog.show(confirm).then(function () {
-        LoteGenetica.delete({id: lote.id}, lote, function (response) {
+        AnimalGenetica.delete({id: animal.id}, animal, function (response) {
           //Esto actualiza llamando al server
           $scope.getAnimales();
         });
         //Esto actualiza sin volver a llamar al server
-        $scope.lotes.results.splice($scope.lotes.results.indexOf(lote), 1);
-        $scope.selectedLotes = [];
+        $scope.animalesGenetica.results.splice($scope.animalesGenetica.results.indexOf(animal), 1);
+        $scope.selectedAnimales = [];
       }, function () {
-        $scope.status = 'Se elimino correctamente.';
+        Utilidades.showSimpleToast('Se elimino correctamente.');
       });
     };
+
+    $scope.deleteListaAnimal = function(lista) {
+      var confirm = $mdDialog.confirm()
+        .title('Esta seguro que desea eliminar?')
+        .content('Esta seguro que desea eliminar los registros de genética del los animales seleccionados.')
+        .targetEvent(null)
+        .ok('Si, estoy seguro')
+        .cancel('Cancelar');
+      $mdDialog.show(confirm).then(function () {
+              angular.forEach(lista, function(animalSeleccionado) {
+                  AnimalGenetica.delete({id: animalSeleccionado.id}, animalSeleccionado, function (response) {
+                    //Esto actualiza llamando al server
+
+                  });
+                $scope.animalesGenetica.results.splice($scope.animalesGenetica.results.indexOf(animalSeleccionado), 1);
+
+              });
+              $scope.selectedAnimales = [];
+            }, function () {
+        $scope.getAnimales();
+        Utilidades.showSimpleToast('Se elimino correctamente.');
+      });
+    };
+
+
 
     $scope.abrirDialogoNuevo = function () {
       $mdDialog.show({
@@ -125,7 +149,7 @@ angular.module('frontendmuApp')
         controller: 'DialogsDialogoNuevoGeneticaCtrl'
       }).then(function () {
 
-      })
-    }
+      });
+    };
 
   });

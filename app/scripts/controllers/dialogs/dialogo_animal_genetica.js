@@ -96,7 +96,7 @@ angular.module('frontendmuApp')
         var nuevoAnimalGenetica = new AnimalGenetica($scope.newAnimalGenetica);
         console.log(nuevoAnimalGenetica);
         nuevoAnimalGenetica.$save();
-        //$mdDialog.hide();
+        $mdDialog.hide();
       }
     };
 

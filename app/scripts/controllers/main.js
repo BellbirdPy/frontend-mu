@@ -8,26 +8,31 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('MainCtrl', function ($scope, ServerData, Establecimiento, $location, $rootScope, Noticia, $sce, $mdDialog) {
+  .controller('MainCtrl', function ($scope, ServerData, Establecimiento, $location, $rootScope, Noticia, $sce, $mdDialog, Utilidades) {
     $scope.establecimientos = [];
     $scope.obj = ServerData;
+    console.log($scope.obj);
     $scope.noticias = [];
     Establecimiento.get(function (response) {
-      if (response.count == 0) {
+      $scope.establecimientos = response.results;
+      console.log($scope.establecimientos.length);
+      if ($scope.establecimientos.length == 0) {
         $mdDialog.show({
-          templateUrl: 'views/dialogs/dialogo_establecimiento.html',
-          targetEvent: null,
-          controller: ['$scope', '$mdDialog', function ($scope, $mdDialog) {
-
-            $scope.cancel = function () {
-              $mdDialog.cancel();
-            };
-
-          }]
+          templateUrl: 'views/dialogs/dialogo_agregar_establecimiento.html',
+          controller: 'DialogsDialogoAgregarEstablecimientoCtrl',
+          locals: {
+            Inicial: true
+          }
+        }).then(function (value) {
+          if (value) {
+            Establecimiento.get(function (response) {
+              $scope.establecimientos = response.results;
+            });
+          } else {
+            Utilidades.showSimpleToast('No se ha podido crear el establecimiento');
+          }
         });
       }
-      $scope.establecimientos = response.results;
-
     });
 
 
