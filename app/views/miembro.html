@@ -1,0 +1,60 @@
+<section>
+  <div >
+    <h1 class="md-display-1 green-text">Establecimiento</h1>
+  </div>
+</section>
+<section>
+  <div layout-padding>
+    <h2 class="md-headline green-text">Miembros</h2>
+  </div>
+  <md-card>
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedMiembros.length">
+      <div class="md-toolbar-tools">
+        <span flex>Miembros</span>
+        <md-button class="md-icon-button" aria-label="More" ng-click="editMiembro()">
+          <md-icon><i class="material-icons">add</i> </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-toolbar class="md-table-toolbar green lighten-4 green-text text-darken-4" ng-show="selectedMiembros.length">
+      <div class="md-toolbar-tools">
+        <span>[[selectedMiembros.length]] [[selectedMiembros.length > 1 ? 'miembros seleccionadas' : 'miembro seleccionada']]</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-show="selectedMiembros.length == 1" ng-click="editMiembro(selectedMiembros[0])" aria-label="Editar Raza">
+          <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+        </md-button>
+        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedMiembros.length >= 1" ng-click="deleteRaza(selectedMiembros)"  aria-label="Delete Raza">
+          <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+        </md-button>
+      </div>
+
+    </md-toolbar>
+
+    <!-- exact table from live demo -->
+    <md-table-container>
+      <table md-table md-row-select multiple ng-model="selectedMiembros" md-progress="promiseMiembros">
+        <thead md-head md-order="queryMiembros.ordering" md-on-reorder="getMiembros">
+        <tr md-row>
+          <th md-column md-numeric md-order-by="username"><span>username</span></th>
+          <th md-column md-order-by="first_name"><span>Nombre</span></th>
+          <th md-column md-order-by="last_name"><span>Apellido</span></th>
+          <th md-column md-order-by="email"><span>Email</span></th>
+          <th md-column md-order-by="cargo"><span>Cargo</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="miembro" md-select-id="id" ng-disabled="!miembro.establecimiento" md-auto-select ng-repeat="miembro in miembros.results">
+          <td md-cell>[[miembro.username]]</td>
+          <td md-cell>[[miembro.first_name]]</td>
+          <td md-cell>[[miembro.last_name]]</td>
+          <td md-cell>[[miembro.email]]</td>
+          <td md-cell>Administrador</td>
+        </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+    <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-limit="20" md-page="queryMiembros.page" md-total="[[miembros.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getMiembros" md-page-select></md-table-pagination>
+  </md-card>
+</section>
+
+

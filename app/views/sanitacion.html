@@ -4,11 +4,21 @@
     <md-toolbar class="">
       <div class="md-toolbar-tools white-text">
         <h2 class="md-title">Calendario de Sanitación</h2>
+        <md-menu md-position-mode="target-right target" >
+          <md-button class="md-icon-button white-text" aria-label="More" ng-click="$mdOpenMenu($event)">
+            <md-icon><i class="material-icons white-text">more_vert</i> </md-icon>
+          </md-button>
+          <md-menu-content width="4" >
+            <md-menu-item>
+              <md-button ng-click="agregarEvento()">
+                <p>Agendar vacunación</p>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
       </div>
     </md-toolbar>
     <md-content>
-      <br>
-      <md-button  ng-hide="selection.length" ng-click="agregarEvento()" class="lime-text">Agendar vacunación</md-button>
       <br>
       <div id='calendar' style="cursor:pointer"></div>
     </md-content>
@@ -47,22 +57,20 @@
       <table md-table md-row-select multiple ng-model="selectedVacunaciones" md-progress="promiseVacunaciones">
         <thead md-head md-order="queryVacunaciones.ordering" md-on-reorder="getVacunaciones">
         <tr md-row>
+          <th md-column md-order-by="lotes"><span>Lote</span></th>
           <th md-column md-order-by="fecha_vacunacion"><span>Fecha de vacunación</span></th>
           <th md-column md-order-by="nombre"><span>Nombre de la vacuna</span></th>
-          <th md-column md-order-by="nombre_cientifico"><span>Nombre científico</span></th>
           <th md-column md-order-by="veterinario"><span>Veterinario</span></th>
-          <th md-column md-order-by="enfermedad"><span>Enfermedad</span></th>
-          <th md-column md-order-by="codigo"><span>Código</span></th>
+          <th md-column md-order-by="enfermedad"><span>Sanidad</span></th>
         </tr>
         </thead>
         <tbody md-body>
         <tr md-row md-select="vacunacion" md-select-id="id" ng-disabled="!vacunacion.establecimiento" md-auto-select ng-repeat="vacunacion in vacunaciones.results">
+          <td md-cell><div ng-repeat="lote in vacunacion.lotes_completo">[[lote.nombre]]</div></td>
           <td md-cell>[[vacunacion.fecha_vacunacion| date: 'dd-MM-yyyy']]</td>
           <td md-cell>[[vacunacion.nombre]]</td>
-          <td md-cell>[[vacunacion.nombre_cientifico]]</td>
           <td md-cell>[[vacunacion.veterinario]]</td>
           <td md-cell>[[vacunacion.enfermedad]]</td>
-          <td md-cell>[[vacunacion.codigo]]</td>
         </tr>
         </tbody>
       </table>

@@ -10,11 +10,8 @@
   <form>
     <md-dialog-content layout-padding>
       <div layout="column">
-        <md-input-container >
-          <label>Fecha</label>
-          <input type="date" ng-model="form.fecha" >
-        </md-input-container>
-        <md-input-container >
+        <div layout="row">
+        <md-input-container flex >
           <label>Tipo</label>
           <md-select ng-model="form.tipo">
             <md-option value="M">
@@ -25,6 +22,9 @@
             </md-option>
           </md-select>
         </md-input-container>
+        <md-datepicker ng-model="fecha" style="margin:13px 0;"
+                       md-placeholder="Fecha"></md-datepicker>
+        </div>
         <md-input-container >
           <label>Descripción</label>
           <input ng-model="form.razon" >

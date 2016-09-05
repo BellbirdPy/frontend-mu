@@ -18,8 +18,8 @@ angular.module('frontendmuApp')
     //Esto se encarga de cargar en el escope el listado de compras
     $scope.updateListadoCompras = function () {
       $scope.promise = Compra.get({establecimiento: obj.establecimiento.id,carga_masiva:3}, function (response) {
-        $scope.compras = response.results;
-        if ($scope.compras !== []) {
+        $scope.compras = response;
+        if ($scope.compras.results !== []) {
           $scope.comprasCargadas = true;
         }
       });

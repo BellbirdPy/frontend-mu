@@ -118,7 +118,7 @@
       <md-sidemenu-group ng-show="obj.establecimiento.potreros.length">
         <md-divider style="margin:0;"></md-divider>
         <md-sidemenu-button href="#dashboard">
-          <md-icon><i class="material-icons">dashboard</i></md-icon>
+          <md-icon><i class="material-icons">menu</i></md-icon>
           Menú principal
         </md-sidemenu-button>
       </md-sidemenu-group>
@@ -146,14 +146,15 @@
       <md-sidemenu-group ng-show="obj.establecimiento.potreros.length">
         <md-divider style="margin:0;"></md-divider>
         <md-sidemenu-button href="#nutricion">
-          <md-icon><i class="material-icons">restaurant</i></md-icon>
+          <md-icon md-svg-src="images/nutricion.svg"></md-icon>
+
           Nutrición
         </md-sidemenu-button>
       </md-sidemenu-group>
       <md-sidemenu-group ng-show="obj.establecimiento.potreros.length">
         <md-divider style="margin:0;"></md-divider>
         <md-sidemenu-button href="#genetica">
-          <md-icon><i class="material-icons">people</i></md-icon>
+          <md-icon md-svg-src="images/genetica.svg"></md-icon>
           Genética
         </md-sidemenu-button>
       </md-sidemenu-group>
@@ -173,7 +174,7 @@
     </md-sidemenu>
   </md-content>
   <footer layout-padding>
-    <p align="right">© 2015 Bellbird</p>
+    <p align="right"></p>
   </footer>
 
 </md-sidenav>
@@ -351,12 +352,15 @@
 <script src="scripts/services/tarea.js"></script>
 <script src="scripts/controllers/tarea.js"></script>
 <script src="scripts/services/establecimientousuarios.js"></script>
-<script src="scripts/controllers/mensaje_inicial.js"></script>
 <script src="scripts/controllers/genetica.js"></script>
 <script src="scripts/services/genetica.js"></script>
 <script src="scripts/controllers/dialogs/dialogo_lote_genetica.js"></script>
 <script src="scripts/controllers/dialogs/dialogo_animal_genetica.js"></script>
 <script src="scripts/controllers/dialogs/dialogo_nuevo_genetica.js"></script>
+<script src="scripts/controllers/mensaje_inicial.js"></script>
+<script src="scripts/controllers/dialogs/dialogocrearmiembro.js"></script>
+<script src="scripts/services/miembro.js"></script>
+<script src="scripts/controllers/miembro.js"></script>
 <script src="scripts/controllers/dialogs/dialogo_agregar_establecimiento.js"></script>
 <script src="scripts/services/departamento.js"></script>
 <!-- endbuild -->

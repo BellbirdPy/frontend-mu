@@ -18,7 +18,8 @@ angular
     'ngMaterial',
     'md.data.table',
     'ur.file',
-    'ngMaterialSidemenu'
+    'ngMaterialSidemenu',
+    'ui.calendar'
   ])
   .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider, $interpolateProvider, $mdDateLocaleProvider) {
 
@@ -138,15 +139,20 @@ angular
         controller: 'PajuelaCtrl',
         controllerAs: 'pajuela'
       })
+      .when('/mensaje_inicial', {
+        templateUrl: 'views/mensaje_inicial.html',
+        controller: 'MensajeInicialCtrl',
+        controllerAs: 'mensaje_inicial'
+      })
       .when('/genetica', {
         templateUrl: 'views/genetica.html',
         controller: 'GeneticaCtrl',
         controllerAs: 'genetica'
       })
-      .when('/mensaje_inicial', {
-        templateUrl: 'views/mensaje_inicial.html',
-        controller: 'MensajeInicialCtrl',
-        controllerAs: 'mensaje_inicial'
+      .when('/miembro', {
+        templateUrl: 'views/miembro.html',
+        controller: 'MiembroCtrl',
+        controllerAs: 'miembro'
       })
       .otherwise({
         redirectTo: '/'

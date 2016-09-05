@@ -13,7 +13,7 @@ angular.module('frontendmuApp')
     $scope.newCompra = {};
     $scope.newDetalle = {};
     $scope.newCompra.detalle_compra = [];
-    $scope.fecha_compra = new Date();
+    $scope.fecha_compra = new Date(2016,8,2);
 
     $scope.seleccionDetalleCompra = [];
     $scope.categorias = Categoria.get(function (response) {
@@ -36,14 +36,20 @@ angular.module('frontendmuApp')
       $mdDialog.cancel();
     };
 
+    $scope.query = {limit:5,page:1}
+
     $scope.cargarDetalleCompra = function (newDetalle) {
       var detalle_compra = {};
-      detalle_compra.categoria = newDetalle.categoria;
+      detalle_compra.categoria = newDetalle.categoria.id;
+      detalle_compra.categoria_nombre = newDetalle.categoria.nombre;
+
       detalle_compra.carimbo = newDetalle.carimbo;
-      detalle_compra.raza = newDetalle.raza;
+      detalle_compra.raza = newDetalle.raza.id;
+      detalle_compra.raza_nombre = newDetalle.raza.nombre;
       detalle_compra.cantidad = newDetalle.cantidad;
       detalle_compra.caravana_inicial = newDetalle.nro_caravana_inicial;
-      detalle_compra.lote = newDetalle.lote;
+      detalle_compra.lote = newDetalle.lote.id;
+      detalle_compra.lote_nombre = newDetalle.lote.nombre;
 
       $scope.newCompra.detalle_compra.push(detalle_compra);
       $scope.DetalleCompra = {};

@@ -63,8 +63,8 @@ angular.module('frontendmuApp')
         loteSelected = response;
         console.log(loteSelected);
         //traemos el primer animal del listado de animales
-        Animal.get({id: loteSelected.animales[0]}, function (response) {
-          animalSelected = response;
+        Animal.get({lote: loteSelected.id, limit: 1}, function (response) {
+          animalSelected = response.results[0];
           if (animalSelected.id) {
             console.log(animalSelected);
             console.log('Cargando datos en los campos');

@@ -1,12 +1,7 @@
-<section>
-  <div >
-    <h1 class="md-display-1 green-text">Manejo</h1>
-  </div>
-</section>
 <!--Section Compras -->
 <section>
   <div layout-padding>
-    <h2 class="md-headline green-text">Compras</h2>
+    <div class="md-display-1 green-text">Manejo <div class="md-headline grey-text">Compra de Animales</div> </div>
   </div>
       <!--Aca va ir el listado-->
       <md-card>
@@ -55,7 +50,7 @@
             </thead>
             <tbody md-body>
             <tr md-row md-select="compra" md-select-id="id" md-auto-select
-                ng-repeat="compra in compras | filter: searchCompra"
+                ng-repeat="compra in compras.results | filter: searchCompra"
                 ng-right-click="prueba($event)">
               <td md-cell>[[compra.cod_establecimiento_vendedor]]</td>
               <td md-cell>[[compra.nombre_vendedor]]</td>

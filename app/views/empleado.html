@@ -108,9 +108,9 @@
                     <th md-column md-order-by="apellido"><span>Apellido</span></th>
                     <th md-column md-order-by="nombre"><span>Nombre</span></th>
                     <th md-column md-numeric md-order-by="numero_cedula"><span>CI Nº.</span></th>
-                    <th md-column md-order-by="fecha_nacimiento"><span>Fecha Nac.</span></th>
                     <th md-column><span>Teléfono</span></th>
                     <!--
+                    <th md-column md-order-by="fecha_nacimiento"><span>Fecha Nac.</span></th>
                     <th md-column md-order-by="fecha_nacimiento"><span>Fecha Nac.</span></th>
                     <th md-column md-order-by="direccion"><span>Dirección</span></th>
 
@@ -128,9 +128,9 @@
                     <td md-cell>[[con.apellido]]</td>
                     <td md-cell>[[con.nombre]]</td>
                     <td md-cell>[[con.numero_cedula | number]]</td>
-                    <td md-cell>[[con.fecha_nacimiento | date:'dd/MM/yyyy']]</td>
+
                     <td md-cell>[[con.telefono]]</td>
-                    <!--
+                    <!--<td md-cell>[[con.fecha_nacimiento | date:'dd/MM/yyyy']]</td>
                     <td md-cell>[[emp.fecha_nacimiento | date:'dd/MM/yyyy']]</td>
                     <td md-cell>[[emp.direccion]]</td>
 
