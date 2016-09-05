@@ -7,68 +7,93 @@
         <i class="material-icons white-text text-darken-4">close</i></md-button>
     </div>
   </md-toolbar>
-  <form layout="column" layout-padding ng-show="lotes.results.length >= 1">
+  <form layout="column" layout-padding ng-show="lotes.results.length >= 1" name="form">
     <md-input-container>
       <label>Lote</label>
-      <md-select ng-model="newLoteGenetica.lote" ng-change="loteSeleccionado()">
+      <md-select ng-model="newLoteGenetica.lote" ng-change="loteSeleccionado()" required name="lote">
         <md-option ng-if="lote.cantidad>0" ng-repeat="lote in lotes.results" value="[[lote.id]]">
           [[lote.nombre]]
         </md-option>
       </md-select>
+      <div ng-messages="form.lote.$error" ng-show="form.lote.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Categoria</label>
-      <md-select ng-model="newLoteGenetica.categoria">
+      <md-select ng-model="newLoteGenetica.categoria" required name="categoria">
         <md-option ng-repeat="categoria in categorias.results" value="[[categoria.id]]">
           [[categoria.nombre]]
         </md-option>
       </md-select>
+      <div ng-messages="form.categoria.$error" ng-show="form.categoria.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Raza</label>
-      <md-select ng-model="newLoteGenetica.raza">
+      <md-select ng-model="newLoteGenetica.raza" required name="raza">
         <md-option ng-repeat="raza in razas.results" value="[[raza.id]]">
           [[raza.nombre]]
         </md-option>
       </md-select>
+      <div ng-messages="form.raza.$error" ng-show="form.raza.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Carimbo</label>
-      <md-select ng-model="newLoteGenetica.carimbo">
+      <md-select ng-model="newLoteGenetica.carimbo" required name="carimbo">
         <md-option ng-repeat="carimbo in carimbos" value="[[carimbo]]">
           [[carimbo]]
         </md-option>
       </md-select>
+      <div ng-messages="form.carimbo.$error" ng-show="form.carimbo.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Tipo de servicio</label>
-      <md-select ng-model="newLoteGenetica.tipo_servicio">
+      <md-select ng-model="newLoteGenetica.tipo_servicio" required name="servicio">
         <md-option ng-repeat="tipo in tipos_servicios" value="[[tipo.id]]">
           [[tipo.nombre]]
         </md-option>
       </md-select>
+      <div ng-messages="form.servicio.$error" ng-show="form.servicio.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Porcentaje de pureza</label>
-      <md-select ng-model="newLoteGenetica.porcentaje_pureza">
+      <md-select ng-model="newLoteGenetica.porcentaje_pureza" aria-label="pureza" name="porcentaje_pureza" required >
         <md-option ng-repeat="porcentaje in porcentajes" value="[[porcentaje]]">
           [[porcentaje]]%
         </md-option>
       </md-select>
+      <div ng-messages="form.porcentaje_pureza.$error" ng-show="form.porcentaje_pureza.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Descripcion</label>
-      <input ng-model="newLoteGenetica.descripcion">
+      <input ng-model="newLoteGenetica.descripcion" required name="descripcion">
+      <div ng-messages="form.descripcion.$error" ng-show="form.descripcion.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
     <md-input-container>
       <label>Pedigree del padre</label>
-      <input ng-model="newLoteGenetica.pedigree_padre">
+      <input ng-model="newLoteGenetica.pedigree_padre" required name="padre">
+      <div ng-messages="form.padre.$error" ng-show="form.padre.$touched || form.$submitted">
+        <div ng-messages-include="views/error_messages.html"></div>
+      </div>
     </md-input-container>
 
     <md-dialog-actions layout="row">
       <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
       <span flex></span>
-      <md-button flex-order="1" ng-click="guardar()" class="md-primary">Guardar</md-button>
+      <span md-hide="form.$valid">Algunos campos requeridos no fueron completados</span>
+      <md-button type="submit" flex-order="1" ng-click="form.$valid && guardar()" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()">Cancelar</md-button>
     </md-dialog-actions>
   </form>
