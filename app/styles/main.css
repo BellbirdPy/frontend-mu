@@ -11,7 +11,7 @@
 .site-sidenav md-content {
   background: transparent;
 }
-*/
+
 
 .hoverTable tr:hover {
   background-color: #EEEEEE;
@@ -149,7 +149,7 @@ table.centered thead tr th, table.centered tbody tr td {
 }
 
 thead {
-  border-bottom: 1px solid #d0d0d0;
+  border-bottom: 0px solid #d0d0d0;
 }
 
 td, th {
@@ -157,7 +157,7 @@ td, th {
   display: table-cell;
   text-align: left;
   vertical-align: middle;
-  border-radius: 2px;
+  border-radius: 0px;
 }
 
 @media only screen and (max-width: 992px) {
@@ -167,7 +167,6 @@ td, th {
     border-spacing: 0;
     display: block;
     position: relative;
-    /* sort out borders */
   }
 
   table.responsive-table th, table.responsive-table td {
@@ -367,7 +366,7 @@ span.badge.new {
 span.badge.new:after {
   content: " new";
 }
-
+*/
 /*!
  * Waves v0.6.0
  * http://fian.my.id/Waves

@@ -25,6 +25,8 @@ angular.module('frontendmuApp')
       angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
     });
 
+
+
     $scope.showAlert = function(ev) {
       // Appending dialog to document.body to cover sidenav in docs app
       // Modal dialogs should fully cover application
@@ -61,7 +63,12 @@ angular.module('frontendmuApp')
           center: 'title',
           right:  'next'
         },
-        dayNamesShort:["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"]
+        dayNamesShort:["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"],
+        googleCalendarApiKey: 'AIzaSyAg-BXo7AgcqlpvLaQiKl00yrxAhl6gznE',
+        events: {
+          googleCalendarId: '9dehs6s7f6hpmpgotp2gm3kg1g@group.calendar.google.com',
+          color:'#F44336'
+        }
 
       }
     );
