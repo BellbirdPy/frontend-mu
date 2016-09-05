@@ -28,8 +28,11 @@ angular.module('frontendmuApp')
       console.log('Fue presionado guardar');
       $scope.newEstablecimiento.estado = "A";
       var nuevoEstablecimiento = new Establecimiento($scope.newEstablecimiento);
-      nuevoEstablecimiento.$save();
-      $mdDialog.hide();
+      nuevoEstablecimiento.$save(function () {
+        $mdDialog.hide(true);
+      },function () {
+        $mdDialog.hide(false);
+      });
     };
 
     $scope.cancel = function () {

@@ -8,7 +8,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('MainCtrl', function ($scope, ServerData, Establecimiento, $location, $rootScope, Noticia, $sce, $mdDialog) {
+  .controller('MainCtrl', function ($scope, ServerData, Establecimiento, $location, $rootScope, Noticia, $sce, $mdDialog, Utilidades) {
     $scope.establecimientos = [];
     $scope.obj = ServerData;
     console.log($scope.obj);
@@ -22,6 +22,14 @@ angular.module('frontendmuApp')
           controller: 'DialogsDialogoAgregarEstablecimientoCtrl',
           locals: {
             Inicial: true
+          }
+        }).then(function (value) {
+          if (value) {
+            Establecimiento.get(function (response) {
+              $scope.establecimientos = response.results;
+            });
+          } else {
+            Utilidades.showSimpleToast('No se ha podido crear el establecimiento');
           }
         });
       }
