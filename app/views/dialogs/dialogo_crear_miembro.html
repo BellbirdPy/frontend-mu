@@ -10,45 +10,51 @@
   <form>
     <md-dialog-content layout-padding>
       <div layout="column">
-        <md-input-container>
+        <md-input-container ng-if="modificar == false">
           <label>Nombre de usuario</label>
-          <input ng-model="newMiembro.username" required>
+          <input ng-model="newMiembro.user.username"  required>
         </md-input-container>
         <md-input-container>
           <label>Nombre</label>
-          <input ng-model="newMiembro.first_name" required>
+          <input ng-model="newMiembro.user.first_name" required>
         </md-input-container>
         <md-input-container>
           <label>Apellido</label>
-          <input ng-model="newMiembro.last_name" required>
+          <input ng-model="newMiembro.user.last_name" required>
         </md-input-container>
         <md-input-container>
           <label>Mail</label>
-          <input ng-model="newMiembro.mail" required>
+          <input ng-model="newMiembro.user.email" required>
         </md-input-container>
         <md-input-container class="md-block">
           <label>Cargo</label>
           <md-select ng-model="newMiembro.cargo">
-            <md-option  value="Propietario">
+            <md-option  value="P">
               Propietario
             </md-option>
-            <md-option  value="Administrador">
+            <md-option  value="A">
               Administrador
             </md-option>
-            <md-option  value="Contador">
+            <md-option  value="C">
               Contador
             </md-option>
           </md-select>
         </md-input-container>
-        <md-input-container>
+        <md-input-container ng-if="modificar == false">
           <label>Contraseña</label>
-          <input type="password" ng-model="newMiembro.contrasena" required>
+          <input type="password" ng-model="newMiembro.user.password" required>
+        </md-input-container>
+        <md-input-container ng-if="modificar == false">
+          <label>Repetir Contraseña</label>
+          <input type="password" ng-model="newMiembro.user.password2" required>
         </md-input-container>
       </div>
+
     </md-dialog-content>
 
     <md-dialog-actions layout="row" >
       <!--<div class="md-actions"><a href="#" flex>Informe</a></div>-->
+      <div ng-show="error" class="red-text">Nombre de usuario: [[error]]</div>
       <span flex></span>
       <md-button flex-order="1" ng-click="answer('guardar')" class="md-primary">Guardar</md-button>
       <md-button ng-click="cancel()" >Cancelar</md-button>

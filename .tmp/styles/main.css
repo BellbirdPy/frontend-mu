@@ -11,7 +11,7 @@
 .site-sidenav md-content {
   background: transparent;
 }
-*/
+
 
 .hoverTable tr:hover {
   background-color: #EEEEEE;
@@ -133,6 +133,10 @@ table.striped > tbody > tr > td {
 }
 
 table.hoverable > tbody > tr {
+  -webkit-transition: background-color .25s ease;
+  -moz-transition: background-color .25s ease;
+  -o-transition: background-color .25s ease;
+  -ms-transition: background-color .25s ease;
   transition: background-color .25s ease;
 }
 
@@ -145,7 +149,7 @@ table.centered thead tr th, table.centered tbody tr td {
 }
 
 thead {
-  border-bottom: 1px solid #d0d0d0;
+  border-bottom: 0px solid #d0d0d0;
 }
 
 td, th {
@@ -153,7 +157,7 @@ td, th {
   display: table-cell;
   text-align: left;
   vertical-align: middle;
-  border-radius: 2px;
+  border-radius: 0px;
 }
 
 @media only screen and (max-width: 992px) {
@@ -163,7 +167,6 @@ td, th {
     border-spacing: 0;
     display: block;
     position: relative;
-    /* sort out borders */
   }
 
   table.responsive-table th, table.responsive-table td {
@@ -307,6 +310,10 @@ td, th {
 
 .collection a.collection-item {
   display: block;
+  -webkit-transition: 0.25s;
+  -moz-transition: 0.25s;
+  -o-transition: 0.25s;
+  -ms-transition: 0.25s;
   transition: 0.25s;
   color: #26a69a;
 }
@@ -343,6 +350,8 @@ span.badge {
   color: #757575;
   position: absolute;
   right: 15px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -357,7 +366,7 @@ span.badge.new {
 span.badge.new:after {
   content: " new";
 }
-
+*/
 /*!
  * Waves v0.6.0
  * http://fian.my.id/Waves

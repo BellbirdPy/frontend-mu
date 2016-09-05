@@ -124,6 +124,7 @@
           <th md-column md-numeric md-order-by="cantidad_prenados"><span>Cant. Preñadas</span></th>
           <th md-column md-numeric md-order-by="cantidad_total"><span>Cant. Total</span></th>
           <th md-column md-numeric md-order-by="cantidad_prenados"><span>Porcent. de Preñez</span></th>
+          <th md-column md-numeric md-order-by="cantidad_prenados"><span>Cant. de Paridas</span></th>
         </tr>
         </thead>
         <tbody md-body>
@@ -135,6 +136,8 @@
           <td md-cell>[[palpacion.cantidad_prenados]]</td>
           <td md-cell>[[palpacion.cantidad_total]]</td>
           <td md-cell>[[palpacion.cantidad_prenados/palpacion.cantidad_total*100 | number:0]]%</td>
+          <td md-cell>[[palpacion.cantidad_prenados - palpacion.cantidad_actual_prenados]]</td>
+
         </tr>
         </tbody>
       </table>

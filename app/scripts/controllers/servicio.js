@@ -9,7 +9,7 @@
  */
 angular.module('frontendmuApp')
   .controller('ServicioCtrl', function ($scope, ServerData, Servicio, Palpacion, $mdDialog) {
-    $scope.queryServicios = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
+    $scope.queryServicios = {establecimiento: ServerData.establecimiento.id,palpado:3, ordering: 'id',page: 1};
     $scope.selectedServicios = [];
 
     function successServicios(servicios) {
@@ -91,7 +91,7 @@ angular.module('frontendmuApp')
 
   //---------------------------TERMINA SERVICIO -----------------------//
     //--------------------------------------------------------------//
-    $scope.queryPalpaciones = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
+    $scope.queryPalpaciones = {establecimiento: ServerData.establecimiento.id,ordering: 'id',terminado:3,page: 1};
     $scope.selectedPalpaciones = [];
 
     function successPalpaciones(palpaciones) {

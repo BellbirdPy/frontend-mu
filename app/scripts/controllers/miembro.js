@@ -15,13 +15,14 @@ angular.module('frontendmuApp')
 
     function successMiembros(miembros) {
       $scope.miembros = miembros;
-      console.log($scope.miembros);
     }
 
     $scope.getMiembros = function () {
       $scope.promiseMiembros = Miembro.get($scope.queryMiembros,successMiembros).$promise;
       $scope.selectedMiembros = [];
     };
+
+    $scope.getMiembros();
 
 
 
@@ -56,7 +57,7 @@ angular.module('frontendmuApp')
                 if (lista.length >= 1){
                   angular.forEach(lista, function(miembro){
                     Miembro.delete({id:miembro.id},miembro,function(data){
-                      console.log("Eliminado: " + data.nombre);
+                      console.log("Eliminado: " + data.user.nombre);
                     });
                   });
                 }
@@ -83,14 +84,18 @@ angular.module('frontendmuApp')
           templateUrl: 'views/dialogs/dialogo_crear_miembro.html',
           targetEvent: null,
           controller: ['$scope','$mdDialog','Miembro','ServerData' ,function ($scope, $mdDialog, Miembro, ServerData) {
-            $scope.newMiembro = {};
+            $scope.newMiembro = {user:{}};
+            $scope.modificar = false;
             if (miembroModificar) {
+              $scope.modificar = true;
+              delete miembroModificar.username;
               $scope.newMiembro = miembroModificar;
             }else{
-              $scope.newMiembro.username = "";
-              $scope.newMiembro.first_name = "";
-              $scope.newMiembro.last_name = "";
-              $scope.newMiembro.email = "";
+
+              $scope.newMiembro.user.username = "";
+              $scope.newMiembro.user.first_name = "";
+              $scope.newMiembro.user.last_name = "";
+              $scope.newMiembro.user.email = "";
               $scope.newMiembro.cargo = "";
               $scope.newMiembro.establecimiento = ServerData.establecimiento.id;
             }
@@ -102,25 +107,26 @@ angular.module('frontendmuApp')
             $scope.cancel = function () {
               $mdDialog.cancel();
             };
-
+            $scope.error = '';
             $scope.answer = function (answer) {
-              $mdDialog.hide();
 
               if (answer === 'guardar'){
                 if (miembroModificar){
                   Miembro.update({id:$scope.newMiembro.id},$scope.newMiembro,function(data){
                     $scope.newMiembro = data;
-                    $mdDialog.hide($scope.newMiembro);
+                    $mdDialog.hide(data);
                   });
 
                 }else {
                   var nuevo = new Miembro($scope.newMiembro);
 
-                  nuevo.$save(function () {
+                  nuevo.$save(function (data) {
+                    $mdDialog.hide(data);
                   }, function (error) {
+                    $scope.error = error.data.user.username[0];
                     console.log(error);
                   });
-                  $mdDialog.hide(nuevo);
+
                 }
               }
             };
