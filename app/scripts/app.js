@@ -18,8 +18,7 @@ angular
     'ngMaterial',
     'md.data.table',
     'ur.file',
-    'ngMaterialSidemenu',
-    'ui.calendar'
+    'ngMaterialSidemenu'
   ])
   .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider, $interpolateProvider, $mdDateLocaleProvider) {
 
