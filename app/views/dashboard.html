@@ -1,32 +1,35 @@
-<h1 class="md-display-1 green-text">Dashboard</h1>
+<h1 class="md-display-1 green-text">Panel Principal</h1>
 <section>
   <div flex-gt-sm="50" flex>
-    <md-toolbar layout="row">
-      <div class="md-toolbar-tools">
-        <span class="text-white">Notificaciones</span>
-      </div>
-    </md-toolbar>
-    <md-content>
-      <md-list flex>
-        <md-subheader class="md-no-sticky">Servicios</md-subheader>
-        <md-list-item class="md-3-line" ng-repeat="servicio in servicios.results" ng-click="null">
-          <div class="md-list-item-text" layout="column">
-            <h3>El periodo del servicio esta llegando a su fin.</h3>
-            <h4>Fecha de finalización: [[servicio.fecha_fin | date: "dd-MM-yyyy"]]</h4>
-            <p>Tipo de servicio: [[servicio.tipo_display]]. Lote: [[servicio.lote_completo.nombre]]. Potrero: [[servicio.lote_completo.potrero_nombre]]</p>
-          </div>
-        </md-list-item>
-        <md-divider></md-divider>
-        <md-subheader class="md-no-sticky">Tareas</md-subheader>
-        <md-list-item class="md-3-line" ng-repeat="tarea in tareas.results" ng-click="null">
-          <div class="md-list-item-text" layout="column">
-            <h3>Tarea asignada a [[tarea.usuario_asignado_display]].</h3>
-            <h4>Fecha: [[tarea.fecha | date: "dd-MM-yyyy"]]</h4>
-            <p>[[tarea.descripcion]]</p>
-          </div>
-        </md-list-item>
-      </md-list>
-    </md-content>
+    <md-card>
+      <md-toolbar layout="row">
+        <div class="md-toolbar-tools white-text">
+          <h2 class="md-title">Notificaciones</h2>
+        </div>
+      </md-toolbar>
+      <md-content>
+        <md-list flex>
+          <md-subheader class="md-no-sticky">Servicios</md-subheader>
+          <md-list-item class="md-3-line" ng-repeat="servicio in servicios.results" ng-click="null">
+            <div class="md-list-item-text" layout="column">
+              <h3>El periodo del servicio esta llegando a su fin.</h3>
+              <h4>Fecha de finalización: [[servicio.fecha_fin | date: "dd-MM-yyyy"]]</h4>
+              <p>Tipo de servicio: [[servicio.tipo_display]]. Lote: [[servicio.lote_completo.nombre]]. Potrero:
+                [[servicio.lote_completo.potrero_nombre]]</p>
+            </div>
+          </md-list-item>
+          <md-divider></md-divider>
+          <md-subheader class="md-no-sticky">Tareas</md-subheader>
+          <md-list-item class="md-3-line" ng-repeat="tarea in tareas.results" ng-click="null">
+            <div class="md-list-item-text" layout="column">
+              <h3>Tarea asignada a [[tarea.usuario_asignado_display]].</h3>
+              <h4>Fecha: [[tarea.fecha | date: "dd-MM-yyyy"]]</h4>
+              <p>[[tarea.descripcion]]</p>
+            </div>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </md-card>
   </div>
 </section>
 <!--
