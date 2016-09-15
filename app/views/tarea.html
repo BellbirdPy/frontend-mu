@@ -1,5 +1,5 @@
 <section>
-  <div >
+  <div>
     <h1 class="md-display-1 green-text">Tareas</h1>
   </div>
 </section>
@@ -9,8 +9,8 @@
       <div class="md-toolbar-tools">
         <span>Tareas</span>
         <span flex></span>
-        <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCargaTarea(null)"">
-        <md-icon><i class="material-icons">add</i> </md-icon>
+        <md-button class="md-icon-button" aria-label="More" ng-click="abrirFormCargaTarea(null)">
+        <md-icon><i class="material-icons">add</i></md-icon>
         </md-button>
       </div>
     </md-toolbar>
@@ -18,48 +18,42 @@
       <div class="md-toolbar-tools">
         <span>[[selectedTareas.length]] [[selectedTareas.length > 1 ? 'tareas seleccionados' : 'tarea seleccionado']]</span>
         <span flex></span>
-        <md-button class="md-icon-button" ng-show="selectedTareas.length == 1" ng-click="abrirFormCargaTarea(selectedTareas[0])" aria-label="Editar Vacunacion">
-          <md-icon><i class="material-icons green-text text-darken-4">edit</i> </md-icon>
+        <md-button class="md-icon-button" ng-show="selectedTareas.length == 1"
+                   ng-click="abrirFormCargaTarea(selectedTareas[0])" aria-label="Editar Vacunacion">
+          <md-icon><i class="material-icons green-text text-darken-4">edit</i></md-icon>
         </md-button>
-        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedTareas.length == 1" ng-click="deleteTarea(selectedTareas)"  aria-label="Delete Tarea">
-          <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
+        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedTareas.length == 1"
+                   ng-click="deleteTarea(selectedTareas)" aria-label="Delete Tarea">
+          <md-icon><i class="material-icons green-text text-darken-4">delete</i></md-icon>
         </md-button>
-
-
       </div>
-
     </md-toolbar>
-
-    <!-- exact table from live demo -->
     <md-table-container>
       <table md-table md-row-select ng-model="selectedTareas" md-progress="promiseTareas">
         <thead md-head md-order="queryTareas.ordering" md-on-reorder="getTareas">
         <tr md-row md-select-id="id">
-
           <th md-column md-order-by="fecha">Fecha</th>
           <th md-column md-order-by="descripcion"><span>Descripción</span></th>
           <th md-column md-order-by="usuario_asignado_display">Usuario asignado</th>
           <th md-column md-order-by="usuario_creador">Creado por</th>
           <th md-column md-order-by="leido">Leído</th>
-
         </tr>
         </thead>
         <tbody md-body>
         <tr md-row md-select="tarea" md-select-id="id" md-auto-select ng-repeat="tarea in tareas.results">
-
           <td md-cell>[[tarea.fecha| date: 'dd-MM-yyyy']]</td>
           <td md-cell>[[tarea.descripcion]]</td>
           <td md-cell>[[tarea.usuario_asignado_display]]</td>
           <td md-cell>[[tarea.usuario_creador]]</td>
           <td md-cell ng-if="tarea.leido">Si</td>
           <td md-cell ng-if="!tarea.leido">No</td>
-
-
         </tr>
-
         </tbody>
       </table>
     </md-table-container>
-    <md-table-pagination md-limit="queryTareas.limit" md-limit-options="[20, 50, 100]" md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" md-page="queryTareas.page" md-total="[[tareas.count]]" md-page-select="options.pageSelect" md-boundary-links="options.boundaryLinks" md-on-paginate="getTareas"></md-table-pagination>
+    <md-table-pagination md-limit="queryTareas.limit" md-limit-options="[20, 50, 100]"
+                         md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"
+                         md-page="queryTareas.page" md-total="[[tareas.count]]" md-page-select="options.pageSelect"
+                         md-boundary-links="options.boundaryLinks" md-on-paginate="getTareas"></md-table-pagination>
   </md-card>
 </section>
