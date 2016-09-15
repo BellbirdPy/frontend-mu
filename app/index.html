@@ -119,7 +119,7 @@
         <md-divider style="margin:0;"></md-divider>
         <md-sidemenu-button href="#dashboard">
           <md-icon><i class="material-icons">menu</i></md-icon>
-          Menú principal
+          Panel principal
         </md-sidemenu-button>
       </md-sidemenu-group>
       <md-sidemenu-group ng-show="obj.establecimiento.potreros.length">
@@ -127,7 +127,8 @@
         <md-sidemenu-content md-icon="assignment" md-heading="Manejo" md-arrow="true">
           <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#inventario">Inventario
           </md-sidemenu-button>
-          <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#servicio">Servicio</md-sidemenu-button>
+          <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#servicio">Servicio
+          </md-sidemenu-button>
           <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#compra">Compra de animales
           </md-sidemenu-button>
           <md-sidemenu-button ng-show="obj.establecimiento.potreros.length" href="#venta">Venta de animales
@@ -167,6 +168,7 @@
           <md-sidemenu-button href="#empleados">Empleados y contratistas</md-sidemenu-button>
           <md-sidemenu-button href="#tarea">Tareas</md-sidemenu-button>
           <md-sidemenu-button href="#contabilidad">Contabilidad</md-sidemenu-button>
+          <!--md-sidemenu-button href="#mortandad">Resultados físicos</md-sidemenu-button-->
         </md-sidemenu-content>
       </md-sidemenu-group>
 
@@ -262,7 +264,6 @@
 <!-- endbuild -->
 
 
-
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="../bower_components/fullcalendar/dist/gcal.js"></script>
 <script src="../bower_components/js-xlsx/dist/xlsx.core.min.js"></script>
@@ -305,9 +306,6 @@
 <script src="scripts/controllers/dialogs/dialogo_crear_ingreso_vario.js"></script>
 <script src="scripts/controllers/dialogs/dialogo_crear_ingreso_venta.js"></script>
 <script src="scripts/controllers/dialogs/dialogo_crear_tarea.js"></script>
-
-
-
 
 
 <script src="scripts/services/djangoauth.js"></script>
