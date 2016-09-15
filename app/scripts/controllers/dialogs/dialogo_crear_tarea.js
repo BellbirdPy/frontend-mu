@@ -11,7 +11,7 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearTareaCtrl', function ($scope, $mdDialog, ServerData, Tarea, Utilidades, EstablecimientoUsuarios) {
+  .controller('DialogsDialogoCrearTareaCtrl', function ($scope, $mdDialog, ServerData, Tarea, Utilidades, Miembro) {
     var obj = ServerData;
     $scope.queryUsuarios = {establecimiento:obj.establecimiento.id};
 
@@ -20,7 +20,7 @@ angular.module('frontendmuApp')
     }
 
     $scope.getUsuarios = function () {
-      $scope.promiseUsuarios = EstablecimientoUsuarios.get($scope.queryUsuarios, successUsuarios).$promise;
+      $scope.promiseUsuarios = Miembro.get($scope.queryUsuarios, successUsuarios).$promise;
     };
 
     $scope.getUsuarios();
@@ -67,11 +67,11 @@ angular.module('frontendmuApp')
 
         $scope.newTarea.establecimiento = obj.establecimiento.id; //Esto se tieen que poner el establecimiento despues
         //Formateamos la fecha
-        console.log()
+        console.log();
         $scope.newTarea.fecha = $scope.fecha.getFullYear() + '-'
           + ($scope.fecha.getMonth()+1) + '-' + $scope.fecha.getDate();
         $scope.newTarea.leido= false;
-        console.log($scope.newTarea.fecha)
+        console.log($scope.newTarea.fecha);
         var nuevoTarea = new Tarea($scope.newTarea);
         nuevoTarea.$save(function () {
             console.log('Tarea realizada');

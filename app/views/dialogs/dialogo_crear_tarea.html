@@ -21,8 +21,8 @@
             </md-input-container>
             <md-input-container class="md-accent-1 md-block" >
               <md-select ng-model="newTarea.usuario_asignado" placeholder="Usuario asignado">
-                <md-option ng-repeat="usuario in usuarios.lista" value="[[usuario.id]]">
-                  [[usuario.username]]
+                <md-option ng-repeat="usuario in usuarios.results" value="[[usuario.user.id]]">
+                  [[usuario.user.username]]
                 </md-option>
               </md-select>
             </md-input-container>

@@ -64,7 +64,7 @@ angular.module('frontendmuApp')
     // ANIMALES
 
     $scope.queryAnimales = {
-      establecimeinto: ServerData.establecimiento.id,
+      establecimiento: ServerData.establecimiento.id,
       limit: 20,
       ordering: 'id',
       page: 1

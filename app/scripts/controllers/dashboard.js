@@ -70,6 +70,11 @@ angular.module('frontendmuApp')
         left:   'prev',
         center: 'title',
         right:  'next'
+      },dayNamesShort:["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado"],
+      googleCalendarApiKey: 'AIzaSyAg-BXo7AgcqlpvLaQiKl00yrxAhl6gznE',
+      events: {
+        googleCalendarId: '9dehs6s7f6hpmpgotp2gm3kg1g@group.calendar.google.com',
+        color:'#F44336'
       }
     });
 

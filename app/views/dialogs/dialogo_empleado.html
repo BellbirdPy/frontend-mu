@@ -22,6 +22,9 @@
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Cedula de Identidad Nº.</label>
                   <input ng-model="newEmpleado.numero_cedula" required>
+                <div ng-message class="black-text">
+                  [[newEmpleado.numero_cedula | number]]
+                </div>
               </md-input-container>
           </div>
           <div layout-gt-sm="row">
@@ -65,7 +68,10 @@
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Salario</label>
-                  <input ng-model="newEmpleado.salario" required>
+                  <input ng-model="newEmpleado.salario" type="number" required>
+                <div ng-message class="black-text">
+                  [[newEmpleado.salario | number]]
+                </div>
               </md-input-container>
           </div>
 

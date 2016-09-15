@@ -10,7 +10,7 @@
 angular.module('frontendmuApp')
   .controller('MeteorologiaCtrl', function ($scope,$mdDialog,ServerData,Meteorologia,$filter) {
 
-    $scope.query = {q:'Asunción',units:'metric',lang:'es',APPID:'38212c68fe70ee4c21988681e3982a25'};
+    $scope.query = {q:ServerData.establecimiento.departamento_nombre +',PY',units:'metric',lang:'es',APPID:'38212c68fe70ee4c21988681e3982a25'};
 
   $scope.getWeather = function () {
     Meteorologia.current.get($scope.query, function(data){
@@ -49,7 +49,7 @@ angular.module('frontendmuApp')
     }
 
     $scope.getReg = function () {
-      $scope.promiseCat = Meteorologia.server.get($scope.queryCat,successReg).$promise;
+      $scope.promiseCat = Meteorologia.server.get($scope.queryReg,successReg).$promise;
       $scope.selectedReg = [];
     };
 

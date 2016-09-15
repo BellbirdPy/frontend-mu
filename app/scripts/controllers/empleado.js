@@ -126,6 +126,7 @@ angular.module('frontendmuApp')
         }]
       })
         .then(function(nuevo) {
+
           if (nuevo !== true) {
             var prueba = $filter('filter')($scope.empleados.results, function (d) {return d.id.toString() === nuevo.id.toString();})[0];
             if (prueba){
@@ -139,6 +140,7 @@ angular.module('frontendmuApp')
             }
 
           }
+          $scope.getEmp();
         }, function() {
           $scope.alert = 'You cancelled the dialog.';
         });
@@ -272,6 +274,7 @@ angular.module('frontendmuApp')
             }else{
               $scope.contratistas.results.unshift(nuevo);
             }
+            $scope.getCon();
 
           }
         }, function() {

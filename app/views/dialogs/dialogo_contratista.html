@@ -22,6 +22,9 @@
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Cedula de Identidad Nº.</label>
                   <input ng-model="newContratista.numero_cedula" required>
+                <div ng-message class="black-text">
+                  [[newContratista.numero_cedula | number]]
+                </div>
               </md-input-container>
           </div>
           <div layout-gt-sm="row">
@@ -42,6 +45,9 @@
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Jornal</label>
                   <input ng-model="newContratista.jornal" required>
+                <div ng-message class="black-text">
+                  [[newContratista.jornal | number]]
+                </div>
               </md-input-container>
           </div>
 
