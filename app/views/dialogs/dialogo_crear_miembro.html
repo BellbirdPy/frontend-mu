@@ -23,6 +23,10 @@
           <input ng-model="newMiembro.user.last_name" required>
         </md-input-container>
         <md-input-container>
+          <label>Telefono</label>
+          <input ng-model="newMiembro.telefono" required>
+        </md-input-container>
+        <md-input-container>
           <label>Mail</label>
           <input ng-model="newMiembro.user.email" required>
         </md-input-container>
@@ -37,6 +41,15 @@
             </md-option>
             <md-option  value="C">
               Contador
+            </md-option>
+            <md-option  value="V">
+              Veterinario
+            </md-option>
+            <md-option  value="I">
+              Ingeniero
+            </md-option>
+            <md-option  value="S">
+              Secretario/a
             </md-option>
           </md-select>
         </md-input-container>
