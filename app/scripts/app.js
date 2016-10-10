@@ -18,7 +18,8 @@ angular
     'ngMaterial',
     'md.data.table',
     'ur.file',
-    'ngMaterialSidemenu'
+    'ngMaterialSidemenu',
+    'oitozero.ngSweetAlert'
   ])
   .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider, $interpolateProvider, $mdDateLocaleProvider) {
 

@@ -8,12 +8,12 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCrearCompraCtrl', function ($scope, $mdDialog, Animal, Categoria, Raza, ServerData, Compra, Lote) {
+  .controller('DialogsDialogoCrearCompraCtrl', function ($scope, $mdDialog, Animal, Categoria, Raza, ServerData, Compra, Lote, SweetAlert) {
     var obj = ServerData;
     $scope.newCompra = {};
     $scope.newDetalle = {};
     $scope.newCompra.detalle_compra = [];
-    $scope.fecha_compra = new Date(2016,8,2);
+    $scope.fecha_compra = new Date(2016, 8, 2);
 
     $scope.seleccionDetalleCompra = [];
     $scope.categorias = Categoria.get(function (response) {
@@ -36,7 +36,7 @@ angular.module('frontendmuApp')
       $mdDialog.cancel();
     };
 
-    $scope.query = {limit:5,page:1}
+    $scope.query = {limit: 5, page: 1}
 
     $scope.cargarDetalleCompra = function (newDetalle) {
       var detalle_compra = {};
@@ -57,17 +57,21 @@ angular.module('frontendmuApp')
 
 
     $scope.guardarCompra = function (newCompra) {
-      $scope.newCompra.establecimiento = obj.establecimiento.id; //Esto se tieen que poner el establecimiento despues
-      //Formateamos la fecha
-      $scope.newCompra.fecha_compra = $scope.fecha_compra.getFullYear() + '-'
-        + $scope.fecha_compra.getMonth() + '-' + $scope.fecha_compra.getDate();
-      var nuevaCompra = new Compra($scope.newCompra);
-      nuevaCompra.$save(function () {
-          console.log('Compra realizada');
-        },
-        function (error) {
-          console.log(error);
-        });
-      $scope.hide();
+      if ($scope.newCompra.detalle_compra.length !== 0) {
+        $scope.newCompra.establecimiento = obj.establecimiento.id;
+        //Formateamos la fecha
+        $scope.newCompra.fecha_compra = $scope.fecha_compra.getFullYear() + '-'
+          + $scope.fecha_compra.getMonth() + '-' + $scope.fecha_compra.getDate();
+        var nuevaCompra = new Compra($scope.newCompra);
+        nuevaCompra.$save(function () {
+            console.log('Compra realizada');
+          },
+          function (error) {
+            console.log(error);
+          });
+        $scope.hide();
+      } else {
+        SweetAlert.swal("Debe ingresar los detalles de la compra");
+      }
     }
   });

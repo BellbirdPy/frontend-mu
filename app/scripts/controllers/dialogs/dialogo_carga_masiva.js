@@ -8,15 +8,15 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DialogsDialogoCargaMasivaCtrl', function ($scope, $mdDialog, Animal, Categoria, Raza, ServerData, Compra, Lote, $mdToast, Utilidades) {
+  .controller('DialogsDialogoCargaMasivaCtrl', function ($scope, $mdDialog, Animal, Categoria, Raza, ServerData, Compra, Lote, $mdToast, Utilidades, SweetAlert) {
     var obj = ServerData;
     $scope.newCompra = {
-      establecimiento:obj.establecimiento.id,
-      cod_establecimiento_vendedor:obj.establecimiento.id,
-      nombre_vendedor:'carga masiva sistema',
-      numero_guia:'1',
-      precio_total:0,
-      carga_masiva:true
+      establecimiento: obj.establecimiento.id,
+      cod_establecimiento_vendedor: obj.establecimiento.id,
+      nombre_vendedor: 'carga masiva sistema',
+      numero_guia: '1',
+      precio_total: 0,
+      carga_masiva: true
     };
     $scope.newDetalle = {};
     $scope.newCompra.detalle_compra = [];
@@ -60,22 +60,25 @@ angular.module('frontendmuApp')
     };
 
 
-
     $scope.guardarCompra = function (newCompra) {
-      $scope.newCompra.establecimiento = obj.establecimiento.id; //Esto se tieen que poner el establecimiento despues
-      //Formateamos la fecha
-      $scope.newCompra.fecha_compra = $scope.fecha_compra.getFullYear() + '-'
-        + $scope.fecha_compra.getMonth() + '-' + $scope.fecha_compra.getDate();
-      var nuevaCompra = new Compra($scope.newCompra);
-      Utilidades.showSimpleToast('Este proceso puede tardar unos minutos');
-      nuevaCompra.$save(function () {
-          console.log('Compra realizada');
-          Utilidades.showSimpleToast('Carga masiva realizada!');
-        },
-        function (error) {
-          console.log(error);
-          Utilidades.showSimpleToast('Ocurrió un error!');
-        });
-      $scope.hide();
+      if ($scope.newCompra.detalle_compra.length !== 0) {
+        $scope.newCompra.establecimiento = obj.establecimiento.id;
+        //Formateamos la fecha
+        $scope.newCompra.fecha_compra = $scope.fecha_compra.getFullYear() + '-'
+          + $scope.fecha_compra.getMonth() + '-' + $scope.fecha_compra.getDate();
+        var nuevaCompra = new Compra($scope.newCompra);
+        Utilidades.showSimpleToast('Este proceso puede tardar unos minutos');
+        nuevaCompra.$save(function () {
+            console.log('Compra realizada');
+            Utilidades.showSimpleToast('Carga masiva realizada!');
+          },
+          function (error) {
+            console.log(error);
+            Utilidades.showSimpleToast('Ocurrió un error!');
+          });
+        $scope.hide();
+      } else {
+        SweetAlert.swal("Debe ingresar los detalles de la carga");
+      }
     }
   });
