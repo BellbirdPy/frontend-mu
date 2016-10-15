@@ -11,7 +11,7 @@
     <md-toolbar class="md-table-toolbar md-default" ng-hide="selectedMiembros.length">
       <div class="md-toolbar-tools">
         <span flex>Miembros</span>
-        <md-button class="md-icon-button" aria-label="More" ng-click="editMiembro()">
+        <md-button ng-show="owner == currentUser" class="md-icon-button" aria-label="More" ng-click="editMiembro()">
           <md-icon><i class="material-icons">add</i> </md-icon>
         </md-button>
       </div>
@@ -20,7 +20,7 @@
       <div class="md-toolbar-tools">
         <span>[[selectedMiembros.length]] [[selectedMiembros.length > 1 ? 'miembros seleccionadas' : 'miembro seleccionada']]</span>
         <span flex></span>
-        <md-button class="md-icon-button green-text text-darken-4" ng-show="selectedMiembros.length >= 1" ng-click="deleteMiembro(selectedMiembros)"  aria-label="Delete Raza">
+        <md-button ng-show="owner == currentUser" class="md-icon-button green-text text-darken-4" ng-show="selectedMiembros.length >= 1" ng-click="deleteMiembro(selectedMiembros)"  aria-label="Delete Raza">
           <md-icon><i class="material-icons green-text text-darken-4">delete</i> </md-icon>
         </md-button>
       </div>

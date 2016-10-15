@@ -12,10 +12,14 @@ angular.module('frontendmuApp')
 
     $scope.queryMiembros = {establecimiento: ServerData.establecimiento.id,ordering: 'id',page: 1};
     $scope.selectedMiembros = [];
+    $scope.currentUser = ServerData.establecimiento.current_user;
+    $scope.owner = ServerData.establecimiento.owner.id;
+
 
     function successMiembros(miembros) {
       $scope.miembros = miembros;
     }
+
 
     $scope.getMiembros = function () {
       $scope.promiseMiembros = Miembro.get($scope.queryMiembros,successMiembros).$promise;

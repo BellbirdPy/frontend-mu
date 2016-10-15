@@ -13,7 +13,7 @@ angular.module('frontendmuApp')
 
     Evento.get(function(response){
       $scope.eventos = response.results;
-      angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos );
+      angular.element(('#calendario')).fullCalendar( 'addEventSource', $scope.eventos );
     });
     $scope.events = [];
     EventoEstablecimiento.get({'establecimiento':ServerData.establecimiento.id},function(response){
@@ -22,7 +22,7 @@ angular.module('frontendmuApp')
         evento.color = '#8bc34a';
       });
       console.log($scope.eventos_establecimiento);
-      angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
+      angular.element(('#calendario')).fullCalendar( 'addEventSource', $scope.eventos_establecimiento );
     });
 
 
@@ -43,7 +43,7 @@ angular.module('frontendmuApp')
       );
     };
 
-    angular.element(('#calendar')).fullCalendar(
+    angular.element(('#calendario')).fullCalendar(
       {
         eventClick: function(calEvent, jsEvent, view) {
           if (calEvent.veterinario){
@@ -73,6 +73,10 @@ angular.module('frontendmuApp')
       }
     );
 
+    angular.element(('#calendario')).fullCalendar( 'refresh' );
+    angular.element(('#calendario')).fullCalendar( 'render' );
+
+
 
     $scope.agregarEvento = function(evento) {
       $mdDialog.show({
@@ -101,7 +105,7 @@ angular.module('frontendmuApp')
               .cancel('Cancelar');
             $mdDialog.show(confirm).then(function() {
               EventoEstablecimiento.delete({id:evento.id},evento,function(data){
-                angular.element(('#calendar')).fullCalendar( 'removeEvents', [evento.id] );
+                angular.element(('#calendario')).fullCalendar( 'removeEvents', [evento.id] );
               });
 
             }, function() {
@@ -133,7 +137,7 @@ angular.module('frontendmuApp')
                 var nuevo = new EventoEstablecimiento($scope.newEvento);
 
                 nuevo.$save(function (data) {
-                  angular.element(('#calendar')).fullCalendar( 'addEventSource', [data] );
+                  angular.element(('#calendario')).fullCalendar( 'addEventSource', [data] );
                 }, function (error) {
                   console.log(error);
                 });
@@ -151,8 +155,8 @@ angular.module('frontendmuApp')
             if (prueba){
               if (prueba.id === nuevo.id) {
                 angular.extend(prueba, nuevo);
-                angular.element(('#calendar')).fullCalendar( 'removeEvents', [nuevo.id] );
-                angular.element(('#calendar')).fullCalendar( 'addEventSource', [nuevo] );
+                angular.element(('#calendario')).fullCalendar( 'removeEvents', [nuevo.id] );
+                angular.element(('#calendario')).fullCalendar( 'addEventSource', [nuevo] );
               }else{
                 $scope.eventos_establecimiento.unshift(nuevo);
               }
@@ -182,7 +186,7 @@ angular.module('frontendmuApp')
       });
       if (vacunacion<=1){
 
-      angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.events );
+      angular.element(('#calendario')).fullCalendar( 'addEventSource', $scope.events );
       }
 
       console.log($scope.vacunaciones);
