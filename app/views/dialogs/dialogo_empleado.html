@@ -68,10 +68,11 @@
               </md-input-container>
               <md-input-container class="md-block" flex-gt-sm>
                   <label>Salario</label>
-                  <input ng-model="newEmpleado.salario" type="number" required>
-                <div ng-message class="black-text">
-                  [[newEmpleado.salario | number]]
-                </div>
+                  <input ng-model="newEmpleado.salario" type="number" awnum
+                         num-sep=","
+                         num-int="15"
+                         num-thousand="true" required>
+
               </md-input-container>
           </div>
 

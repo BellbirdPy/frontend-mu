@@ -29,7 +29,10 @@
 
         <md-input-container class="md-accent-1 md-block" flex>
           <label>Precio</label>
-          <input type="number" ng-model="newVenta.precio_total">
+          <input ng-model="newVenta.precio_total" awnum
+                 num-sep=","
+                 num-int="15"
+                 num-thousand="true">
         </md-input-container>
         <md-datepicker ng-model="fecha_venta" style="margin:13px 0;"
                        md-placeholder="Fecha de venta"></md-datepicker>

@@ -19,7 +19,8 @@ angular
     'md.data.table',
     'ur.file',
     'ngMaterialSidemenu',
-    'oitozero.ngSweetAlert'
+    'oitozero.ngSweetAlert',
+    'dynamicNumber'
   ])
   .config(function ($routeProvider, $mdThemingProvider, $httpProvider, $resourceProvider, $interpolateProvider, $mdDateLocaleProvider) {
 
