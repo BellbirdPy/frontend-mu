@@ -8,8 +8,9 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('DashboardCtrl', function ($scope,Evento,EventoEstablecimiento,$mdDialog,$filter,ServerData, Tarea, Servicio,$http,$q,$timeout) {
+  .controller('DashboardCtrl', function ($scope,Utilidades,Evento,EventoEstablecimiento,$mdDialog,$filter,ServerData, Tarea, Servicio,$http,$q,$timeout) {
     $scope.events = [];
+    $scope.tareas_calendario = [];
     $scope.checked=false;
 
     $scope.notificar = function (){
@@ -20,9 +21,15 @@ angular.module('frontendmuApp')
       }
     };
 
-    $scope.queryTareas = {establecimiento: ServerData.establecimiento.id,limit:20, ordering: 'fecha',page: 1,leido:'False'};
+    $scope.queryTareas = {establecimiento: ServerData.establecimiento.id,limit:20, ordering: 'fecha',page: 1};
 
     function successTareas(tareas) {
+      angular.forEach(tareas.results,function(tarea){
+        $scope.tareas_calendario.push({title: 'Tarea: ' + tarea.descripcion,
+          start: Utilidades.toDate(tarea.fecha),end: Utilidades.toDate(tarea.fecha),allDay: true});
+
+        angular.element(('#calendar')).fullCalendar( 'addEventSource', $scope.tareas_calendario );
+      });
       $scope.tareas = tareas;
     }
 
@@ -30,6 +37,8 @@ angular.module('frontendmuApp')
       console.log($scope.queryTareas);
       $scope.promiseTareas = Tarea.get($scope.queryTareas,successTareas).$promise;
     };
+
+    $scope.getTareas();
 
 
     $scope.fecha = new Date(Date.now());
