@@ -18,9 +18,44 @@
           <label>Superficie (Ha.)</label>
           <input ng-model="newPotrero.superficie" >
         </md-input-container>
-        <md-input-container>
-          <label>Uso</label>
-          <input ng-model="newPotrero.uso" >
+        <md-input-container >
+          <label>Uso:</label>
+          <md-select ng-model="newPotrero.uso">
+            <md-option value="Pastura">
+              Pastura
+            </md-option>
+            <md-option value="Silvo - pastoril">
+              Silvo - pastoril
+            </md-option>
+            <md-option value="Corral">
+              Corral
+            </md-option>
+            <md-option value="Casa Patronal">
+              Casa Patronal
+            </md-option>
+            <md-option value="Corralón - Dormidero">
+              Corralón - Dormidero
+            </md-option>
+            <md-option value="Pastura para Henificación">
+              Pastura para Henificación
+            </md-option>
+            <md-option value="Silo bolsa">
+              Silo bolsa
+            </md-option>
+            <md-option value="Silo torta">
+              Silo torta
+            </md-option>
+            <md-option value="Confinamiento - Engorde">
+              Confinamiento - Engorde
+            </md-option>
+            <md-option value="Retiro">
+              Retiro
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container >
+          <label>Descripción</label>
+          <input ng-model="newPotrero.descripcion" >
         </md-input-container>
       </div>
     </md-dialog-content>

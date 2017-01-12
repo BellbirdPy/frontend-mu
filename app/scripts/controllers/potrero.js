@@ -46,6 +46,8 @@ angular.module('frontendmuApp')
             ServerData.establecimiento = data;
             console.log(ServerData.establecimiento);
           });
+          $scope.selectedPotreros = [];
+
 
         });
       }, function() {
@@ -65,8 +67,9 @@ angular.module('frontendmuApp')
             $scope.newPotrero = potreroModificar;
           }else{
             $scope.newPotrero.nombre = "";
-            $scope.newPotrero.superficie = "";
+            $scope.newPotrero.superficie = null;
             $scope.newPotrero.uso = "";
+            $scope.newPotrero.descripcion = null;
             $scope.newPotrero.establecimiento = ServerData.establecimiento.id;
           }
 
