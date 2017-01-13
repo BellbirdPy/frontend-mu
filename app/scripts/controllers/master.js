@@ -74,12 +74,17 @@ angular.module('frontendmuApp')
 
     $scope.vm = vm;
 
+
+
+
+
     $scope.agregarEstablecimiento = function () {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_agregar_establecimiento.html',
         controller: 'DialogsDialogoAgregarEstablecimientoCtrl',
         locals: {
-          Inicial: false
+          Inicial: false,
+          Modificar:false
         }
       }).then(function (value) {
         if (value) {

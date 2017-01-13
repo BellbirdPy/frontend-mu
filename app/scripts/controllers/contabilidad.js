@@ -8,9 +8,24 @@
  * Controller of the frontendmuApp
  */
 angular.module('frontendmuApp')
-  .controller('ContabilidadCtrl', function ($scope,$filter,$mdDialog, Egreso, ContabilidadTotales,
-                                            ReporteEgreso,ServerData, IngresoVenta, IngresoVario,
+  .controller('ContabilidadCtrl', function ($scope, $filter, $mdDialog, Egreso, ContabilidadTotales,
+                                            ReporteEgreso, ServerData, Venta, IngresoVario,
                                             Establecimiento) {
+
+    $scope.queryVentas = {establecimiento: ServerData.establecimiento.id, ordering: 'id', page: 1};
+    $scope.selectedVentas = [];
+
+    function successVentas(ventas) {
+      $scope.ventas = ventas;
+      console.log($scope.ventas);
+    }
+
+    $scope.getVentas = function () {
+      $scope.promiseVentas = Venta.get($scope.queryVentas, successVentas).$promise;
+      $scope.selectedVentas = [];
+    };
+
+    $scope.getVentas();
 
     $scope.queryTotales = {establecimiento: ServerData.establecimiento.id};
 
@@ -20,42 +35,42 @@ angular.module('frontendmuApp')
 
     $scope.getTotales = function () {
       console.log($scope.queryIngresosVenta);
-      $scope.promiseTotales = ContabilidadTotales.get($scope.queryTotales,successTotales).$promise;
+      $scope.promiseTotales = ContabilidadTotales.get($scope.queryTotales, successTotales).$promise;
     };
 
     $scope.getTotales();
+    /*
+     $scope.queryIngresosVenta = {establecimiento: ServerData.establecimiento.id,limit:20, ordering: 'fecha',page: 1};
+     $scope.selectedIngresosVenta = [];
 
-    $scope.queryIngresosVenta = {establecimiento: ServerData.establecimiento.id,limit:20, ordering: 'fecha',page: 1};
-    $scope.selectedIngresosVenta = [];
+     function successIngresosVenta(ingresosVenta) {
+     $scope.ingresosVenta = ingresosVenta;
+     }
 
-    function successIngresosVenta(ingresosVenta) {
-      $scope.ingresosVenta = ingresosVenta;
-    }
+     $scope.getIngresosVenta = function () {
+     console.log($scope.queryIngresosVenta);
+     $scope.promiseIngresosVenta = Venta.get($scope.queryIngresosVenta,successIngresosVenta).$promise;
+     $scope.selectedIngresosVenta = [];
+     };
 
-    $scope.getIngresosVenta = function () {
-      console.log($scope.queryIngresosVenta);
-      $scope.promiseIngresosVenta = IngresoVenta.get($scope.queryIngresosVenta,successIngresosVenta).$promise;
-      $scope.selectedIngresosVenta = [];
-    };
-
-    $scope.getIngresosVenta();
-
+     $scope.getIngresosVenta();
+     */
     $scope.abrirFormCargaIngresoVenta = function (ingresoVenta) {
       ServerData.ingresoVenta_seleccionado = ingresoVenta;
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_crear_ingreso_venta.html',
         targetEvent: null,
-        controller:'DialogsDialogoCrearIngresoVentaCtrl'
+        controller: 'DialogsDialogoCrearIngresoVentaCtrl'
       }).then(function () {
         $scope.getIngresosVenta();
         $scope.getTotales();
       });
     };
-    $scope.deleteIngresoVenta = function(lista) {
+    $scope.deleteIngresoVenta = function (lista) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_eliminar_ingreso_venta.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','IngresoVenta','$filter' ,function ($scope, $mdDialog, IngresoVenta) {
+        controller: ['$scope', '$mdDialog', 'IngresoVenta', '$filter', function ($scope, $mdDialog, IngresoVenta) {
           $scope.options = {
             pageSelect: true
           };
@@ -78,34 +93,39 @@ angular.module('frontendmuApp')
           };
 
           $scope.answer = function (answer) {
-            if (answer === 'guardar'){
-              if (lista.length >= 1){
-                angular.forEach(lista, function(ingresoVenta){
-                  IngresoVenta.delete({id:ingresoVenta.id},ingresoVenta,function(data){
+            if (answer === 'guardar') {
+              if (lista.length >= 1) {
+                angular.forEach(lista, function (ingresoVenta) {
+                  IngresoVenta.delete({id: ingresoVenta.id}, ingresoVenta, function (data) {
                     console.log("eliminado: " + data.fecha_ingresoVenta);
                   });
                 });
               }
               $mdDialog.hide(lista);
-            }else{
+            } else {
               $mdDialog.hide();
             }
           };
 
         }]
       })
-        .then(function(lista) {
+        .then(function (lista) {
           if (lista !== true) {
             $scope.getIngresosVenta();
             $scope.getTotales();
           }
-        }, function() {
+        }, function () {
           $scope.alert = 'You cancelled the dialog.';
         });
     };
 
 
-    $scope.queryIngresosVarios = {establecimiento: ServerData.establecimiento.id,limit:20, ordering: 'fecha',page: 1};
+    $scope.queryIngresosVarios = {
+      establecimiento: ServerData.establecimiento.id,
+      limit: 20,
+      ordering: 'fecha',
+      page: 1
+    };
     $scope.selectedIngresosVarios = [];
 
     function successIngresosVarios(ingresosVarios) {
@@ -114,28 +134,28 @@ angular.module('frontendmuApp')
 
     $scope.getIngresosVarios = function () {
       console.log($scope.queryIngresosVarios);
-      $scope.promiseIngresosVarios = IngresoVario.get($scope.queryIngresosVarios,successIngresosVarios).$promise;
+      $scope.promiseIngresosVarios = IngresoVario.get($scope.queryIngresosVarios, successIngresosVarios).$promise;
       $scope.selectedIngresosVarios = [];
     };
 
-    $scope.getIngresosVarios();
+    //$scope.getIngresosVarios();
 
     $scope.abrirFormCargaIngreso = function (ingresoVario) {
       ServerData.ingresoVario_seleccionado = ingresoVario;
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_crear_ingreso_vario.html',
         targetEvent: null,
-        controller:'DialogsDialogoCrearIngresoVarioCtrl'
+        controller: 'DialogsDialogoCrearIngresoVarioCtrl'
       }).then(function () {
         $scope.getIngresosVarios();
         $scope.getTotales();
       });
     };
-    $scope.deleteIngresoVario = function(lista) {
+    $scope.deleteIngresoVario = function (lista) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_eliminar_ingreso_vario.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','IngresoVario','$filter' ,function ($scope, $mdDialog, IngresoVario) {
+        controller: ['$scope', '$mdDialog', 'IngresoVario', '$filter', function ($scope, $mdDialog, IngresoVario) {
           $scope.options = {
             pageSelect: true
           };
@@ -158,52 +178,52 @@ angular.module('frontendmuApp')
           };
 
           $scope.answer = function (answer) {
-            if (answer === 'guardar'){
-              if (lista.length >= 1){
-                angular.forEach(lista, function(ingresoVario){
-                  IngresoVario.delete({id:ingresoVario.id},ingresoVario,function(data){
+            if (answer === 'guardar') {
+              if (lista.length >= 1) {
+                angular.forEach(lista, function (ingresoVario) {
+                  IngresoVario.delete({id: ingresoVario.id}, ingresoVario, function (data) {
                     console.log("eliminado: " + data.fecha_ingresoVario);
                   });
                 });
               }
               $mdDialog.hide(lista);
-            }else{
+            } else {
               $mdDialog.hide();
             }
           };
 
         }]
       })
-        .then(function(lista) {
+        .then(function (lista) {
           if (lista !== true) {
             $scope.getIngresosVarios();
             $scope.getTotales();
           }
-        }, function() {
+        }, function () {
           $scope.alert = 'You cancelled the dialog.';
         });
     };
 
 
     $scope.generarReporte = function () {
-      ServerData.mes = $scope.fecha_reporte.getMonth()+1;
+      ServerData.mes = $scope.fecha_reporte.getMonth() + 1;
       ServerData.anho = $scope.fecha_reporte.getFullYear();
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_reporte_egreso.html',
         targetEvent: null,
-        controller:'DialogsDialogoReporteEgresoCtrl'
+        controller: 'DialogsDialogoReporteEgresoCtrl'
       });
     };
 
 
-    $scope.queryEgresos = {establecimiento: ServerData.establecimiento.id,limit:20, ordering: 'fecha',page: 1};
+    $scope.queryEgresos = {establecimiento: ServerData.establecimiento.id, limit: 20, ordering: 'fecha', page: 1};
     $scope.selectedEgresos = [];
     $scope.rubros = [
-      {c:'GD',display:'Gastos Directos'},
-      {c:'GA',display:'Gastos Administrativos'},
-      {c:'IT',display:'Impuestos y Tazas'},
-      {c:'GC', display:'Gastos de Comercialización'},
-      {c:'GF', display:'Gastos Financieros'}];
+      {c: 'GD', display: 'Gastos Directos'},
+      {c: 'GA', display: 'Gastos Administrativos'},
+      {c: 'IT', display: 'Impuestos y Tazas'},
+      {c: 'GC', display: 'Gastos de Comercialización'},
+      {c: 'GF', display: 'Gastos Financieros'}];
 
     function successEgresos(egresos) {
       $scope.egresos = egresos;
@@ -211,7 +231,7 @@ angular.module('frontendmuApp')
 
     $scope.getEgresos = function () {
       console.log($scope.queryEgresos);
-      $scope.promiseEgresos = Egreso.get($scope.queryEgresos,successEgresos).$promise;
+      $scope.promiseEgresos = Egreso.get($scope.queryEgresos, successEgresos).$promise;
       $scope.selectedEgresos = [];
     };
 
@@ -222,16 +242,16 @@ angular.module('frontendmuApp')
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_crear_egreso.html',
         targetEvent: null,
-        controller:'DialogsDialogoCrearEgresoCtrl'
+        controller: 'DialogsDialogoCrearEgresoCtrl'
       }).then(function () {
         $scope.getEgresos();
       });
     };
-    $scope.deleteEgreso = function(lista) {
+    $scope.deleteEgreso = function (lista) {
       $mdDialog.show({
         templateUrl: 'views/dialogs/dialogo_eliminar_egreso.html',
         targetEvent: null,
-        controller: ['$scope','$mdDialog','Egreso','$filter' ,function ($scope, $mdDialog, Egreso) {
+        controller: ['$scope', '$mdDialog', 'Egreso', '$filter', function ($scope, $mdDialog, Egreso) {
           $scope.options = {
             pageSelect: true
           };
@@ -254,31 +274,30 @@ angular.module('frontendmuApp')
           };
 
           $scope.answer = function (answer) {
-            if (answer === 'guardar'){
-              if (lista.length >= 1){
-                angular.forEach(lista, function(egreso){
-                  Egreso.delete({id:egreso.id},egreso,function(data){
+            if (answer === 'guardar') {
+              if (lista.length >= 1) {
+                angular.forEach(lista, function (egreso) {
+                  Egreso.delete({id: egreso.id}, egreso, function (data) {
                     console.log("eliminado: " + data.fecha_egreso);
                   });
                 });
               }
               $mdDialog.hide(lista);
-            }else{
+            } else {
               $mdDialog.hide();
             }
           };
 
         }]
       })
-        .then(function(lista) {
+        .then(function (lista) {
           if (lista !== true) {
             $scope.getEgresos();
           }
-        }, function() {
+        }, function () {
           $scope.alert = 'You cancelled the dialog.';
         });
     };
-
 
 
   });

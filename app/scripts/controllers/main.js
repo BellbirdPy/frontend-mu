@@ -35,6 +35,24 @@ angular.module('frontendmuApp')
       }
     });
 
+    $scope.modificarEstablecimiento = function (establecimiento) {
+      $mdDialog.show({
+        templateUrl: 'views/dialogs/dialogo_agregar_establecimiento.html',
+        controller: 'DialogsDialogoAgregarEstablecimientoCtrl',
+        locals: {
+          Inicial: false,
+          Modificar:establecimiento
+        }
+      }).then(function (value) {
+        if (value) {
+          $location.path('/');
+          $route.reload();
+        } else {
+          Utilidades.showSimpleToast('No se ha podido modificar el establecimiento');
+        }
+      });
+    };
+
 
     $scope.seleccionar = function (e) {
       $scope.obj.establecimiento = e;

@@ -95,8 +95,9 @@ angular.module('frontendmuApp')
 
       $scope.newVenta.establecimiento = obj.establecimiento.id; //Esto se tieen que poner el establecimiento despues
       //Formateamos la fecha
+      var currentMonth = $scope.fecha_venta.getMonth() + 1;
       $scope.newVenta.fecha_venta = $scope.fecha_venta.getFullYear() + '-'
-        + $scope.fecha_venta.getMonth() + '-' + $scope.fecha_venta.getDate();
+        + currentMonth + '-' + $scope.fecha_venta.getDate();
       var nuevaVenta = new Venta($scope.newVenta);
       nuevaVenta.$save(function () {
           console.log('Venta realizada');
